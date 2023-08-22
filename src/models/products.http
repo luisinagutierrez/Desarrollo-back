@@ -1,0 +1,60 @@
+### obtener todos los productos
+
+GET http://localhost:3000/api/products
+
+### obtener un producto por id ----- 1 es el id del producto
+
+GET http://localhost:3000/api/products/1   
+
+### crear un nuevo producto
+
+POST http://localhost:3000/api/products
+Content-Type: application/json
+
+{
+   "productCode":1 ,
+  "description": "Cartera 1",
+  "stock": 22,
+  "measures": 13,
+  "name":"Delicate",
+  "cuit":2035243674,
+  "categoryId": 1,
+
+}
+
+### modificar un producto (PUT - recurso completo e idempotente)
+
+PUT http://localhost:3000/api/products/1
+Content-Type: application/json
+
+{
+   "productCode": 2,
+  "description": "cartera 2",
+  "stock": 2,
+  "measures":12 ,
+  "name":"Greedy",
+  "cuit":2035243674,
+  "categoryId": 1,
+
+}
+
+### modificar un producto (PATCH  - recurso parcial)
+
+PATCH http://localhost:3000/api/products/1
+Content-Type: application/json
+
+
+{
+"productCode": 3,
+  "description": "cartera 3",
+  "stock": 5,
+  "measures": 15,
+  "name":"Lover",
+  "cuit":2035243674,
+  "categoryId": 1,
+
+}
+
+### borrar un producto
+
+DELETE http://localhost:3000/api/products/1
