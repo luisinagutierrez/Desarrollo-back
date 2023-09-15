@@ -1,4 +1,4 @@
-export class supplier {
+export class Supplier {
     cuil: number 
     businessName: string
     phone: number

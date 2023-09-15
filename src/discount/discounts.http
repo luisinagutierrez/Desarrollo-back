@@ -1,0 +1,49 @@
+### obtener todas las provincias
+
+GET http://localhost:3000/api/discounts
+
+### obtener un producto por id ----- 1 es el id del producto
+
+dataSince: number 
+    amount: number 
+GET http://localhost:3000/api/discounts/23082023/100000   
+
+### crear un nuevo producto
+
+POST http://localhost:3000/api/discounts
+Content-Type: application/json
+
+{
+    "id": "1", 
+    "dataSince": 20230203 ,
+    "amount": 100000,
+    "discount": 0.1   
+} 
+
+### modificar un producto (PUT - recurso completo e idempotente)
+
+PUT http://localhost:3000/api/discounts/23082023/100000
+Content-Type: application/json
+
+{
+    "id": "2", 
+    "dataSince": 20230630 ,
+    "amount": 150000,
+    "discount": 0.3
+}
+
+### modificar un producto (PATCH  - recurso parcial)
+
+PATCH http://localhost:3000/api/discounts/23082023/100000
+Content-Type: application/json
+
+{
+    "id": "3", 
+    "dataSince": 20230109 ,
+    "amount": 120000,
+    "discount": 0.2
+}
+
+### borrar un producto
+
+DELETE http://localhost:3000/api/discounts/23082023/100000
