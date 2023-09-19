@@ -3,6 +3,7 @@ import { Supplier } from "./supplier.entity.js";
 
 const suppliers = [ // este es el nuestro 
     new Supplier(
+        1,
         28-44444444-7,
         'Lady Purse',
         34719888,

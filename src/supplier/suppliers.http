@@ -12,6 +12,7 @@ POST http://localhost:3000/api/suppliers
 Content-Type: application/json
 
 {
+    "id": 1,
     "cuil": 2090129021 ,
     "businessName": "Porse",
     "phone": 3418624361,
@@ -25,6 +26,7 @@ PUT http://localhost:3000/api/suppliers/1
 Content-Type: application/json
 
 {
+    "id": 2,
     "cuil": 2036281041 ,
     "businessName": "Baggy",
     "phone": 3412492518,
@@ -38,6 +40,7 @@ PATCH http://localhost:3000/api/suppliers/1
 Content-Type: application/json
 
 {
+    "id": 3,
     "cuil": 2025982081 ,
     "businessName": "Tentroya",
     "phone": 3417209756,

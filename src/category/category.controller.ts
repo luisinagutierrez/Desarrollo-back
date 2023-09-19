@@ -24,7 +24,7 @@ function findAll(req: Request, res: Response){
 };
 
 function findOne(req: Request, res: Response){
-    const id = req.params.id;  //no se
+    const id = req.params.id; 
     const category = repository.findOne({id});
     if (!category) {
       return res.status(404).send({message: 'category not found!'});

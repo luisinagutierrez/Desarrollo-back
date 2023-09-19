@@ -3,7 +3,7 @@ import {Discount} from "./discount.entity.js";
 
 const Discounts = [
     new Discount(
-      "1",
+      1,
       23052023,
       1000000,
       0.1
@@ -15,8 +15,8 @@ export class DiscountRepository implements Repository<Discount>{
         return Discounts
     }
 
-    public findOne (item: {id: string }): Discount | undefined{
-        return Discounts.find((Discount) => Discount.id === item.id) //??? ESTÁ MAL
+    public findOne (item: {id: string}): Discount | undefined{
+        return Discounts.find((Discount) => Discount.id === parseInt(item.id)) //??? ESTÁ MAL
     }
     
     public add(item: Discount): Discount | undefined {
@@ -33,7 +33,7 @@ export class DiscountRepository implements Repository<Discount>{
     }
 
     public delete(item: {id: string}): Discount | undefined {
-        const index = Discounts.findIndex(Discount => Discount.id === item.id) //??? ESTÁ MAL
+        const index = Discounts.findIndex(Discount => Discount.id === parseInt(item.id)) //??? ESTÁ MAL
         if (index !== -1){
           const deletedDiscounts = Discounts[index];
           Discounts.splice(index, 1);

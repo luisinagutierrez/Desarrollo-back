@@ -1,4 +1,5 @@
 export class clients {
+    id: number
     dni: number 
     firstName: string
     lastName: string
@@ -10,7 +11,8 @@ export class clients {
     //type: string[] = ['Minorista', 'Mayorista']
     postCode: number
 
-    constructor(dni: number, firstName: string, lastName: string, phone: number, email: string, password: string, street: string, streetNumber: number, postCode: number){
+    constructor(id: number, dni: number, firstName: string, lastName: string, phone: number, email: string, password: string, street: string, streetNumber: number, postCode: number){
+        this.id = id;
         this.dni = dni;
         this.firstName = firstName;
         this.lastName = lastName;

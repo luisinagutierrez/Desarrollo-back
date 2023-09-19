@@ -7,7 +7,8 @@ const repository = new provinceRepository();
 function sanitizeProvinceInput(req: Request, res: Response, next: NextFunction){
   
     req.body.sanitizeInput ={
-      suppliers: req.body.id,
+      //suppliers: req.body.id,
+      id: req.body.id,
       name: req.body.name,
     }
     //more checks here

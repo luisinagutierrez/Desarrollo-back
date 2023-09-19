@@ -7,6 +7,7 @@ const repository = new supplierRepository();
 function sanitizeSupplierInput(req: Request, res: Response, next: NextFunction){
   
     req.body.sanitizeInput ={
+      id: req.body.id, 
       cuil: req.body.cuil, 
       businessName: req.body.businessName,
       phone: req.body.phone,
@@ -38,7 +39,7 @@ function findOne(req: Request, res: Response){
 function add(req: Request, res: Response){
     const input = req.body.sanitizeInput;
   
-    const supplierInput = new Supplier(input.cuil, input.businessName, input.phone, input.webPage, input.email);
+    const supplierInput = new Supplier(input.id, input.cuil, input.businessName, input.phone, input.webPage, input.email);
   
     const supplier = repository.add(supplierInput);
     return res.status(201).send({message: 'Supplier created!', data: supplier});  
@@ -46,7 +47,7 @@ function add(req: Request, res: Response){
   };
   
   function update(req: Request, res: Response){
-    req.body.sanitizeInput.cuil = req.params.id;
+    req.body.sanitizeInput.id = req.params.id;
     const supplier =repository.update(req.body.sanitizeInput);
   
     if (!supplier) {

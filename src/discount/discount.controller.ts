@@ -42,7 +42,7 @@ function add(req: Request, res: Response){
   };
   
   function update(req: Request, res: Response){
-    req.body.sanitizeInput.id = req.params.id; //estaría bien ??
+    req.body.sanitizeInput.id = req.params.id; 
     const discount =repository.update(req.body.sanitizeInput);
   
     if (!discount) {
