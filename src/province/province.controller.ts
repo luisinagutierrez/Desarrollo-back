@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { provinceRepository } from './province.repository.js';
+import { provinceRepository } from './province.repository.memory.js';
 import { Province } from './province.entity.js';
 
 const repository = new provinceRepository(); 

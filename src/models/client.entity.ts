@@ -1,27 +1,30 @@
-export class clients {
+import { City } from "./city.entity.js"
+import { User } from "./user.entity.js"
+
+export class Client {
     id: number
     dni: number 
     firstName: string
-    lastName: string
+    surName: string
     phone: number
-    email: string
     password: string
     street: string
     streetNumber: number
     //type: string[] = ['Minorista', 'Mayorista']
-    postCode: number
+    city: City
+    user: User
 
-    constructor(id: number, dni: number, firstName: string, lastName: string, phone: number, email: string, password: string, street: string, streetNumber: number, postCode: number){
+    constructor(id: number, dni: number, firstName: string, surName: string, phone: number, password: string, street: string, streetNumber: number, city: City, user: User){
         this.id = id;
         this.dni = dni;
         this.firstName = firstName;
-        this.lastName = lastName;
+        this.surName = surName;
         this.phone = phone;
-        this.email = email;
         this.password = password;
         this.street = street;
         this.streetNumber = streetNumber;
         //this.type = type;
-        this.postCode = postCode
+        this.city = city;
+        this.user = user;
     }
 }

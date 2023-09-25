@@ -1,5 +1,5 @@
 export class Province {
-    id: number 
+    id: number //ponemos _id:string??
     name: string
 
     constructor(id: number, name: string){

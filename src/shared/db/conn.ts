@@ -1,7 +1,10 @@
-// const client = new  MongoClient(uri);
+import { MongoClient } from "mongodb"; //it is done once for app
 
+const uri = process.env.MONGO_URI || "mongodb://localhost:27017";
+const dbName = process.env.MONGODB_DB || "Ecommerce2023";
 
-// await client.Connect(); // genera un elemento y lo inicializa 
+const client = new MongoClient(uri);
 
-// export const db= client.db(dbName)// estoy conectando la base de datos a todo mi trabajo
+await client.connect();
 
+export const db = client.db(dbName);

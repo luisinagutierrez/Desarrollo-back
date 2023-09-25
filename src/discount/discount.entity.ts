@@ -1,12 +1,12 @@
 export class Discount {
     id: number
-    dataSince: number 
+    dateSince: Date 
     amount: number
     discount: number    
 
-    constructor(id: number, dataSince: number, amount: number, discount: number){
+    constructor(id: number, dateSince: Date , amount: number, discount: number){
         this.id= id;
-        this.dataSince = dataSince;
+        this.dateSince = dateSince;
         this.amount = amount;
         this. discount = discount;
     }
