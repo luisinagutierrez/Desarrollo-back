@@ -1,43 +1,33 @@
-import { Repository } from "../shared/repository.js";
-import {Discount} from "./discount.entity.js";
+import {Repository} from "../shared/repository.js";
+import { Discount } from "./discount.entity.js";
+import { db } from "../shared/db/conn.js";
+import { ObjectId } from "mongodb";
 
-const Discounts = [
-    new Discount(
-      1,
-      23052023,
-      1000000,
-      0.1
-    )
-]
+const discountsArray = [];
 
-export class DiscountRepository implements Repository<Discount>{
-    public findAll(): Discount [] | undefined{
-        return Discounts
+const Discounts = db.collection<Discount>("Discount"); //returns token
+export class discountRepository implements Repository <Discount>{ 
+    public async findAll(): Promise<Discount [] | undefined>{
+        return await Discounts.find().toArray();
     }
 
-    public findOne (item: {id: string}): Discount | undefined{
-        return Discounts.find((Discount) => Discount.id === parseInt(item.id)) //??? ESTÁ MAL
+    public async findOne (item: {id: string;}): Promise<Discount | undefined>{
+      const _id = new ObjectId(item.id);  
+      return (await Discounts.findOne({_id})) || undefined;  
     }
-    
-    public add(item: Discount): Discount | undefined {
-        Discounts.push(item);
+
+    public async add(item: Discount): Promise<Discount | undefined> {
+        item._id = (await Discounts.insertOne(item)).insertedId;
         return item;
       }
 
-    public update(item: Discount): Discount | undefined {
-        const index = Discounts.findIndex(Discount => Discount.id === item.id); // NECESITA DOS PARÁMETROS IGUAL Q EN EL FIN ONE
-        if (index !== -1){
-          Discounts[index] = {...Discounts[index], ...item};
-        }
-        return Discounts[index];
+    public async update(id:string, item: Discount): Promise<Discount | undefined> {
+      const _id = new ObjectId(id);
+      return (await Discounts.findOneAndUpdate({_id}, {$set: item}, {returnDocument: "after"})) || undefined;
     }
 
-    public delete(item: {id: string}): Discount | undefined {
-        const index = Discounts.findIndex(Discount => Discount.id === parseInt(item.id)) //??? ESTÁ MAL
-        if (index !== -1){
-          const deletedDiscounts = Discounts[index];
-          Discounts.splice(index, 1);
-          return deletedDiscounts; 
-        }
+    public async delete(item: {id: string}): Promise<Discount | undefined> {
+      const _id = new ObjectId(item.id);
+      return (await Discounts.findOneAndDelete({_id})) || undefined;
       }
 }

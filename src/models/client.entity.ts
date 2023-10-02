@@ -1,5 +1,5 @@
 import { City } from "./city.entity.js"
-import { User } from "./user.entity.js"
+import { User } from "../user/user.entity.js"
 
 export class Client {
     id: number

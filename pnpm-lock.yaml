@@ -1,9 +1,16 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   express:
     specifier: 4.18.2
     version: 4.18.2
+  mongo:
+    specifier: 0.1.0
+    version: 0.1.0
   mongodb:
     specifier: 6.1.0
     version: 6.1.0
@@ -413,6 +420,21 @@ packages:
     hasBin: true
     dev: false
 
+  /mongo@0.1.0:
+    resolution: {integrity: sha512-2MPq+GCNKhah0V/g/HIQI/S1h6Ycd87KPuXAITkeXWT6wncvABFxOaXdzCKlRvLSQRUkDimllrRrhoHUTD8usg==}
+    engines: {node: '>= 0.4.0'}
+    dependencies:
+      mongodb: 6.1.0
+    transitivePeerDependencies:
+      - '@aws-sdk/credential-providers'
+      - '@mongodb-js/zstd'
+      - gcp-metadata
+      - kerberos
+      - mongodb-client-encryption
+      - snappy
+      - socks
+    dev: false
+
   /mongodb-connection-string-url@2.6.0:
     resolution: {integrity: sha512-WvTZlI9ab0QYtTYnuMLgobULWhokRjtC7db9LtcVfJ+Hsnyr5eo6ZtNAt3Ly24XZScGMelOcGtm7lSn0332tPQ==}
     dependencies:
@@ -715,7 +737,3 @@ packages:
     dependencies:
       isexe: 2.0.0
     dev: true
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false

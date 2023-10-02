@@ -1,45 +1,33 @@
 import {Repository} from "../shared/repository.js";
 import { Supplier } from "./supplier.entity.js";
+import { db } from "../shared/db/conn.js";
+import { ObjectId } from "mongodb";
 
-const suppliers = [ // este es el nuestro 
-    new Supplier(
-        1,
-        28-44444444-7,
-        'Lady Purse',
-        34719888,
-        'ladyPurse.com',
-        'ladypurse@hotmail.com',
-    )
-]
+const suppliersArray = [];
 
+const Suppliers = db.collection<Supplier>("Supplier"); //returns token
 export class supplierRepository implements Repository <Supplier>{
-    public findAll(): Supplier [] | undefined{
-        return suppliers
+    public async findAll(): Promise<Supplier [] | undefined>{
+        return await Suppliers.find().toArray();
     }
 
-    public findOne (item: {id: string;}): Supplier | undefined{
-        return suppliers.find((Supplier) => Supplier.cuil === parseInt(item.id))
+    public async findOne (item: {id: string;}): Promise<Supplier | undefined>{
+      const _id = new ObjectId(item.id);  
+      return (await Suppliers.findOne({_id})) || undefined;  
     }
 
-    public add(item: Supplier): Supplier | undefined {
-        suppliers.push(item);
+    public async add(item: Supplier): Promise<Supplier | undefined> {
+        item._id = (await Suppliers.insertOne(item)).insertedId;
         return item;
       }
 
-    public update(item: Supplier): Supplier | undefined {
-        const index = suppliers.findIndex(Supplier => Supplier.cuil === item.cuil);
-        if (index !== -1){
-          suppliers[index] = {...suppliers[index], ...item};
-        }
-        return suppliers[index];
+    public async update(id:string, item: Supplier): Promise<Supplier | undefined> {
+      const _id = new ObjectId(id);
+      return (await Suppliers.findOneAndUpdate({_id}, {$set: item}, {returnDocument: "after"})) || undefined;
     }
 
-    public delete(item: {id: string}): Supplier | undefined {
-        const index = suppliers.findIndex(Supplier => Supplier.cuil === parseInt(item.id));
-        if (index !== -1){
-          const deletedsuppliers = suppliers[index];
-          suppliers.splice(index, 1);
-          return deletedsuppliers; 
-        }
+    public async delete(item: {id: string}): Promise<Supplier | undefined> {
+      const _id = new ObjectId(item.id);
+      return (await Suppliers.findOneAndDelete({_id})) || undefined;
       }
 }
