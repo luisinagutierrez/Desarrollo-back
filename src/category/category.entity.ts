@@ -1,9 +1,11 @@
+import { ObjectId } from "mongodb";
+
 export class Category {
-    id: number 
+    _id: ObjectId
     name: string 
 
-    constructor(id: number, name: string){
-        this.id = id;
+    constructor(_id: ObjectId, name: string){
+        this._id = _id;
         this.name = name;
     }
 }

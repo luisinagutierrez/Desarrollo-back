@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { provinceRepository } from './province.repository.memory.js';
+import { provinceRepository } from './province.repository.js';
 import { Province } from './province.entity.js';
 
 const repository = new provinceRepository(); 
@@ -20,32 +20,31 @@ function sanitizeProvinceInput(req: Request, res: Response, next: NextFunction){
     next();
 }
 
-function findAll(req: Request, res: Response){
-    res.json({data: repository.findAll()});
+async function findAll(req: Request, res: Response){
+    res.json({data: await repository.findAll()});
 };
 
-function findOne(req: Request, res: Response){
+async function findOne(req: Request, res: Response){
     const id = req.params.id;
-    const province = repository.findOne({id});
+    const province = await repository.findOne({id});
     if (!province) {
       return res.status(404).send({message: 'Province not found!'});
     }
     res.json({data: province});
 };
 
-function add(req: Request, res: Response){
+async function add(req: Request, res: Response){
     const input = req.body.sanitizeInput;
   
     const provinceInput = new Province(input.id, input.name);
   
-    const province = repository.add(provinceInput);
+    const province = await repository.add(provinceInput);
     return res.status(201).send({message: 'Province created!', data: province});  
   
   };
   
-  function update(req: Request, res: Response){
-    req.body.sanitizeInput.id = req.params.id;
-    const province =repository.update(req.body.sanitizeInput);
+  async function update(req: Request, res: Response){
+    const province = await repository.update(req.params.id,req.body.sanitizeInput);
   
     if (!province) {
       return res.status(404).send({message: 'Province not found!'});
@@ -53,9 +52,9 @@ function add(req: Request, res: Response){
     return res.status(200).send({message: 'Province updated!', data: province});  
    };
   
-  function remove(req: Request, res: Response){
+ async function remove(req: Request, res: Response){
     const id = req.params.id;
-    const province = repository.delete({id});
+    const province = await repository.delete({id});
     if (!province) {
       return res.status(404).send({message: 'Province not found!'});
     }else{

@@ -1,9 +1,11 @@
+import { ObjectId } from "mongodb";
+
 export class Province {
-    id: number //ponemos _id:string??
+    _id?: ObjectId
     name: string
 
-    constructor(id: number, name: string){
-        this.id = id;
+    constructor(_id: ObjectId, name: string){
+        this._id = _id;
         this.name = name;
     }
 }

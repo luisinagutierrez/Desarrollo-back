@@ -1,41 +1,33 @@
-import { Repository } from "../shared/repository.js";
-import {Category} from "./category.entity.js"
+import {Repository} from "../shared/repository.js";
+import { Category } from "./category.entity.js";
+import { db } from "../shared/db/conn.js";
+import { ObjectId } from "mongodb";
 
-const Categories = [
-    new Category(
-        1,
-        'Carteras'
-    )
-]
+const categoriesArray = [];
 
-export class CategoryRepository implements Repository<Category>{
-    public findAll(): Category [] | undefined{   
-        return Categories
+const Categories = db.collection<Category>("Category"); //returns token
+export class categoryRepository implements Repository <Category>{
+    public async findAll(): Promise<Category [] | undefined>{
+        return await Categories.find().toArray();
     }
 
-    public findOne (item: {id: string;}): Category | undefined{
-        return Categories.find((Category) => Category.id === parseInt(item.id))
+    public async findOne (item: {id: string;}): Promise<Category | undefined>{
+      const _id = new ObjectId(item.id);  
+      return (await Categories.findOne({_id})) || undefined;  
     }
 
-    public add(item: Category): Category | undefined {
-        Categories.push(item);
+    public async add(item: Category): Promise<Category | undefined> {
+        item._id = (await Categories.insertOne(item)).insertedId;
         return item;
       }
 
-    public update(item: Category): Category | undefined {
-        const index = Categories.findIndex(Category => Category.id === item.id);
-        if (index !== -1){
-          Categories[index] = {...Categories[index], ...item};
-        }
-        return Categories[index];
+    public async update(id:string, item: Category): Promise<Category | undefined> {
+      const _id = new ObjectId(id);
+      return (await Categories.findOneAndUpdate({_id}, {$set: item}, {returnDocument: "after"})) || undefined;
     }
 
-    public delete(item: {id: string}): Category | undefined {
-        const index = Categories.findIndex(Category => Category.id === parseInt(item.id));
-        if (index !== -1){
-          const deletedCategories = Categories[index];
-          Categories.splice(index, 1);
-          return deletedCategories; 
-        }
+    public async delete(item: {id: string}): Promise<Category | undefined> {
+      const _id = new ObjectId(item.id);
+      return (await Categories.findOneAndDelete({_id})) || undefined;
       }
 }

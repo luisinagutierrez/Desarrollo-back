@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { Category} from './category.entity.js';
-import { CategoryRepository } from './category.repository.js';
+import { categoryRepository } from './category.repository.js';
 
-const repository = new CategoryRepository(); 
+const repository = new categoryRepository(); 
 
 function sanitizeCategoryInput(req: Request, res: Response, next: NextFunction){ //
   
@@ -18,47 +18,46 @@ function sanitizeCategoryInput(req: Request, res: Response, next: NextFunction){
     next();
 }
 
-function findAll(req: Request, res: Response){
-    res.json({data: repository.findAll()}).end();
+async function findAll(req: Request, res: Response){
+    res.json({data: await repository.findAll()});
     
 };
 
-function findOne(req: Request, res: Response){
+async function findOne(req: Request, res: Response){
     const id = req.params.id; 
-    const category = repository.findOne({id});
+    const category = await repository.findOne({id});
     if (!category) {
       return res.status(404).send({message: 'category not found!'});
     }
     res.json({data: category});
 };
 
-function add(req: Request, res: Response){
+async function add(req: Request, res: Response){
     const input = req.body.sanitizeInput;
   
     const categoryInput = new Category(input.id, input.name); //
   
-    const category = repository.add(categoryInput);
-    return res.status(201).send({message: 'category created!', data: category});  
+    const category = await repository.add(categoryInput);
+    return res.status(201).send({message: 'Category created!', data: category});  
   
   };
   
-  function update(req: Request, res: Response){
-    req.body.sanitizeInput.id = req.params.id; //
-    const category =repository.update(req.body.sanitizeInput);
+async function update(req: Request, res: Response){
+    const category =repository.update(req.body.id,req.body.sanitizeInput);
   
     if (!category) {
-      return res.status(404).send({message: 'category not found!'});
+      return res.status(404).send({message: 'Category not found!'});
     }
-    return res.status(200).send({message: 'category updated!', data: category});  
+    return res.status(200).send({message: 'Category updated!', data: category});  
    };
   
-  function remove(req: Request, res: Response){
+async function remove(req: Request, res: Response){
     const id = req.params.id;  //
-    const category = repository.delete({id});
+    const category = await repository.delete({id});
     if (!category) {
-      return res.status(404).send({message: 'category not found!'});
+      return res.status(404).send({message: 'Category not found!'});
     }else{
-      return res.status(200).send({message: 'category deleted!', data: category});  
+      return res.status(200).send({message: 'Category deleted!', data: category});  
     }
   };
   

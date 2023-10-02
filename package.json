@@ -1,19 +1,19 @@
 {
-  "name": "1tp-dsw-3k3-be-griva-gutierrez",
+  "name": "tp-dsw-3k3-be-gini-griva-gutierrez",
   "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "scripts": {
-    "startdev": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/app.js\""
+    "start:dev": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/app.js\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "4.18.2"
+    "express": "4.18.2",
+    "mongodb": "6.1.0"
   },
-
   "devDependencies": {
     "@types/express": "4.17.17",
     "@types/node": "20.5.2",
