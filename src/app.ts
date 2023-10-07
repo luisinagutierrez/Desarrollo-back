@@ -4,6 +4,7 @@ import { categoryRouter } from './category/category.routes.js'
 import { discountRouter } from './discount/discount.routes.js';
 import { supplierRouter } from './supplier/supplier.routes.js';
 import { provinceRouter } from './province/province.routes.js';
+import { userRouter } from './user/user.routes.js';
 
 //const repository = new CategoryRepository();
 
@@ -14,6 +15,7 @@ app.use('/api/categories', categoryRouter);
 app.use('/api/discounts', discountRouter);
 app.use('/api/suppliers', supplierRouter);
 app.use('/api/provinces', provinceRouter);
+app.use('/api/users', userRouter);
 
 
 app.use((_, res) => {

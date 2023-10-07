@@ -2,7 +2,7 @@ import { Product } from "../product/product.entity.js"
 import { Order } from "./order.entity.js"
 
 
-export class OrderList{
+export class Cart{
   id: number
   productAmount: number
   order: Order
