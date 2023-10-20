@@ -11,11 +11,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@mikro-orm/core": "5.8.10",
+    "@mikro-orm/mongo-highlighter": "1.0.0",
+    "@mikro-orm/mongodb": "5.8.10",
     "bcrypt": "^5.1.1",
     "express": "4.18.2",
     "jsonwebtoken": "^9.0.2",
     "mongo": "0.1.0",
-    "mongodb": "6.1.0"
+    "reflect-metadata": "0.1.13"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

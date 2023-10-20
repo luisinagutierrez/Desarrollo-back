@@ -1,0 +1,21 @@
+### GET ALL
+GET http://localhost:3000/api/cities
+
+### POST
+@name createCity
+
+POST http://localhost:3000/api/cities
+
+```json
+{
+    "postCode": "2000",
+    "name": "Rosario",
+    //"province": "Santa Fe" aca va el id de santa fe?
+}
+```
+### ID
+@id = {{createCity.response.body.data.id}} 
+### por que no funciona arriba??
+
+### GET ONE
+#GET http://localhost:3000/api/cities/{{id}}

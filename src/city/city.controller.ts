@@ -1,13 +1,13 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { Province } from './province.entity.js';
+import { City } from './city.entity.js';
 import { orm } from '../shared/db/orm.js';
 
 const em = orm.em;
 
 async function findAll(req: Request, res: Response){
   try{
-    const provinces = await em.find(Province, {});
-    res.status(200).json({message:'found all provinces',data: provinces});
+    const cities = await em.find(City, {});
+    res.status(200).json({message:'found all cities',data: cities});
   } catch (error: any) {
     res.status(500).json({message: error.message});
   }
@@ -16,10 +16,10 @@ async function findAll(req: Request, res: Response){
 async function findOne(req: Request, res: Response){
   try{
   const id = req.params.id;
-  const province = await em.findOneOrFail(Province, {id});
+  const city = await em.findOneOrFail(City, {id});
   res
     .status(200)
-    .json({message: 'found one Province', data: province});
+    .json({message: 'found one city', data: city});
   }
   catch (error: any) {
     res.status(500).json({message: error.message});
@@ -28,11 +28,11 @@ async function findOne(req: Request, res: Response){
 
 async function add(req: Request, res: Response){
   try{
-    const province = em.create(Province, req.body);
+    const city = em.create(City, req.body);
     await em.flush();
     res
       .status(201)
-      .json({message:'Province created',data: Province});  
+      .json({message:'city created',data: city});  
   } catch (error: any) {
     res.status(500).json({message: error.message});
   }
@@ -41,12 +41,12 @@ async function add(req: Request, res: Response){
   async function update(req: Request, res: Response){
     try{
       const id = req.params.id;
-      const province = em.getReference(Province, id);
-      em.assign(Province, req.body);
+      const city = em.getReference(City, id);
+      em.assign(city, req.body);
       await em.flush();
       res
         .status(200)
-        .json({message: 'Province updated', data: Province});
+        .json({message: 'city updated', data: city});
     }
     catch (error: any) {
       res.status(500).json({message: error.message});
@@ -56,18 +56,18 @@ async function add(req: Request, res: Response){
  async function remove(req: Request, res: Response){
   try{
     const id = req.params.id;
-    const province = em.getReference(Province, id);
-    await em.removeAndFlush(Province);
+    const city = em.getReference(City, id);
+    await em.removeAndFlush(city);
     res
       .status(200)
-      .json({message: 'Province deleted', data: Province});
+      .json({message: 'city deleted', data: city});
   }
   catch (error: any) {
     res.status(500).json({message: error.message});
   }
 };
   
-  export const controller = { 
+  export const controller = {  
     findAll, 
     findOne,
     add,

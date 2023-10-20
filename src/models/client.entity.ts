@@ -1,4 +1,4 @@
-import { City } from "./city.entity.js"
+import { City } from "../city/city.entity.js"
 import { User } from "../user/user.entity.js"
 
 export class Client {
