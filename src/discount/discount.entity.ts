@@ -1,15 +1,15 @@
-import { ObjectId } from "mongodb";
+import {Entity, ManyToOne, Property, Rel} from '@mikro-orm/core';
+import { BaseEntity } from '../shared/db/baseEntity.entity.js';
 
-export class Discount {
-    _id: ObjectId
-    dateSince: Date 
-    amount: number
-    discount: number    
+@Entity()   
+export class Discount extends BaseEntity {
 
-    constructor(_id: ObjectId, dateSince: Date , amount: number, discount: number){
-        this._id= _id;
-        this.dateSince = dateSince;
-        this.amount = amount;
-        this. discount = discount;
-    }
+    @Property({nullable: false, unique: true})
+    dateSince!: Date 
+
+    @Property({nullable: false, unique: true})
+    amount!: number
+
+    @Property({nullable: false, unique: true})
+    discountPercentage!: number
 }

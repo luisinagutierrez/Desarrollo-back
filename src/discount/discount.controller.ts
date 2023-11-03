@@ -1,73 +1,76 @@
-import { Request, Response, NextFunction } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import { Discount } from './discount.entity.js';
-import { discountRepository } from './discount.repository.js';
+import { orm } from '../shared/db/orm.js';
 
-const repository = new discountRepository(); 
-
-function sanitizeDiscountInput(req: Request, res: Response, next: NextFunction){ //
-  
-    req.body.sanitizeInput ={
-      id: req.body.id,
-      name: req.body.name,
-    }
-    //more checks here
-    Object.keys(req.body.sanitizeInput).forEach((key) => {
-      if(req.body.sanitizeInput[key] === undefined) delete req.body.sanitizeInput[key];
-      });
-  
-    next();
-}
+const em = orm.em;
 
 async function findAll(req: Request, res: Response){
-    res.json({data: await repository.findAll()});
-    
+  try{
+    const discounts = await em.find(Discount, {});
+    res.status(200).json({message:'found all discounts',data: discounts});
+  } catch (error: any) {
+    res.status(500).json({message: error.message});
+  }
 };
 
 async function findOne(req: Request, res: Response){
-    const id = req.params.id; 
-    const discount = await repository.findOne({id});
-    if (!discount) {
-      return res.status(404).send({message: 'Discount not found!'});
-    }
-    res.json({data: discount});
+  try{
+  const id = req.params.id;
+  const discount = await em.findOneOrFail(Discount, {id});
+  res
+    .status(200)
+    .json({message: 'found one discount', data: discount});
+  }
+  catch (error: any) {
+    res.status(500).json({message: error.message});
+  }
 };
 
 async function add(req: Request, res: Response){
-    const input = req.body.sanitizeInput;
-
-    const discountInput = new Discount(input.id, input.dateSince, input.amount, input.discount  ); //
+  try{
+    const discount = em.create(Discount, req.body);
+    await em.flush();
+    res
+      .status(201)
+      .json({message:'discount created',data: discount});  
+  } catch (error: any) {
+    res.status(500).json({message: error.message});
+  }
+};
   
-    const discount = await repository.add(discountInput);
-    return res.status(201).send({message: 'Discount created!', data: discount});  
-  
-  };
-  
-async function update(req: Request, res: Response){
-    const discount =repository.update(req.body.id,req.body.sanitizeInput);
-  
-    if (!discount) {
-      return res.status(404).send({message: 'Discount not found!'});
+  async function update(req: Request, res: Response){
+    try{
+      const id = req.params.id;
+      const discount = em.getReference(Discount, id);
+      em.assign(discount, req.body);
+      await em.flush();
+      res
+        .status(200)
+        .json({message: 'discount updated', data: discount});
     }
-    return res.status(200).send({message: 'Discount updated!', data: discount});  
-   };
-  
-async function remove(req: Request, res: Response){
-    const id = req.params.id;  //
-    const discount = await repository.delete({id});
-    if (!discount) {
-      return res.status(404).send({message: 'Discount not found!'});
-    }else{
-      return res.status(200).send({message: 'Discount deleted!', data: discount});  
+    catch (error: any) {
+      res.status(500).json({message: error.message});
     }
   };
   
-  export const controller = { 
-    sanitizeDiscountInput,  ////
+ async function remove(req: Request, res: Response){
+  try{
+    const id = req.params.id;
+    const discount = em.getReference(Discount, id);
+    await em.removeAndFlush(discount);
+    res
+      .status(200)
+      .json({message: 'discount deleted', data: discount});
+  }
+  catch (error: any) {
+    res.status(500).json({message: error.message});
+  }
+};
+  
+  export const controller = {  
     findAll, 
     findOne,
     add,
     update,
     remove
   };
-
-

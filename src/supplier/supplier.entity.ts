@@ -1,17 +1,15 @@
 import { ObjectId } from "mongodb"
-import {Entity, ManyToOne, Property} from '@mikro-orm/core'; 
+import {Entity, ManyToOne, OneToMany, Property, Collection, Cascade} from '@mikro-orm/core'; 
 import { BaseEntity } from '../shared/db/baseEntity.entity.js';
 import { City } from "../city/city.entity.js"
+import { Product } from "../product/product.entity.js";
 //import { Shipment } from "../models/shipment.entity.js";
 
 @Entity()   
 export class Supplier extends BaseEntity {
 
     @Property({nullable: false, unique: true})
-    id!: string 
-
-    @Property({nullable: false, unique: true})
-    cuil!: number
+    cuit!: number
 
     @Property({nullable: false, unique: true})
     businessName!: string
@@ -23,8 +21,9 @@ export class Supplier extends BaseEntity {
     phone!: string
 
     @ManyToOne(() => City, {nullable: false})
-    city!: City
+    city!: string
 
-    // en provincia ver error con producto
+    @OneToMany(() => Product, (product) => product.supplier, {cascade:[Cascade.ALL]})
+    products = new Collection<Product>(this);
 
 }

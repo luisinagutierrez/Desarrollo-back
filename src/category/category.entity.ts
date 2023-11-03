@@ -1,11 +1,18 @@
-import { ObjectId } from "mongodb";
+import {Entity, ManyToOne, OneToMany, Property, Rel, Collection, Cascade} from '@mikro-orm/core';
+import { BaseEntity } from '../shared/db/baseEntity.entity.js';
+import { Province } from "../province/province.entity.js";
+import { Product } from "../product/product.entity.js";
+//import { Shipment } from "../models/shipment.entity.js";
 
-export class Category {
-    _id: ObjectId
-    name: string 
+@Entity()   
+export class Category extends BaseEntity {
 
-    constructor(_id: ObjectId, name: string){
-        this._id = _id;
-        this.name = name;
-    }
+    @Property({nullable: false, unique: true})
+    name!: string 
+
+    @Property({nullable: false, unique: true})
+    description!: string
+
+    @OneToMany(() => Product, (product) => product.category, {cascade:[Cascade.ALL]})
+    products = new Collection<Product>(this);
 }

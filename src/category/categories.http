@@ -1,4 +1,4 @@
-### obtener todas las provincias
+### obtener todas las categorias
 
 GET http://localhost:3000/api/categories
 
@@ -12,8 +12,11 @@ POST http://localhost:3000/api/categories
 Content-Type: application/json
 
 {
-    "id": 1,
-    "name": "Purse"
+    "name": "Purses",
+    "description": "Luxurious and fashionable purses",
+    "products":{
+        
+    }
 }
 
 ### modificar un producto (PUT - recurso completo e idempotente)

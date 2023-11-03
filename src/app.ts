@@ -1,4 +1,4 @@
-// pnpm instal all 
+// pnpm install all 
 import 'reflect-metadata';
 import express, { Request, Response, NextFunction} from 'express';
 import { categoryRouter } from './category/category.routes.js'
@@ -9,6 +9,8 @@ import { userRouter } from './user/user.routes.js';
 import { cityRouter } from './city/city.routes.js';
 import { orm } from './shared/db/orm.js';
 import { RequestContext } from '@mikro-orm/core';
+import { productRouter } from './product/product.routes.js';
+import { clientRouter } from './client/client.routes.js';
 
 
 //const repository = new CategoryRepository();
@@ -28,13 +30,17 @@ app.use('/api/discounts', discountRouter);
 app.use('/api/suppliers', supplierRouter);
 app.use('/api/provinces', provinceRouter);
 app.use('/api/users', userRouter);
-app.use('api/cities', cityRouter);
+app.use('/api/cities', cityRouter);
+app.use('/api/products', productRouter);
+app.use('/api/clients', clientRouter);
 
 
 app.use((_, res) => {
   return res.status(404).send({message: 'Resource not found!'});
 });
 
-app.listen(3000, () => {
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
   console.log('Server running on http://localhost:3000/');
 });
