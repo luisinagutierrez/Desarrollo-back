@@ -1,30 +1,35 @@
-import { ObjectId } from "mongodb"
+import { City } from "../city/city.entity.js"
+import { User } from "../user/user.entity.js"
 import {Entity, ManyToOne, Property} from '@mikro-orm/core'; 
 import { BaseEntity } from '../shared/db/baseEntity.entity.js';
-import { City } from "../city/city.entity.js"
 //import { Shipment } from "../models/shipment.entity.js";
 
 @Entity()   
-export class Supplier extends BaseEntity {
+export class Client extends BaseEntity {
 
     @Property({nullable: false, unique: true})
     id!: string 
 
     @Property({nullable: false, unique: true})
-    cuil!: number
+    dni!: number
 
     @Property({nullable: false, unique: true})
-    businessName!: string
+    name!: string
 
     @Property({nullable: false, unique: true})
-    email!: string
+    firstName!: string
 
     @Property({nullable: false, unique: true})
-    phone!: string
+    LastName!: string
 
-    @ManyToOne(() => City, {nullable: false})
-    city!: City
+    @Property({nullable: false, unique: true})
+    phone!: number
 
-    // en provincia ver error con producto
+    @Property({nullable: false, unique: true})
+    street!: string
+
+    @Property({nullable: false, unique: true})
+    streetNumber!: string
+// en provincia ver error
 
 }

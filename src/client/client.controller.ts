@@ -1,14 +1,13 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { Supplier } from './supplier.entity.js';
+import { Client } from './client.entity.js';
 import { orm } from '../shared/db/orm.js';
-
 
 const em = orm.em;
 
 async function findAll(req: Request, res: Response){
   try{
-    const cities = await em.find(Supplier, {});
-    res.status(200).json({message:'found all cities',data: cities});
+    const clients = await em.find(Client, {}); //
+    res.status(200).json({message:'found all clients',data: clients});
   } catch (error: any) {
     res.status(500).json({message: error.message});
   }
@@ -17,10 +16,10 @@ async function findAll(req: Request, res: Response){
 async function findOne(req: Request, res: Response){
   try{
   const id = req.params.id;
-  const supplier = await em.findOneOrFail(Supplier, {id});
+  const client = await em.findOneOrFail(Client, {id});//
   res
     .status(200)
-    .json({message: 'found one supplier', data: supplier});
+    .json({message: 'found one client', data: client});
   }
   catch (error: any) {
     res.status(500).json({message: error.message});
@@ -29,11 +28,11 @@ async function findOne(req: Request, res: Response){
 
 async function add(req: Request, res: Response){
   try{
-    const supplier = em.create(Supplier, req.body);
+    const client = em.create(Client, req.body);//
     await em.flush();
     res
       .status(201)
-      .json({message:'supplier created',data: supplier});  
+      .json({message:'client created',data: client});  
   } catch (error: any) {
     res.status(500).json({message: error.message});
   }
@@ -42,12 +41,12 @@ async function add(req: Request, res: Response){
   async function update(req: Request, res: Response){
     try{
       const id = req.params.id;
-      const supplier = em.getReference(Supplier, id);
-      em.assign(supplier, req.body);
+      const client = em.getReference(Client, id);//
+      em.assign(client, req.body);
       await em.flush();
       res
         .status(200)
-        .json({message: 'supplier updated', data: supplier});
+        .json({message: 'client updated', data: client});
     }
     catch (error: any) {
       res.status(500).json({message: error.message});
@@ -57,33 +56,21 @@ async function add(req: Request, res: Response){
  async function remove(req: Request, res: Response){
   try{
     const id = req.params.id;
-    const supplier = em.getReference(Supplier, id);
-    await em.removeAndFlush(supplier);
+    const client = em.getReference(Client, id);
+    await em.removeAndFlush(client);
     res
       .status(200)
-      .json({message: 'supplier deleted', data: supplier});
+      .json({message: 'client deleted', data: client});
   }
   catch (error: any) {
     res.status(500).json({message: error.message});
   }
-}
-
-async function listSuppliersByCity(req: Request, res: Response){
-  try{
-    const city = req.params.city;
-    const suppliers = await em.find(Supplier, {city});
-    res.status(200).json({message:'found all suppliers',data: suppliers});
-  } catch (error: any) {
-    res.status(500).json({message: error.message});
-  }
-}
-
+};
   
   export const controller = {  
     findAll, 
     findOne,
     add,
     update,
-    remove,
-    listSuppliersByCity
+    remove
   };

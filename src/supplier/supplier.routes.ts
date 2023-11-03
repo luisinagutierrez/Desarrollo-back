@@ -5,7 +5,7 @@ export const supplierRouter = Router();
 
 supplierRouter.get('/', controller.findAll);
 supplierRouter.get('/:id', controller.findOne);
-supplierRouter.post('/', controller.sanitizeSupplierInput, controller.add); 
-supplierRouter.put('/:id', controller.sanitizeSupplierInput, controller.update);
-supplierRouter.patch('/:id', controller.sanitizeSupplierInput, controller.update);
+supplierRouter.post('/', controller.add); 
+supplierRouter.put('/:id', controller.update);
 supplierRouter.delete('/:id', controller.remove);
+supplierRouter.get('/city/:city', controller.listSuppliersByCity); //??

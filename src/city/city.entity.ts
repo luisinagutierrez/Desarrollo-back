@@ -1,4 +1,4 @@
-import {Entity, ManyToOne, Property} from '@mikro-orm/core';
+import {Entity, ManyToOne, Property, Rel} from '@mikro-orm/core';
 import { BaseEntity } from '../shared/db/baseEntity.entity.js';
 import { Province } from "../province/province.entity.js";
 //import { Shipment } from "../models/shipment.entity.js";
@@ -13,6 +13,5 @@ export class City extends BaseEntity {
     name!: string
 
     @ManyToOne(() => Province, {nullable: false})
-    province!: Province
-
+    province!: Rel<Province>
 }

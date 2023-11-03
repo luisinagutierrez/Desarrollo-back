@@ -1,4 +1,4 @@
-import { Client } from "./client.entity.js";
+import { Client } from "../client/client.entity.js";
 
 export class Order {
     id: number
