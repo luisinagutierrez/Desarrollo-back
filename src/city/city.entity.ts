@@ -6,7 +6,6 @@ import { Client } from '../client/client.entity.js';
 
 @Entity()   
 export class City extends BaseEntity {
-
     @Property({nullable: false, unique: true, type: 'string'})
     postCode!: string 
 

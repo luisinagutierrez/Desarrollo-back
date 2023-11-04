@@ -6,10 +6,10 @@ import { Cart } from '../cart/cart.entity.js';
 //import { Shipment } from "../models/shipment.entity.js";
 
 @Entity()   
-export class Product extends BaseEntity {
+export class Product extends BaseEntity { 
 
     @Property({nullable: false, unique: true})
-    productCode!: number
+    name!: string
 
     @Property({nullable: false, unique: true})
     description!: string 
@@ -18,7 +18,7 @@ export class Product extends BaseEntity {
     price!: number
 
     @Property({nullable: false, unique: true})
-    name!: string
+    stock!: number
 
     @Property({nullable: false, unique: true})
     image!: string

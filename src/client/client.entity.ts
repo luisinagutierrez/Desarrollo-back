@@ -6,6 +6,7 @@ import { BaseEntity } from '../shared/db/baseEntity.entity.js';
 
 @Entity()   
 export class Client extends BaseEntity {
+    
     @Property({nullable: false, unique: true})
     dni!: number
 
