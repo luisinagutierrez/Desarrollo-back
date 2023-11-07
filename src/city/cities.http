@@ -10,7 +10,6 @@ GET http://localhost:3000/api/cities/65492350fcd9263a928e7982
 
 POST http://localhost:3000/api/cities
 Content-Type: application/json
-
 {
     "postCode": "2000",
     "name": "Rosario",
@@ -19,24 +18,11 @@ Content-Type: application/json
 }
 
 ### modificar un producto (PUT - recurso completo e idempotente)
-
 PUT http://localhost:3000/api/cities/1
-Content-Type: application/json
-
-{
-    "id": 2,
-    "name": "Wallet"
-}
 
 ### modificar un producto (PATCH  - recurso parcial)
 
 PATCH http://localhost:3000/api/cities/1
-Content-Type: application/json
-
-{
-    "id": 3,
-    "name": "fanny pack" 
-}
 
 ### borrar un producto
 

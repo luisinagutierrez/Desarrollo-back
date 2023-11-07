@@ -14,13 +14,13 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
-   "productCode":1 ,
-  "description": "Cartera 1",
-  "stock": 22,
-  "measures": 13,
-  "name":"Delicate",
-  "cuit":2035243674,
-  "categoryId": 1,
+  "name": "Delicate" ,
+  "description":"Una cartera imprescindible para tu colección, con una correa ajustable y un diseño perfecto.",
+  "price": 120000,
+  "stock": 5,
+  "image": "https://drive.google.com/file/d/1p1Ypb9oFli5KFF7gwBaMdYMoDEgpJ_Mx/view?usp=sharing",
+  "category": "6549a37ef81e2d74f95681f4",
+  "supplier": "65499d5799224e08c3910772"
 
 }
 
