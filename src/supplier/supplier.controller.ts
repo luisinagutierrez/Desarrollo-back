@@ -68,22 +68,10 @@ async function add(req: Request, res: Response){
   }
 }
 
-async function listSuppliersByCity(req: Request, res: Response){
-  try{
-    const city = req.params.city;
-    const suppliers = await em.find(Supplier, {city});
-    res.status(200).json({message:'found all suppliers',data: suppliers});
-  } catch (error: any) {
-    res.status(500).json({message: error.message});
-  }
-}
-
-  
   export const controller = {  
     findAll, 
     findOne,
     add,
     update,
-    remove,
-    listSuppliersByCity
+    remove
   };

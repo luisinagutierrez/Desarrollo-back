@@ -12,8 +12,8 @@ POST http://localhost:3000/api/provinces
 Content-Type: application/json
 
 {
-    "id": 1,
-    "name": "Santa Fe"
+    "name": "Santa Fe",
+    "cities": []
 }
 
 ### modificar un producto (PUT - recurso completo e idempotente)

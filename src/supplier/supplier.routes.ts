@@ -8,4 +8,3 @@ supplierRouter.get('/:id', controller.findOne);
 supplierRouter.post('/', controller.add); 
 supplierRouter.put('/:id', controller.update);
 supplierRouter.delete('/:id', controller.remove);
-supplierRouter.get('/city/:city', controller.listSuppliersByCity); //??

@@ -1,21 +1,43 @@
-### GET ALL
+### obtener todas las categorias
+
 GET http://localhost:3000/api/cities
 
-### POST
-@name createCity
+### obtener un producto por id ----- 1 es el id del producto
+
+GET http://localhost:3000/api/cities/65492350fcd9263a928e7982   
+
+### crear un nuevo producto
 
 POST http://localhost:3000/api/cities
+Content-Type: application/json
 
-```json
 {
     "postCode": "2000",
     "name": "Rosario",
-    //"province": "Santa Fe" aca va el id de santa fe?
+    "province": "65492e908b8ae43c08412ddf",
+    "clients":[]
 }
-```
-### ID
-@id = {{createCity.response.body.data.id}} 
-### por que no funciona arriba??
 
-### GET ONE
-#GET http://localhost:3000/api/cities/{{id}}
+### modificar un producto (PUT - recurso completo e idempotente)
+
+PUT http://localhost:3000/api/cities/1
+Content-Type: application/json
+
+{
+    "id": 2,
+    "name": "Wallet"
+}
+
+### modificar un producto (PATCH  - recurso parcial)
+
+PATCH http://localhost:3000/api/cities/1
+Content-Type: application/json
+
+{
+    "id": 3,
+    "name": "fanny pack" 
+}
+
+### borrar un producto
+
+DELETE http://localhost:3000/api/cities/65492350fcd9263a928e7982

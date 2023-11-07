@@ -1,12 +1,15 @@
 import { MikroORM } from "@mikro-orm/core";
 import { MongoHighlighter } from "@mikro-orm/mongo-highlighter";
+//import { Category } from "../../category/category.entity.js";
+
 
 export const orm = await MikroORM.init({
+//  entities: [Category],
   entities: ['dist/**/*.entity.js'],
   entitiesTs: ['src/**/*.entity.ts'],
   dbName: 'Ecommerce2023',
   type: 'mongo',
-  clientUrl: 'mongodb://localhost:27017',
+  clientUrl: 'mongodb://127.0.0.1:27017',
   highlighter: new MongoHighlighter(),
   debug: true,
   schemaGenerator: { //never in production

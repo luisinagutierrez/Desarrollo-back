@@ -10,14 +10,13 @@ GET http://localhost:3000/api/suppliers/1
 
 POST http://localhost:3000/api/suppliers
 Content-Type: application/json
-
 {
-    "id": 1,
-    "cuil": 2090129021 ,
-    "businessName": "Porse",
-    "phone": 3418624361,
-    "webPage": "porse.com",
-    "email": "porse@gmail.com"
+    "cuit": 30449876542 ,
+    "businessName": "Lady Stork",
+    "phone": "3418624361",
+    "email": "ladystork@gmail.com",
+    "city": "654930bdaf270c0d88ad8d66",
+    "products":[]
 }
 
 ### modificar un producto (PUT - recurso completo e idempotente)
