@@ -77,6 +77,37 @@ async function listByCategory(req: Request, res: Response){
     res.status(500).json({message: error.message});
   }
 }
+
+async function searchProducts(req: Request, res: Response){
+  const searchTerm = req.params.searchTerm;
+
+  try{
+    const products = await em.find(Product, { description: new RegExp(searchTerm, 'i') }); // i = case insensitive
+  
+  if(!products || products.length === 0){
+    res.status(404).json({message: 'No products found'});
+  }
+  else{
+    res.status(200).json({message: 'found products', data: products});
+  }
+} catch (error: any) {
+  res.status(500).json({message: error.message});
+}
+}
+
+async function orderProductStock(req: Request, res: Response){
+  const cart = req.body.cart;
+  const {products} = cart;
+  try{
+    for (const product of products) {
+      const productToUpdate = await em.findOneOrFail(Product, {id: product.id});
+      productToUpdate.stock -= product.quantity;
+      await em.flush();
+    }
+  } catch (error: any) {
+    res.status(500).json({message: error.message});
+  }
+}
   
   export const controller = {  
     findAll, 
@@ -84,5 +115,7 @@ async function listByCategory(req: Request, res: Response){
     add,
     update,
     remove,
-    listByCategory
+    listByCategory,
+    searchProducts,
+    orderProductStock
   };

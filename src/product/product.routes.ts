@@ -9,3 +9,5 @@ productRouter.post('/', controller.add);
 productRouter.put('/:id', controller.update);
 productRouter.delete('/:id', controller.remove);
 productRouter.get('/category/:category', controller.listByCategory); //??
+productRouter.get('/search/:searchTerm', controller.searchProducts); //??
+productRouter.patch('/cart', controller.orderProductStock); //??
