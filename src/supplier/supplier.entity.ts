@@ -6,7 +6,6 @@ import { Product } from "../product/product.entity.js";
 
 @Entity()   
 export class Supplier extends BaseEntity {
-
     @Property({nullable: false, unique: true})
     cuit!: number
 
