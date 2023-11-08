@@ -10,12 +10,16 @@ GET http://localhost:3000/api/cities/65492350fcd9263a928e7982
 
 POST http://localhost:3000/api/cities
 Content-Type: application/json
+
 {
     "postCode": "2000",
     "name": "Rosario",
-    "province": "65492e908b8ae43c08412ddf",
+    "province": "654baf5a2aed6214eed43aa4",
     "clients":[]
 }
+
+  
+
 
 ### modificar un producto (PUT - recurso completo e idempotente)
 PUT http://localhost:3000/api/cities/1

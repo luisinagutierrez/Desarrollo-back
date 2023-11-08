@@ -29,6 +29,6 @@ export class Product extends BaseEntity {
     @ManyToOne(() => Supplier, {nullable: false})
     supplier!: Rel<Supplier>
 
-    @ManyToOne(() => Cart, {nullable: false})   
-    cart!: Rel<Cart>
+    // @ManyToOne(() => Cart, {nullable: false})   
+    // cart!: Rel<Cart>
 }

@@ -1,5 +1,6 @@
 // pnpm install all 
 import 'reflect-metadata';
+import cors from 'cors';
 import express, { Request, Response, NextFunction} from 'express';
 import { categoryRouter } from './category/category.routes.js'
 import { discountRouter } from './discount/discount.routes.js';
@@ -17,6 +18,8 @@ import { clientRouter } from './client/client.routes.js';
 
 const app = express();
 app.use(express.json());
+
+app.use(cors());
 
 //luego de los middlewares base
 app.use((req: Request, res: Response, next) => {

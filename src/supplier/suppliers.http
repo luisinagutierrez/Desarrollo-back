@@ -10,12 +10,13 @@ GET http://localhost:3000/api/suppliers/1
 
 POST http://localhost:3000/api/suppliers
 Content-Type: application/json
+
 {
     "cuit": 30449876542 ,
-    "businessName": "Lady Stork",
+    "businessName": "Nekea",
     "phone": "3418624361",
-    "email": "ladystork@gmail.com",
-    "city": "654930bdaf270c0d88ad8d66",
+    "email": "Nekeastork@gmail.com",
+    "city": "654bb0422aed6214eed43aa5",
     "products":[]
 }
 

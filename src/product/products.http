@@ -19,8 +19,8 @@ Content-Type: application/json
   "price": 120000,
   "stock": 5,
   "image": "https://drive.google.com/file/d/1p1Ypb9oFli5KFF7gwBaMdYMoDEgpJ_Mx/view?usp=sharing",
-  "category": "6549a37ef81e2d74f95681f4",
-  "supplier": "65499d5799224e08c3910772"
+  "category": "654baf282aed6214eed43aa3",
+  "supplier": "654bb0e52aed6214eed43aa6"
 
 }
 
