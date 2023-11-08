@@ -13,9 +13,6 @@ import { RequestContext } from '@mikro-orm/core';
 import { productRouter } from './product/product.routes.js';
 import { clientRouter } from './client/client.routes.js';
 
-
-//const repository = new CategoryRepository();
-
 const app = express();
 app.use(express.json());
 

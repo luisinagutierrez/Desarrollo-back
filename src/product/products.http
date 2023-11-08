@@ -29,33 +29,11 @@ Content-Type: application/json
 PUT http://localhost:3000/api/products/1
 Content-Type: application/json
 
-{
-   "productCode": 2,
-  "description": "cartera 2",
-  "stock": 2,
-  "measures":12 ,
-  "name":"Greedy",
-  "cuit":2035243674,
-  "categoryId": 1,
-
-}
-
 ### modificar un producto (PATCH  - recurso parcial)
 
 PATCH http://localhost:3000/api/products/1
 Content-Type: application/json
 
-
-{
-"productCode": 3,
-  "description": "cartera 3",
-  "stock": 5,
-  "measures": 15,
-  "name":"Lover",
-  "cuit":2035243674,
-  "categoryId": 1,
-
-}
 
 ### borrar un producto
 
