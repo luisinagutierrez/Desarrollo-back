@@ -7,7 +7,6 @@ GET http://localhost:3000/api/products
 GET http://localhost:3000/api/products/1   
 
 
-id city 654930bdaf270c0d88ad8d66
 ### crear un nuevo producto
 
 POST http://localhost:3000/api/products
@@ -18,10 +17,9 @@ Content-Type: application/json
   "description":"Una cartera imprescindible para tu colección, con una correa ajustable y un diseño perfecto.",
   "price": 120000,
   "stock": 5,
-  "image": "https://drive.google.com/file/d/1p1Ypb9oFli5KFF7gwBaMdYMoDEgpJ_Mx/view?usp=sharing",
-  "category": "654baf282aed6214eed43aa3",
-  "supplier": "654bb0e52aed6214eed43aa6"
-
+  "image": "Cartera1.jpg",
+  "category": "654ced3bbaab1b1922b95bfd",
+  "supplier": "654cece3f2319d36d23f1021"
 }
 
 ### modificar un producto (PUT - recurso completo e idempotente)

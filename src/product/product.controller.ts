@@ -1,8 +1,30 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { Product } from './product.entity.js';
 import { orm } from '../shared/db/orm.js';
+import multer from 'multer';
+import path from 'path';
+
+// declare global {
+//   namespace Express {
+//     interface Request {
+//       file: File | undefined;
+//     }
+//   }
+// }
 
 const em = orm.em;
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, 'uploadsProductsPhotographs'));
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  },
+});
+
+const upload = multer({ storage });
+
 
 async function findAll(req: Request, res: Response){
   try{
@@ -26,18 +48,32 @@ async function findOne(req: Request, res: Response){
   }
 };
 
-async function add(req: Request, res: Response){
-  try{
-    const product = em.create(Product, req.body);//
-    await em.flush();
-    res
-      .status(201)
-      .json({message:'product created',data: product});  
+async function add(req: Request, res: Response) {
+  try {
+    upload.single('image')(req, res, async (err: any) => {
+      if (err) {
+        return res.status(400).json({ error: 'Error al subir la imagen' });
+      }
+
+      if (!req.file) {
+        return res.status(400).json({ error: 'No se ha adjuntado ninguna imagen' });
+      }
+
+      const { name, description, price, stock, category, supplier } = req.body;
+      const imageFileName = req.file.filename;
+      const image = '/uploadsProductsPhotographs/' + imageFileName;
+      
+      const product = em.create(Product, { name, description, price, stock, category, supplier, image });
+      await em.flush();
+
+      res.status(201).json({ message: 'product created', data: product });
+    });
   } catch (error: any) {
-    res.status(500).json({message: error.message});
+    console.error(error); // Agregamos una impresión de error para depurar
+    res.status(500).json({ message: error.message });
   }
 };
-  
+
   async function update(req: Request, res: Response){
     try{
       const id = req.params.id;

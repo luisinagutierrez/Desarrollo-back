@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import { User } from './user.entity.js';
 import { orm } from '../shared/db/orm.js';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+//import bcrypt from 'bcrypt';
 
 const em = orm.em;
 
@@ -69,21 +69,21 @@ async function signUp(req: Request, res: Response){
   }
 }
 
-async function login(req: Request, res: Response){
-  try{
-    const user = await em.findOneOrFail(User, {email: req.body.email});
-    if(!user) 
-    {return res.status(404).send({message: 'User not found!'});}
-    const match = await bcrypt.compare(req.body.password, user.password);
-    if(!match) 
-    {return res.status(401).send({message: 'Invalid password!'});}
-    const token = jwt.sign({userId: user.id}, 'secretKey', {expiresIn: '1h'});
-    res.status(200).json({token});
-  }
-  catch(error: any){
-    res.status(500).json({message: error.message});
-  }
-}
+// async function login(req: Request, res: Response){
+//   try{
+//     const user = await em.findOneOrFail(User, {email: req.body.email});
+//     if(!user) 
+//     {return res.status(404).send({message: 'User not found!'});}
+//     const match = await bcrypt.compare(req.body.password, user.password);
+//     if(!match) 
+//     {return res.status(401).send({message: 'Invalid password!'});}
+//     const token = jwt.sign({userId: user.id}, 'secretKey', {expiresIn: '1h'});
+//     res.status(200).json({token});
+//   }
+//   catch(error: any){
+//     res.status(500).json({message: error.message});
+//   }
+// }
 
 async function forgotPassword(req: Request, res: Response){
   try{
@@ -107,5 +107,5 @@ async function forgotPassword(req: Request, res: Response){
     signUp,
     update,
     remove,
-    login
+    //login
   };

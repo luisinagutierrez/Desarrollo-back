@@ -8,4 +8,4 @@ userRouter.get('/:id', controller.findOne);
 userRouter.post('/', controller.signUp); 
 userRouter.put('/:id', controller.update);
 userRouter.delete('/:id', controller.remove);
-userRouter.post('/login', controller.login);
+//userRouter.post('/login', controller.login);
