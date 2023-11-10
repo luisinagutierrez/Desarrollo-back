@@ -12,14 +12,14 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
-  "name": "Tamo loco" ,
+  "name": "Cartera 2 prueba" ,
   "description":"Una cartera imprescindible para tu colección, con una correa ajustable y un diseño perfecto.",
   "price": 120000,
-  "stock": 5,
-  "image": "https://equipovallejo.vtexassets.com/arquivos/ids/232122-800-auto?v=638161505849100000&width=800&height=auto&aspect=true",
+  "stock": 10,
+  "image": "https://ugosantini.com.ar/wp-content/uploads/2023/04/leyre-violeta-mayo.jpg",
   //"image": "../../uploadsProductsPhotographs/Cartera1.jpg",
-  "category": "654ced3bbaab1b1922b95bfd",
-  "supplier": "654cece3f2319d36d23f1021"
+  "category": "654e0d58e435fe829c912e2d",
+  "supplier": "654e0e33e435fe829c912e2f"
 }
 
 ### modificar un producto (PUT - recurso completo e idempotente)
