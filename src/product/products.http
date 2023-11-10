@@ -6,18 +6,18 @@ GET http://localhost:3000/api/products
 
 GET http://localhost:3000/api/products/1   
 
-
 ### crear un nuevo producto
 
 POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
-  "name": "Delicate" ,
+  "name": "Tamo loco" ,
   "description":"Una cartera imprescindible para tu colección, con una correa ajustable y un diseño perfecto.",
   "price": 120000,
   "stock": 5,
-  "image": "Cartera1.jpg",
+  "image": "https://equipovallejo.vtexassets.com/arquivos/ids/232122-800-auto?v=638161505849100000&width=800&height=auto&aspect=true",
+  //"image": "../../uploadsProductsPhotographs/Cartera1.jpg",
   "category": "654ced3bbaab1b1922b95bfd",
   "supplier": "654cece3f2319d36d23f1021"
 }
@@ -35,4 +35,4 @@ Content-Type: application/json
 
 ### borrar un producto
 
-DELETE http://localhost:3000/api/products/1
+DELETE http://localhost:3000/api/products/654e1c9e0750690b678af05d

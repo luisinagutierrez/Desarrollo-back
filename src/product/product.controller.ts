@@ -16,10 +16,10 @@ const em = orm.em;
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, 'uploadsProductsPhotographs'));
+    cb(null, 'uploadsProductsPhotographs/'); 
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname);
+    cb(null, Date.now() + '-' + file.originalname); 
   },
 });
 
@@ -55,15 +55,15 @@ async function add(req: Request, res: Response) {
         return res.status(400).json({ error: 'Error al subir la imagen' });
       }
 
-      if (!req.file) {
-        return res.status(400).json({ error: 'No se ha adjuntado ninguna imagen' });
-      }
+      // if (!req.file) {
+      //   return res.status(400).json({ error: 'No se ha adjuntado ninguna imagen' });
+      // }
 
-      const { name, description, price, stock, category, supplier } = req.body;
-      const imageFileName = req.file.filename;
-      const image = '/uploadsProductsPhotographs/' + imageFileName;
+      const { name, description, price, stock, image, category, supplier } = req.body;
+     // const imageFileName = req.file.filename;
+      //const image = 'uploadsProductsPhotographs/' + imageFileName;
       
-      const product = em.create(Product, { name, description, price, stock, category, supplier, image });
+      const product = em.create(Product, { name, description, price, stock, image, category, supplier });
       await em.flush();
 
       res.status(201).json({ message: 'product created', data: product });
