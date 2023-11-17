@@ -29,10 +29,21 @@ Content-Type: application/json
 
 ### modificar un producto (PATCH  - recurso parcial)
 
-PATCH http://localhost:3000/api/products/1
+PATCH http://localhost:3000/api/products/65577d84b1e73fafe6888704
 Content-Type: application/json
+
+{
+  "name": "Cartera 2 prueba" ,
+  "description":"Una cartera imprescindible para tu colección, con una correa ajustable y un diseño perfecto.",
+  "price": 120000,
+  "stock": 10,
+  "image": "https://ugosantini.com.ar/wp-content/uploads/2023/04/leyre-violeta-mayo.jpg",
+  "category": "654e0d58e435fe829c912e2d",
+  "supplier": "654e0e33e435fe829c912e2f"
+}
+
 
 
 ### borrar un producto
 
-DELETE http://localhost:3000/api/products/654e1c9e0750690b678af05d
+DELETE http://localhost:3000/api/products/654e70fb071d385f21eddbcb
