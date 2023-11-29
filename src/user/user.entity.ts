@@ -20,7 +20,7 @@ export class User extends BaseEntity {
     // @Property({nullable: false, unique: true})
     // resetPasswordToken!: string
 
-    @ManyToOne(() => Client, {nullable: false})
-    client!: Rel<Client>
+    // @ManyToOne(() => Client, {nullable: false})
+    // client!: Rel<Client>
 
 }

@@ -8,4 +8,5 @@ supplierRouter.get('/', controller.findAll);
 supplierRouter.get('/:id', controller.findOne);
 supplierRouter.post('/', controller.add); 
 supplierRouter.put('/:id', controller.update);
+supplierRouter.patch('/:id', controller.update);
 supplierRouter.delete('/:id', controller.remove);

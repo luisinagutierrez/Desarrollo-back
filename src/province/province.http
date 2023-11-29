@@ -12,20 +12,30 @@ POST http://localhost:3000/api/provinces
 Content-Type: application/json
 
 {
-    "name": "Santa Fe",
+    "name": "Córdoba",
     "cities": []
 }
 
 ### modificar un producto (PUT - recurso completo e idempotente)
 
-PUT http://localhost:3000/api/provinces/1
+PUT http://localhost:3000/api/provinces/654baf5a2aed6214eed43aa4
 Content-Type: application/json
+
+{
+    "name": "Luli",
+    "cities": []
+}
 
 ### modificar un producto (PATCH  - recurso parcial)
 
-PATCH http://localhost:3000/api/provinces/1
+PATCH http://localhost:3000/api/provinces/654baf5a2aed6214eed43aa4
 Content-Type: application/json
+
+{
+    "name": "Luli",
+    "cities": []
+}
 
 ### borrar un producto
 
-DELETE http://localhost:3000/api/provinces/1
+DELETE http://localhost:3000/api/provinces/656769024f67ce3c38812b6f

@@ -20,9 +20,16 @@ Content-Type: application/json
 
   
 
-
 ### modificar un producto (PUT - recurso completo e idempotente)
-PUT http://localhost:3000/api/cities/1
+PUT http://localhost:3000/api/cities/654e64a3c4ea1def4fa94fa0
+Content-Type: application/json
+
+{
+    "postCode": "2230",
+    "name": "Rosario",
+    "province": "654baf5a2aed6214eed43aa4",
+    "clients":[]
+}
 
 ### modificar un producto (PATCH  - recurso parcial)
 
@@ -30,4 +37,4 @@ PATCH http://localhost:3000/api/cities/1
 
 ### borrar un producto
 
-DELETE http://localhost:3000/api/cities/65492350fcd9263a928e7982
+DELETE http://localhost:3000/api/cities/654e0e1ae435fe829c912e2e

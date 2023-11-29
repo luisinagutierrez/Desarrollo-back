@@ -77,7 +77,7 @@ async function add(req: Request, res: Response) {
   async function update(req: Request, res: Response){
     try{
       const id = req.params.id;
-      const product = em.getReference(Product, id);//
+      const product = em.getReference(Product, id);
       em.assign(product, req.body);
       await em.flush();
       res

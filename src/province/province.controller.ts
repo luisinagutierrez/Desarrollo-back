@@ -42,11 +42,11 @@ async function add(req: Request, res: Response){
     try{
       const id = req.params.id;
       const province = em.getReference(Province, id);
-      em.assign(Province, req.body);
+      em.assign(province, req.body);
       await em.flush();
       res
         .status(200)
-        .json({message: 'Province updated', data: Province});
+        .json({message: 'Province updated', data: province});
     }
     catch (error: any) {
       res.status(500).json({message: error.message});
@@ -57,16 +57,15 @@ async function add(req: Request, res: Response){
   try{
     const id = req.params.id;
     const province = em.getReference(Province, id);
-    await em.removeAndFlush(Province);
+    await em.removeAndFlush(province);
     res
       .status(200)
-      .json({message: 'Province deleted', data: Province});
+      .json({message: 'Province deleted', data: province});
   }
   catch (error: any) {
     res.status(500).json({message: error.message});
   }
-};
-  
+};  
   export const controller = { 
     findAll, 
     findOne,

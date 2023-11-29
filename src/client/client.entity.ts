@@ -28,8 +28,8 @@ export class Client extends BaseEntity {
     @Property({nullable: false, unique: true})
     streetNumber!: string
 
-    @OneToMany(() => User, (user) => user.client, {cascade:[Cascade.ALL]})
-    users = new Collection<User>(this);
+    // @OneToMany(() => User, (user) => user.client, {cascade:[Cascade.ALL]})
+    // users = new Collection<User>(this);
 
     @ManyToOne(() => City, {nullable: false})
     city!: Rel<City>
