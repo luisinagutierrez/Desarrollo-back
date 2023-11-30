@@ -11,7 +11,6 @@ import { cityRouter } from './city/city.routes.js';
 import { orm } from './shared/db/orm.js';
 import { RequestContext } from '@mikro-orm/core';
 import { productRouter } from './product/product.routes.js';
-import { clientRouter } from './client/client.routes.js';
 
 const app = express();
 app.use(express.json());
@@ -32,7 +31,6 @@ app.use('/api/provinces', provinceRouter);
 app.use('/api/users', userRouter);
 app.use('/api/cities', cityRouter);
 app.use('/api/products', productRouter);
-app.use('/api/clients', clientRouter);
 
 
 app.use((_, res) => {

@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { Category } from './category.entity.js';
 import { orm } from '../shared/db/orm.js';
+import { Product } from '../product/product.entity.js';
 
 const em = orm.em;
 
@@ -66,11 +67,30 @@ async function add(req: Request, res: Response){
     res.status(500).json({message: error.message});
   }
 };
+
+async function findProductsByCategory(req: Request, res: Response){
+  try{
+    const name = req.params.name;
+    console.log(name);
+    const category = await em.findOneOrFail(Category, {name: name});
+    //console.log(category);
+    const products = await em.find(Product, {category: category});
+    //console.log(products.length);
+
+    res
+      .status(200)
+      .json({message: 'found products by category', data: products});
+
+  }catch (error: any) {
+    res.status(500).json({message: error.message});
+  }
+};
   
   export const controller = {  
     findAll, 
     findOne,
     add,
     update,
-    remove
+    remove,
+    findProductsByCategory
   };
