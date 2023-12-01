@@ -26,10 +26,10 @@ export class User extends BaseEntity {
     @Property({nullable: false, unique: true})
     phone!: number
 
-    @Property({nullable: false, unique: true})
+    @Property({nullable: true, unique: true})
     street?: string
 
-    @Property({nullable: false, unique: true})
+    @Property({nullable: true, unique: true})
     streetNumber?: string
 
     @ManyToOne(() => City, {nullable: false})
