@@ -30,7 +30,7 @@ async function findOne(req: Request, res: Response){
 
 async function signUp(req: Request, res: Response){
   try{
-    const user = em.create(User, req.body);//
+    const user = em.create(User, req.body);
     await em.flush();
     res
       .status(201)
