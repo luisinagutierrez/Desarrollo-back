@@ -1,11 +1,11 @@
 
 GET http://localhost:3000/api/users
 
-### obtener un producto por id ----- 1 es el id del producto
+### obtener un usuario por id 
 
 GET http://localhost:3000/api/users/1   
 
-### crear un nuevo producto
+### crear un nuevo usuario
 
 POST http://localhost:3000/api/users
 Content-Type: application/json
@@ -14,11 +14,10 @@ Content-Type: application/json
     "email": "agustina@gmail.com" ,
     "password": "contra123",
     "privilege": "cliente",
-    "image": "https://i.pinimg.com/736x/f3/64/71/f36471f51752cff8fcbb551d3fc5575c.jpg",
     "firstName": "Agustina",
     "lastName":"Chemele",
-    "phone": 3044987654 ,
+    "phone": "3044987654",
     "street": "Mendoza",
     "streetNumber": "1200",
-    "city": "654e64a3c4ea1def4fa94fa0"
+    "city": "654cecadf2319d36d23f1020"
 }

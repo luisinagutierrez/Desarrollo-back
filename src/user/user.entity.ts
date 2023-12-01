@@ -14,7 +14,7 @@ export class User extends BaseEntity {
     @Property({nullable: false, unique: true})
     privilege!: string
 
-    @Property({nullable: false, unique: true})
+    @Property({nullable: true, unique: true})
     image?: string
 
     @Property({nullable: false, unique: true})
