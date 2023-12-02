@@ -11,13 +11,11 @@ POST http://localhost:3000/api/users
 Content-Type: application/json
 
 {
-    "email": "agustina@gmail.com" ,
-    "password": "contra123",
+    "email": "Lucio@gmail.com" ,
+    "password": "contra890",
     "privilege": "cliente",
-    "firstName": "Agustina",
-    "lastName":"Chemele",
-    "phone": "3044987654",
-    "street": "Mendoza",
-    "streetNumber": "1200",
-    "city": "654cecadf2319d36d23f1020"
+    "firstName": "Lucio",
+    "lastName":"Maiz",
+    "phone": "3418243512",
+    "city": "654baf5a2aed6214eed43aa4"
 }

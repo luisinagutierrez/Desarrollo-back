@@ -28,7 +28,7 @@ async function findOne(req: Request, res: Response){
   }
 };
 
-async function signUp(req: Request, res: Response){
+async function login(req: Request, res: Response){
   try{
     const user = em.create(User, req.body);
     await em.flush();
@@ -104,7 +104,7 @@ async function forgotPassword(req: Request, res: Response){
   export const controller = {  
     findAll, 
     findOne,
-    signUp,
+    login,
     update,
     remove,
     //login
