@@ -4,6 +4,8 @@ import { controller } from "./supplier.controller.js";
 
 export const supplierRouter = Router();
 
+supplierRouter.get('/:cuit', controller.findProductsBySupplier);
+
 supplierRouter.get('/', controller.findAll);
 supplierRouter.get('/:id', controller.findOne);
 supplierRouter.post('/', controller.add); 

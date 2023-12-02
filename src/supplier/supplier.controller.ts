@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { Supplier } from './supplier.entity.js';
 import { orm } from '../shared/db/orm.js';
+import { Product } from '../product/product.entity.js';	
 
 
 const em = orm.em;
@@ -68,10 +69,28 @@ async function add(req: Request, res: Response){
   }
 }
 
+async function findProductsBySupplier(req: Request, res: Response){
+  try{
+    const cuit = Number(req.params.cuit);
+    console.log(cuit);
+    const supplier = await em.findOneOrFail(Supplier, {cuit: cuit});
+    //console.log(supplier);
+    const products = await em.find(Product, {supplier: supplier});
+    //console.log(products.length);
+
+    res
+      .status(200)
+      .json({message: 'found products by supplier', data: products});
+
+  }catch (error: any) {
+    res.status(500).json({message: error.message});
+  }
+};
   export const controller = {  
     findAll, 
     findOne,
     add,
     update,
-    remove
+    remove,
+    findProductsBySupplier
   };
