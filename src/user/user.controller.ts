@@ -28,7 +28,7 @@ async function findOne(req: Request, res: Response){
   }
 };
 
-async function login(req: Request, res: Response){
+async function singUp(req: Request, res: Response){
   try{
     const user = em.create(User, req.body);
     await em.flush();
@@ -69,7 +69,7 @@ async function login(req: Request, res: Response){
   }
 }
 
-// async function login(req: Request, res: Response){
+// async function singUp(req: Request, res: Response){
 //   try{
 //     const user = await em.findOneOrFail(User, {email: req.body.email});
 //     if(!user) 
@@ -104,7 +104,7 @@ async function forgotPassword(req: Request, res: Response){
   export const controller = {  
     findAll, 
     findOne,
-    login,
+    singUp,
     update,
     remove,
     //login
