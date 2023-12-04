@@ -87,11 +87,27 @@ async function findProductsBySupplier(req: Request, res: Response){
   }
 };
 
+async function findSupplierByCuit(req: Request, res: Response){
+  try {
+    const cuit = Number(req.params.cuit);
+    const supplier = await em.findOne(Supplier, { cuit });
+
+    if (supplier) {
+      res.status(200).json({ message: 'found one supplier', data: supplier });
+    } else {
+      res.status(404).json({ message: 'supplier not found' });
+    }
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
   export const controller = {  
     findAll, 
     findOne,
     add,
     update,
     remove,
-    findProductsBySupplier
+    findProductsBySupplier,
+    findSupplierByCuit
   };

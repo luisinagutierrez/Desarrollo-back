@@ -80,13 +80,25 @@ async function findCityByPostCode(req: Request, res: Response) {
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
-}
+};
+
+async function findCitiesByProvince(req: Request, res: Response) {
+  try {
+    const provinceId = req.params.provinceId;
+    const cities = await em.find(City, { province: { id: provinceId } });
+
+    res.status(200).json({ message: 'found cities by province', data: cities });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
   
-  export const controller = {  
-    findAll, 
-    findOne,
-    add,
-    update,
-    remove,
-    findCityByPostCode
-  };
+export const controller = {  
+  findAll, 
+  findOne,
+  add,
+  update,
+  remove,
+  findCityByPostCode,
+  findCitiesByProvince
+};

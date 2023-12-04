@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { Province } from './province.entity.js';
 import { orm } from '../shared/db/orm.js';
+import { City } from '../city/city.entity.js';
 
 const em = orm.em;
 
@@ -82,6 +83,16 @@ async function findProvinceByName(req: Request, res: Response) {
   }
 };
 
+async function findCitiesByProvince(req: Request, res: Response){
+  try {
+    const id = req.params.id;
+    const province = await em.findOneOrFail(Province, {id: id});
+    const citys = await em.find(City, {province: province});
+    res.status(200).json({message: 'found citys by province', data: citys});
+  } catch (error: any) {
+    res.status(500).json({message: error.message});
+  }
+}
 
 export const controller = { 
   findAll, 
@@ -89,5 +100,6 @@ export const controller = {
   add,
   update,
   remove,
-  findProvinceByName
+  findProvinceByName,
+  findCitiesByProvince
 };
