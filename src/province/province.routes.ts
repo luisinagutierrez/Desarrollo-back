@@ -3,6 +3,7 @@ import { controller} from "./province.controller.js";
 
 export const provinceRouter = Router();
 
+provinceRouter.get('/:name', controller.findProvinceByName);
 provinceRouter.get('/', controller.findAll);
 provinceRouter.get('/:id', controller.findOne);
 provinceRouter.post('/', controller.add); 

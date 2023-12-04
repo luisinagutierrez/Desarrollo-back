@@ -66,11 +66,27 @@ async function add(req: Request, res: Response){
     res.status(500).json({message: error.message});
   }
 };
+
+async function findCityByPostCode(req: Request, res: Response) {
+  try {
+    const postCode = req.params.postCode;
+    const city = await em.findOne(City, { postCode });
+
+    if (city) {
+      res.status(200).json({ message: 'found one city', data: city });
+    } else {
+      res.status(404).json({ message: 'city not found' });
+    }
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+}
   
   export const controller = {  
     findAll, 
     findOne,
     add,
     update,
-    remove
+    remove,
+    findCityByPostCode
   };

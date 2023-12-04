@@ -86,6 +86,7 @@ async function findProductsBySupplier(req: Request, res: Response){
     res.status(500).json({message: error.message});
   }
 };
+
   export const controller = {  
     findAll, 
     findOne,

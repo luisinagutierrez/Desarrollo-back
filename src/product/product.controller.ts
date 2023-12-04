@@ -143,15 +143,31 @@ async function orderProductStock(req: Request, res: Response){
   } catch (error: any) {
     res.status(500).json({message: error.message});
   }
+};
+
+async function findProductByName(req: Request, res: Response) {
+  try {
+    const name = req.params.name;
+    const product = await em.findOne(Product, { name });
+
+    if (product) {
+      res.status(200).json({ message: 'found one product', data: product });
+    } else {
+      res.status(404).json({ message: 'product not found' });
+    }
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
 }
-  
-  export const controller = {  
-    findAll, 
-    findOne,
-    add,
-    update,
-    remove,
-    listByCategory,
-    searchProducts,
-    orderProductStock
-  };
+
+export const controller = {  
+  findAll, 
+  findOne,
+  add,
+  update,
+  remove,
+  listByCategory,
+  searchProducts,
+  orderProductStock,
+  findProductByName
+};

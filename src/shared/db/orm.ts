@@ -1,10 +1,8 @@
 import { MikroORM } from "@mikro-orm/core";
 import { MongoHighlighter } from "@mikro-orm/mongo-highlighter";
-//import { Category } from "../../category/category.entity.js";
 
 
 export const orm = await MikroORM.init({
-//  entities: [Category],
   entities: ['dist/**/*.entity.js'],
   entitiesTs: ['src/**/*.entity.ts'],
   dbName: 'Ecommerce2023',

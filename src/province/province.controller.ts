@@ -66,10 +66,28 @@ async function add(req: Request, res: Response){
     res.status(500).json({message: error.message});
   }
 };  
-  export const controller = { 
-    findAll, 
-    findOne,
-    add,
-    update,
-    remove
-  };
+
+async function findProvinceByName(req: Request, res: Response) {
+  try {
+    const name = req.params.name;
+    const province = await em.findOne(Province, { name });
+
+    if (province) {
+      res.status(200).json({ message: 'found one province', data: province });
+    } else {
+      res.status(404).json({ message: 'province not found' });
+    }
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+export const controller = { 
+  findAll, 
+  findOne,
+  add,
+  update,
+  remove,
+  findProvinceByName
+};
