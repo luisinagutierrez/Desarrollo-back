@@ -11,5 +11,4 @@ productRouter.post('/', controller.add);
 productRouter.patch('/:id', controller.update); // con el put tmb funciona 
 productRouter.delete('/:id', controller.remove);
 productRouter.get('/category/:category', controller.listByCategory); //??
-productRouter.get('/search/:searchTerm', controller.searchProducts); //??
-productRouter.patch('/cart', controller.orderProductStock); //??
+//productRouter.patch('/cart', controller.orderProductStock); //??

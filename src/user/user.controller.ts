@@ -83,22 +83,6 @@ async function findUserByEmail(req: Request, res: Response) {
     res.status(500).json({ message: error.message });
   }
 }
-
-async function forgotPassword(req: Request, res: Response){
-  try{
-    const user = await em.findOneOrFail(User, {email: req.body.email});
-    if(!user)
-    {return res.status(404).send({message: 'User not found!'});}
-    else
-    {
-      const password = req.params.password;
-      //??
-
-  }}
-  catch(error: any){
-    res.status(500).json({message: error.message}); 
-  }
-}
   
   export const controller = {  
     findAll, 

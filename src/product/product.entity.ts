@@ -3,7 +3,6 @@ import { BaseEntity } from '../shared/db/baseEntity.entity.js';
 import { Category } from "../category/category.entity.js";
 import { Supplier } from "../supplier/supplier.entity.js";
 import { Cart } from '../cart/cart.entity.js';
-//import { Shipment } from "../models/shipment.entity.js";
 
 @Entity()   
 export class Product extends BaseEntity { 

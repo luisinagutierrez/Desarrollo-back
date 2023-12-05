@@ -2,15 +2,8 @@ import express, { Request, Response, NextFunction } from 'express';
 import { Product } from './product.entity.js';
 import { orm } from '../shared/db/orm.js';
 import multer from 'multer';
-import path from 'path';
+//import path from 'path';
 
-// declare global {
-//   namespace Express {
-//     interface Request {
-//       file: File | undefined;
-//     }
-//   }
-// }
 
 const em = orm.em;
 
@@ -114,36 +107,19 @@ async function listByCategory(req: Request, res: Response){
   }
 }
 
-async function searchProducts(req: Request, res: Response){
-  const searchTerm = req.params.searchTerm;
-
-  try{
-    const products = await em.find(Product, { description: new RegExp(searchTerm, 'i') }); // i = case insensitive
-  
-  if(!products || products.length === 0){
-    res.status(404).json({message: 'No products found'});
-  }
-  else{
-    res.status(200).json({message: 'found products', data: products});
-  }
-} catch (error: any) {
-  res.status(500).json({message: error.message});
-}
-}
-
-async function orderProductStock(req: Request, res: Response){
-  const cart = req.body.cart;
-  const {products} = cart;
-  try{
-    for (const product of products) {
-      const productToUpdate = await em.findOneOrFail(Product, {id: product.id});
-      productToUpdate.stock -= product.quantity;
-      await em.flush();
-    }
-  } catch (error: any) {
-    res.status(500).json({message: error.message});
-  }
-};
+// async function orderProductStock(req: Request, res: Response){
+//   const cart = req.body.cart;
+//   const {products} = cart;
+//   try{
+//     for (const product of products) {
+//       const productToUpdate = await em.findOneOrFail(Product, {id: product.id});
+//       productToUpdate.stock -= product.quantity;
+//       await em.flush();
+//     }
+//   } catch (error: any) {
+//     res.status(500).json({message: error.message});
+//   }
+// };
 
 async function findProductByName(req: Request, res: Response) {
   try {
@@ -167,7 +143,6 @@ export const controller = {
   update,
   remove,
   listByCategory,
-  searchProducts,
-  orderProductStock,
+  //orderProductStock,
   findProductByName
 };
