@@ -28,18 +28,24 @@ async function findOne(req: Request, res: Response){
   }
 };
 
-async function add(req: Request, res: Response){
-  try{
-    const supplier = em.create(Supplier, req.body);
+async function add(req: Request, res: Response) {
+  try {
+    const supplierData = req.body;
+    const existingSupplier = await em.findOne(Supplier, { cuit: supplierData.cuit });
+    if (existingSupplier) {
+      return res.status(400).json({ message: 'Error', error: 'The supplier already exists' });
+    }
+
+    const supplier = em.create(Supplier, supplierData);
     await em.flush();
-    res
-      .status(201)
-      .json({message:'supplier created',data: supplier});  
-  } catch (error: any) {
-    res.status(500).json({message: error.message});
+
+    res.status(201).json({ message: 'Supplier created successfully', data: supplier });
+  } 
+  catch (error: any) {
+    res.status(500).json({ message: error.message });
   }
 };
-  
+
   async function update(req: Request, res: Response){
     try{
       const id = req.params.id;

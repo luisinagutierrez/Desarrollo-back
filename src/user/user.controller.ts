@@ -57,15 +57,21 @@ catch (error: any) {
 }
 }
 
-async function signUp(req: Request, res: Response){
-  try{
-    const user = em.create(User, req.body);
+async function signUp(req: Request, res: Response) {
+  try {
+    const userData = req.body;
+    const existingUser = await em.findOne(User, { email: userData.email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Error', error: 'The user already exists' });
+    }
+
+    const user = em.create(User, userData);
     await em.flush();
-    res
-      .status(201)
-      .json({message:'user created',data: user});  
-  } catch (error: any) {
-    res.status(500).json({message: error.message});
+
+    res.status(201).json({ message: 'User created successfully', data: user });
+  } 
+  catch (error: any) {
+    res.status(500).json({ message: error.message });
   }
 };
 

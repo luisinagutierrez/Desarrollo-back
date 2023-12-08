@@ -8,7 +8,7 @@ productRouter.get('/:name', controller.findProductByName);
 productRouter.get('/', controller.findAll);
 productRouter.get('/:id', controller.findOne);
 productRouter.post('/', controller.add); 
-productRouter.patch('/:id', controller.update); // con el put tmb funciona 
+productRouter.put('/:id', controller.update); // con el put tmb funciona 
 productRouter.delete('/:id', controller.remove);
 productRouter.get('/category/:category', controller.listByCategory); //??
 //productRouter.patch('/cart', controller.orderProductStock); //??

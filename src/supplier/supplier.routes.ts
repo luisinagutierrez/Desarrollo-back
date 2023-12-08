@@ -9,5 +9,5 @@ supplierRouter.get('/cuit/:cuit', controller.findSupplierByCuit);
 supplierRouter.get('/', controller.findAll);
 supplierRouter.post('/', controller.add); 
 supplierRouter.put('/:id', controller.update);
-supplierRouter.patch('/:id', controller.update);
+supplierRouter.put('/:id', controller.update);
 supplierRouter.delete('/:id', controller.remove);

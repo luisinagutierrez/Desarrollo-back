@@ -43,29 +43,47 @@ async function findOne(req: Request, res: Response){
 
 async function add(req: Request, res: Response) {
   try {
-    upload.single('image')(req, res, async (err: any) => {
-      if (err) {
-        return res.status(400).json({ error: 'Error al subir la imagen' });
-      }
+    const productData = req.body;
+    const existingProduct = await em.findOne(Product, { name: productData.name });
+    if (existingProduct) {
+      return res.status(400).json({ message: 'Error', error: 'The product already exists' });
+    }
 
-      // if (!req.file) {
-      //   return res.status(400).json({ error: 'No se ha adjuntado ninguna imagen' });
-      // }
+    const product = em.create(Product, productData);
+    await em.flush();
 
-      const { name, description, price, stock, image, category, supplier } = req.body;
-     // const imageFileName = req.file.filename;
-      //const image = 'uploadsProductsPhotographs/' + imageFileName;
-      
-      const product = em.create(Product, { name, description, price, stock, image, category, supplier });
-      await em.flush();
-
-      res.status(201).json({ message: 'product created', data: product });
-    });
-  } catch (error: any) {
-    console.error(error); // Agregamos una impresión de error para depurar
+    res.status(201).json({ message: 'Product created successfully', data: product });
+  } 
+  catch (error: any) {
     res.status(500).json({ message: error.message });
   }
 };
+
+// async function add(req: Request, res: Response) {
+//   try {
+//     upload.single('image')(req, res, async (err: any) => {
+//       if (err) {
+//         return res.status(400).json({ error: 'Error al subir la imagen' });
+//       }
+
+//       // if (!req.file) {
+//       //   return res.status(400).json({ error: 'No se ha adjuntado ninguna imagen' });
+//       // }
+
+//       const { name, description, price, stock, image, category, supplier } = req.body;
+//      // const imageFileName = req.file.filename;
+//       //const image = 'uploadsProductsPhotographs/' + imageFileName;
+      
+//       const product = em.create(Product, { name, description, price, stock, image, category, supplier });
+//       await em.flush();
+
+//       res.status(201).json({ message: 'product created', data: product });
+//     });
+//   } catch (error: any) {
+//     console.error(error); // Agregamos una impresión de error para depurar
+//     res.status(500).json({ message: error.message });
+//   }
+// };
 
   async function update(req: Request, res: Response){
     try{

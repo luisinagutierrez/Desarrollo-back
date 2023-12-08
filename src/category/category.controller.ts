@@ -27,15 +27,21 @@ async function findOne(req: Request, res: Response){
   }
 };
 
-async function add(req: Request, res: Response){
-  try{
-    const category = em.create(Category, req.body);
+async function add(req: Request, res: Response) {
+  try {
+    const categoryData = req.body;
+    const existingCategory = await em.findOne(Category, { name: categoryData.name });
+    if (existingCategory) {
+      return res.status(400).json({ message: 'Error', error: 'The category already exists' });
+    }
+
+    const pcategory = em.create(Category, categoryData);
     await em.flush();
-    res
-      .status(201)
-      .json({message:'category created',data: category});  
-  } catch (error: any) {
-    res.status(500).json({message: error.message});
+
+    res.status(201).json({ message: 'Category created successfully', data: pcategory });
+  } 
+  catch (error: any) {
+    res.status(500).json({ message: error.message });
   }
 };
   

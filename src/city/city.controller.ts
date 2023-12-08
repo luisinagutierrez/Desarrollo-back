@@ -26,32 +26,38 @@ async function findOne(req: Request, res: Response){
   }
 };
 
-async function add(req: Request, res: Response){
+async function add(req: Request, res: Response) {
+  try {
+    const cityData = req.body;
+    const existingCity = await em.findOne(City, { postCode: cityData.postCode });
+    if (existingCity) {
+      return res.status(400).json({ message: 'Error', error: 'The city already exists' });
+    }
+
+    const city = em.create(City, cityData);
+    await em.flush();
+
+    res.status(201).json({ message: 'City created successfully', data: city });
+  } 
+  catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+async function update(req: Request, res: Response){
   try{
-    const city = em.create(City, req.body);
+    const id = req.params.id;
+    const city = em.getReference(City, id);
+    em.assign(city, req.body);
     await em.flush();
     res
-      .status(201)
-      .json({message:'city created',data: city});  
-  } catch (error: any) {
+      .status(200)
+      .json({message: 'city updated', data: city});
+  }
+  catch (error: any) {
     res.status(500).json({message: error.message});
   }
 };
-  
-  async function update(req: Request, res: Response){
-    try{
-      const id = req.params.id;
-      const city = em.getReference(City, id);
-      em.assign(city, req.body);
-      await em.flush();
-      res
-        .status(200)
-        .json({message: 'city updated', data: city});
-    }
-    catch (error: any) {
-      res.status(500).json({message: error.message});
-    }
-  };
   
  async function remove(req: Request, res: Response){
   try{
@@ -71,7 +77,6 @@ async function findCityByPostCode(req: Request, res: Response) {
   try {
     const postCode = req.params.postCode;
     const city = await em.findOne(City, { postCode });
-
     if (city) {
       res.status(200).json({ message: 'found one city', data: city });
     } else {
@@ -80,7 +85,8 @@ async function findCityByPostCode(req: Request, res: Response) {
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
-};
+}
+
 
 async function findCitiesByProvince(req: Request, res: Response) {
   try {

@@ -27,17 +27,35 @@ async function findOne(req: Request, res: Response){
   }
 };
 
-async function add(req: Request, res: Response){
-  try{
-    const province = em.create(Province, req.body);
+async function add(req: Request, res: Response) {
+  try {
+    const provinceData = req.body;
+    const existingProvince = await em.findOne(Province, { name: provinceData.name });
+    if (existingProvince) {
+      return res.status(400).json({ message: 'Error', error: 'The province already exists' });
+    }
+
+    const province = em.create(Province, provinceData);
     await em.flush();
-    res
-      .status(201)
-      .json({message:'Province created',data: Province});  
-  } catch (error: any) {
-    res.status(500).json({message: error.message});
+
+    res.status(201).json({ message: 'Province created successfully', data: province });
+  } 
+  catch (error: any) {
+    res.status(500).json({ message: error.message });
   }
-};
+}
+
+// async function add(req: Request, res: Response){
+//   try{
+//     const province = em.create(Province, req.body);
+//     await em.flush();
+//     res
+//       .status(201)
+//       .json({message:'Province created',data: Province});  
+//   } catch (error: any) {
+//     res.status(500).json({message: error.message});
+//   }
+// };
   
   async function update(req: Request, res: Response){
     try{
