@@ -48,12 +48,23 @@ async function add(req: Request, res: Response) {
 async function update(req: Request, res: Response){
   try{
     const id = req.params.id;
-    const category = em.getReference(Category, id);
-    em.assign(category, req.body);
+    const existingCategory = await em.findOne(Category, { id });
+      if (!existingCategory) {
+        return res.status(404).json({ message: 'Province not found' });
+      }
+  
+      const newName = req.body.name;
+      if (newName !== existingCategory.name) {
+        const duplicateCategory = await em.findOne(Category, { name: newName });
+        if (duplicateCategory) {
+          return res.status(400).json({ message: 'Error', error: 'The new name is already used' });
+        }
+      }
+    em.assign(existingCategory, req.body);
     await em.flush();
     res
       .status(200)
-      .json({message: 'category updated', data: category});
+      .json({message: 'category updated', data: existingCategory});
     }
   catch (error: any) {
     res.status(500).json({message: error.message});
@@ -63,7 +74,14 @@ async function update(req: Request, res: Response){
  async function remove(req: Request, res: Response){
   try{
     const id = req.params.id;
-    const category = em.getReference(Category, id);
+    const category = await em.findOne(Category, { id });
+    if (!category) {
+      return res.status(404).json({ message: 'Category not found' });
+    }
+    const cities = await em.find(Product, { category });
+    if (cities.length > 0) {
+      return res.status(400).json({ message: 'Error', error: 'The category has associated products.' });
+    }
     await em.removeAndFlush(category);
     res
       .status(200)

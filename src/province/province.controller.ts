@@ -45,7 +45,7 @@ async function add(req: Request, res: Response) {
   }
 };
 
-  async function update(req: Request, res: Response){
+  async function update(req: Request, res: Response){ /// podemos hacerlo en una funcion tmb
     try{
       const id = req.params.id;
       const existingProvince = await em.findOne(Province, { id });
@@ -73,8 +73,8 @@ async function add(req: Request, res: Response) {
 
  async function remove(req: Request, res: Response){
   try{
-    const id = req.params.id;const province = await em.findOne(Province, { id });
-
+    const id = req.params.id;
+    const province = await em.findOne(Province, { id });
     if (!province) {
       return res.status(404).json({ message: 'Province not found' });
     }

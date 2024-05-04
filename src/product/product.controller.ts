@@ -4,10 +4,9 @@ import { orm } from '../shared/db/orm.js';
 import multer from 'multer';
 //import path from 'path';
 
-
 const em = orm.em;
 
-const storage = multer.diskStorage({
+const storage = multer.diskStorage({ // todavía no funciona 
   destination: function (req, file, cb) {
     cb(null, 'uploadsProductsPhotographs/'); 
   },
@@ -88,12 +87,23 @@ async function add(req: Request, res: Response) {
   async function update(req: Request, res: Response){
     try{
       const id = req.params.id;
-      const product = em.getReference(Product, id);
-      em.assign(product, req.body);
+      const existingProduct = await em.findOne(Product, { id });
+      if (!existingProduct) {
+        return res.status(404).json({ message: 'Product not found' });
+      }
+  
+      const newName = req.body.name;
+      if (newName !== existingProduct.name) {
+        const duplicateProduct = await em.findOne(Product, { name: newName });
+        if (duplicateProduct) {
+          return res.status(400).json({ message: 'Error', error: 'The new name is already used' });
+        }
+      }
+      em.assign(existingProduct, req.body);
       await em.flush();
       res
         .status(200)
-        .json({message: 'product updated', data: product});
+        .json({message: 'product updated', data: existingProduct});
     }
     catch (error: any) {
       res.status(500).json({message: error.message});
@@ -103,7 +113,10 @@ async function add(req: Request, res: Response) {
  async function remove(req: Request, res: Response){
   try{
     const id = req.params.id;
-    const product = em.getReference(Product, id);
+    const product = await em.findOne(Product, { id });
+    if (!product) {
+      return res.status(404).json({ message: 'Province not found' });
+    }
     await em.removeAndFlush(product);
     res
       .status(200)

@@ -47,12 +47,23 @@ async function add(req: Request, res: Response) {
 async function update(req: Request, res: Response){
   try{
     const id = req.params.id;
-    const city = em.getReference(City, id);
-    em.assign(city, req.body);
+    const existingCity = await em.findOne(City, { id });
+      if (!existingCity) {
+        return res.status(404).json({ message: 'City not found' });
+      }
+  
+      const newpostCode = req.body.postCode;
+      if (newpostCode !== existingCity.postCode) {
+        const duplicateCity = await em.findOne(City, { postCode: newpostCode });
+        if (duplicateCity) {
+          return res.status(400).json({ message: 'Error', error: 'The new name is already used' });
+        }
+      }
+    em.assign(existingCity, req.body);
     await em.flush();
     res
       .status(200)
-      .json({message: 'city updated', data: city});
+      .json({message: 'city updated', data: existingCity});
   }
   catch (error: any) {
     res.status(500).json({message: error.message});
@@ -62,7 +73,10 @@ async function update(req: Request, res: Response){
  async function remove(req: Request, res: Response){
   try{
     const id = req.params.id;
-    const city = em.getReference(City, id);
+    const city = await em.findOne(City, { id });
+    if (!city) {
+      return res.status(404).json({ message: 'City not found' });
+    }
     await em.removeAndFlush(city);
     res
       .status(200)

@@ -31,12 +31,23 @@ async function findOne(req: Request, res: Response){
 async function update(req: Request, res: Response){
   try{
     const id = req.params.id;
-    const user = em.getReference(User, id);
-    em.assign(user, req.body);
+    const existingUser = await em.findOne(User, { id });
+      if (!existingUser) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      const newEmail = req.body.name;
+      if (newEmail !== existingUser.email) {
+        const duplicateUser = await em.findOne(User, { email: newEmail });
+        if (duplicateUser) {
+          return res.status(400).json({ message: 'Error', error: 'The new name is already used' });
+        }
+      }
+    em.assign(existingUser, req.body);
     await em.flush();
     res
       .status(200)
-      .json({message: 'user updated', data: user});
+      .json({message: 'user updated', data: existingUser});
   }
   catch (error: any) {
     res.status(500).json({message: error.message});
@@ -46,7 +57,10 @@ async function update(req: Request, res: Response){
 async function remove(req: Request, res: Response){
 try{
   const id = req.params.id;
-  const user = em.getReference(User, id);
+  const user = await em.findOne(User, { id });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
   await em.removeAndFlush(user);
   res
     .status(200)
