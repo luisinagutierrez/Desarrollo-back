@@ -1,4 +1,12 @@
 // pnpm install all 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+// process.on('warning', (warning) => {
+//   if (warning.name === 'DeprecationWarning' && warning.message.includes('NODE_TLS_REJECT_UNAUTHORIZED')) {
+//   } else {
+//     console.warn(warning);
+//   }
+// });
+
 import 'reflect-metadata';
 import cors from 'cors';
 import express, { Request, Response, NextFunction} from 'express';
@@ -11,6 +19,7 @@ import { cityRouter } from './city/city.routes.js';
 import { orm } from './shared/db/orm.js';
 import { RequestContext } from '@mikro-orm/core';
 import { productRouter } from './product/product.routes.js';
+import { authRouter } from './auth/auth.routes.js';
 
 const app = express();
 app.use(express.json());
@@ -31,6 +40,7 @@ app.use('/api/provinces', provinceRouter);
 app.use('/api/users', userRouter);
 app.use('/api/cities', cityRouter);
 app.use('/api/products', productRouter);
+app.use('/api/auth', authRouter);
 
 
 app.use((_, res) => {
