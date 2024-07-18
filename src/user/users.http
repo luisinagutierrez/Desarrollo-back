@@ -19,3 +19,11 @@ Content-Type: application/json
     "phone": "3418243512",
     "city": "654baf5a2aed6214eed43aa4"
 }
+
+PUT http://localhost:3000/api/users/update-password
+Content-Type: application/json
+
+{
+    "email": "luisinagutierrez2618@gmail.com" ,
+    "password": "hola hola"
+}

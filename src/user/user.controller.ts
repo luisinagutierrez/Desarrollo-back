@@ -103,6 +103,25 @@ async function findUserByEmail(req: Request, res: Response) {
     res.status(500).json({ message: error.message });
   }
 }
+async function updatePassword(req: Request, res: Response) {
+  try {
+    const { email, password: password } = req.body;
+    const user = await em.findOne(User, { email });
+
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    user.password = password;
+    await em.persistAndFlush(user);
+
+    res.status(200).json({ message: 'Contraseña actualizada exitosamente' });
+  } 
+  catch (error) {
+    console.error('Error al actualizar contraseña:', error);
+    res.status(500).json({ message: 'Error al actualizar contraseña' });
+  }
+}
   
   export const controller = {  
     findAll, 
@@ -110,6 +129,8 @@ async function findUserByEmail(req: Request, res: Response) {
     update,
     remove,
     signUp,
-    findUserByEmail
+    findUserByEmail,
+    updatePassword
+    
     //login
   };
