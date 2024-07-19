@@ -4,7 +4,7 @@ import { controller } from "./product.controller.js";
 export const productRouter = Router();
 
 
-productRouter.get('/:name', controller.findProductByName);
+productRouter.get('/product/:name', controller.findProductByName);
 productRouter.get('/', controller.findAll);
 productRouter.get('/:id', controller.findOne);
 productRouter.post('/', controller.add); 

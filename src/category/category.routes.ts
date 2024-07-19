@@ -4,9 +4,10 @@ import { controller } from "./category.controller.js";
 export const categoryRouter = Router();
 
 categoryRouter.get('/products/:name', controller.findProductsByCategory);
-categoryRouter.get('/name/:name', controller.findCategoryByName); 
+categoryRouter.get('/category/:name', controller.findCategoryByName); 
 categoryRouter.get('/', controller.findAll);
 categoryRouter.get('/:id', controller.findOne);
 categoryRouter.post('/', controller.add); 
 categoryRouter.put('/:id', controller.update);
 categoryRouter.delete('/:id', controller.remove);
+
