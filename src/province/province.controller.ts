@@ -23,7 +23,7 @@ async function findOne(req: Request, res: Response){
     .json({message: 'found one Province', data: province});
   }
   catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 };
 
@@ -32,7 +32,7 @@ async function add(req: Request, res: Response) {
     const provinceData = req.body;
     const existingProvince = await em.findOne(Province, { name: provinceData.name });
     if (existingProvince) {
-      return res.status(400).json({ message: 'Error', error: 'The province already exists' });
+      return res.status(303).json({ message: 'Error', error: 'The province already exists' });
     }
 
     const province = em.create(Province, provinceData);
@@ -41,7 +41,7 @@ async function add(req: Request, res: Response) {
     res.status(201).json({ message: 'Province created successfully', data: province });
   } 
   catch (error: any) {
-    res.status(500).json({ message: error.message });
+    res.status(404).json({ message: error.message });
   }
 };
 
@@ -67,7 +67,7 @@ async function add(req: Request, res: Response) {
         .json({message: 'Province updated', data: existingProvince});
     }
     catch (error: any) {
-      res.status(500).json({message: error.message});
+      res.status(404).json({message: error.message});
     }
   };
 
@@ -89,7 +89,7 @@ async function add(req: Request, res: Response) {
       .json({message: 'Province deleted', data: province});
   }
   catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 };  
 
@@ -105,7 +105,7 @@ async function findProvinceByName(req: Request, res: Response) {
       res.status(404).json({ message: 'province not found' });
     }
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    res.status(404).json({ message: error.message });
   }
 };
 
@@ -116,7 +116,7 @@ async function findCitiesByProvince(req: Request, res: Response){
     const citys = await em.find(City, {province: province});
     res.status(200).json({message: 'found citys by province', data: citys});
   } catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 }
 
@@ -129,51 +129,3 @@ export const controller = {
   findProvinceByName,
   findCitiesByProvince
 };
-
-
-// ESTO ES COMO ESTABA ANTERIORMENTE, SOLO CAMBIÉ EL ABM EN PROVINCIA ENTERO, EL RESTO SOLO TIENE EL ADD CAMBIADO 
-//
-// async function add(req: Request, res: Response){
-//   try{
-//     const province = em.create(Province, req.body);
-//     await em.flush();
-//     res
-//       .status(201)
-//       .json({message:'Province created',data: Province});  
-//   } catch (error: any) {
-//     res.status(500).json({message: error.message});
-//   }
-// };
-
-//
-
-// async function update(req: Request, res: Response){
-//   try{
-//     const id = req.params.id;
-//     const province = em.getReference(Province, id);
-//     em.assign(province, req.body);
-//     await em.flush();
-//     res
-//       .status(200)
-//       .json({message: 'Province updated', data: province});
-//   }
-//   catch (error: any) {
-//     res.status(500).json({message: error.message});
-//   }
-// };
-
-//
-
-// async function remove(req: Request, res: Response){
-// try{
-//   const id = req.params.id;
-//   const province = em.getReference(Province, id);
-//   await em.removeAndFlush(province);
-//   res
-//     .status(200)
-//     .json({message: 'Province deleted', data: province});
-// }
-// catch (error: any) {
-//   res.status(500).json({message: error.message});
-// }
-// };  

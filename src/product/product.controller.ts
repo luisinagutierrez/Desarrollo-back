@@ -23,7 +23,7 @@ async function findAll(req: Request, res: Response){
     const products = await em.find(Product, {});
     res.status(200).json({message:'found all products',data: products});
   } catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 };
 
@@ -36,7 +36,7 @@ async function findOne(req: Request, res: Response){
     .json({message: 'found one product', data: product});
   }
   catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 };
 
@@ -45,7 +45,7 @@ async function add(req: Request, res: Response) {
     const productData = req.body;
     const existingProduct = await em.findOne(Product, { name: productData.name });
     if (existingProduct) {
-      return res.status(400).json({ message: 'Error', error: 'The product already exists' });
+      return res.status(303).json({ message: 'Error', error: 'The product already exists' });
     }
 
     const product = em.create(Product, productData);
@@ -54,7 +54,7 @@ async function add(req: Request, res: Response) {
     res.status(201).json({ message: 'Product created successfully', data: product });
   } 
   catch (error: any) {
-    res.status(500).json({ message: error.message });
+    res.status(404).json({ message: error.message });
   }
 };
 
@@ -80,7 +80,7 @@ async function add(req: Request, res: Response) {
 //     });
 //   } catch (error: any) {
 //     console.error(error); // Agregamos una impresión de error para depurar
-//     res.status(500).json({ message: error.message });
+//     res.status(404).json({ message: error.message });
 //   }
 // };
 
@@ -106,7 +106,7 @@ async function add(req: Request, res: Response) {
         .json({message: 'product updated', data: existingProduct});
     }
     catch (error: any) {
-      res.status(500).json({message: error.message});
+      res.status(404).json({message: error.message});
     }
   };
   
@@ -123,7 +123,7 @@ async function add(req: Request, res: Response) {
       .json({message: 'product deleted', data: product});
   }
   catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 }
 
@@ -134,7 +134,7 @@ async function listByCategory(req: Request, res: Response){
     res.status(200).json({message:'found all products',data: products});
   }
   catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 }
 
@@ -148,7 +148,7 @@ async function listByCategory(req: Request, res: Response){
 //       await em.flush();
 //     }
 //   } catch (error: any) {
-//     res.status(500).json({message: error.message});
+//     res.status(404).json({message: error.message});
 //   }
 // };
 
@@ -163,7 +163,7 @@ async function findProductByName(req: Request, res: Response) {
       res.status(404).json({ message: 'product not found' });
     }
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    res.status(404).json({ message: error.message });
   }
 }
 

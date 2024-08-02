@@ -11,7 +11,7 @@ async function findAll(req: Request, res: Response){
     const products = await em.find(Supplier, {});
     res.status(200).json({message:'found all products',data: products});
   } catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 };
 
@@ -24,7 +24,7 @@ async function findOne(req: Request, res: Response){
     .json({message: 'found one supplier', data: supplier});
   }
   catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 };
 
@@ -33,7 +33,7 @@ async function add(req: Request, res: Response) {
     const supplierData = req.body;
     const existingSupplier = await em.findOne(Supplier, { cuit: supplierData.cuit });
     if (existingSupplier) {
-      return res.status(400).json({ message: 'Error', error: 'The supplier already exists' });
+      return res.status(303).json({ message: 'Error', error: 'The supplier already exists' });
     }
 
     const supplier = em.create(Supplier, supplierData);
@@ -42,7 +42,7 @@ async function add(req: Request, res: Response) {
     res.status(201).json({ message: 'Supplier created successfully', data: supplier });
   } 
   catch (error: any) {
-    res.status(500).json({ message: error.message });
+    res.status(404).json({ message: error.message });
   }
 };
 
@@ -68,7 +68,7 @@ async function add(req: Request, res: Response) {
         .json({message: 'supplier updated', data: existingSupplier});
     }
     catch (error: any) {
-      res.status(500).json({message: error.message});
+      res.status(404).json({message: error.message});
     }
   };
   
@@ -90,7 +90,7 @@ async function add(req: Request, res: Response) {
       .json({message: 'supplier deleted', data: supplier});
   }
   catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 }
 
@@ -108,7 +108,7 @@ async function findProductsBySupplier(req: Request, res: Response){
       .json({message: 'found products by supplier', data: products});
 
   }catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 };
 
@@ -123,7 +123,7 @@ async function findSupplierByCuit(req: Request, res: Response){
       res.status(404).json({ message: 'supplier not found' });
     }
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    res.status(404).json({ message: error.message });
   }
 };
 

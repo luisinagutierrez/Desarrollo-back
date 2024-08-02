@@ -11,7 +11,7 @@ async function findAll(req: Request, res: Response){
     const users = await em.find(User, {});
     res.status(200).json({message:'found all users',data: users});
   } catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 };
 
@@ -24,7 +24,7 @@ async function findOne(req: Request, res: Response){
     .json({message: 'found one user', data: user});
   }
   catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 };
 
@@ -50,7 +50,7 @@ async function update(req: Request, res: Response){
       .json({message: 'user updated', data: existingUser});
   }
   catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 };
 
@@ -67,7 +67,7 @@ try{
     .json({message: 'user deleted', data: user});
 }
 catch (error: any) {
-  res.status(500).json({message: error.message});
+  res.status(404).json({message: error.message});
 }
 }
 
@@ -76,7 +76,7 @@ async function signUp(req: Request, res: Response) {
     const userData = req.body;
     const existingUser = await em.findOne(User, { email: userData.email });
     if (existingUser) {
-      return res.status(400).json({ message: 'Error', error: 'The user already exists' });
+      return res.status(393).json({ message: 'Error', error: 'The user already exists' });
     }
 
     const user = em.create(User, userData);
@@ -85,7 +85,7 @@ async function signUp(req: Request, res: Response) {
     res.status(201).json({ message: 'User created successfully', data: user });
   } 
   catch (error: any) {
-    res.status(500).json({ message: error.message });
+    res.status(404).json({ message: error.message });
   }
 };
 
@@ -100,7 +100,7 @@ async function findUserByEmail(req: Request, res: Response) {
       res.status(404).json({ message: 'User not found' });
     }
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    res.status(404).json({ message: error.message });
   }
 }
 async function updatePassword(req: Request, res: Response) {
@@ -119,7 +119,7 @@ async function updatePassword(req: Request, res: Response) {
   } 
   catch (error) {
     console.error('Error al actualizar contraseña:', error);
-    res.status(500).json({ message: 'Error al actualizar contraseña' });
+    res.status(404).json({ message: 'Error al actualizar contraseña' });
   }
 }
   

@@ -9,7 +9,7 @@ async function findAll(req: Request, res: Response){
     const discounts = await em.find(Discount, {});
     res.status(200).json({message:'found all discounts',data: discounts});
   } catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 };
 
@@ -22,7 +22,7 @@ async function findOne(req: Request, res: Response){
     .json({message: 'found one discount', data: discount});
   }
   catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 };
 
@@ -34,7 +34,7 @@ async function add(req: Request, res: Response){
       .status(201)
       .json({message:'discount created',data: discount});  
   } catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 };
   
@@ -49,7 +49,7 @@ async function add(req: Request, res: Response){
         .json({message: 'discount updated', data: discount});
     }
     catch (error: any) {
-      res.status(500).json({message: error.message});
+      res.status(404).json({message: error.message});
     }
   };
   
@@ -63,7 +63,7 @@ async function add(req: Request, res: Response){
       .json({message: 'discount deleted', data: discount});
   }
   catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 };
   

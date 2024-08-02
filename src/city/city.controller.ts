@@ -9,7 +9,7 @@ async function findAll(req: Request, res: Response){
     const cities = await em.find(City, {});
     res.status(200).json({message:'found all cities',data: cities});
   } catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 };
 
@@ -22,7 +22,7 @@ async function findOne(req: Request, res: Response){
     .json({message: 'found one city', data: city});
   }
   catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 };
 
@@ -31,7 +31,7 @@ async function add(req: Request, res: Response) {
     const cityData = req.body;
     const existingCity = await em.findOne(City, { postCode: cityData.postCode });
     if (existingCity) {
-      return res.status(400).json({ message: 'Error', error: 'The city already exists' });
+      return res.status(303).json({ message: 'Error', error: 'The city already exists' });
     }
 
     const city = em.create(City, cityData);
@@ -40,7 +40,7 @@ async function add(req: Request, res: Response) {
     res.status(201).json({ message: 'City created successfully', data: city });
   } 
   catch (error: any) {
-    res.status(500).json({ message: error.message });
+    res.status(404).json({ message: error.message });
   }
 };
 
@@ -66,7 +66,7 @@ async function update(req: Request, res: Response){
       .json({message: 'city updated', data: existingCity});
   }
   catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 };
   
@@ -83,7 +83,7 @@ async function update(req: Request, res: Response){
       .json({message: 'city deleted', data: city});
   }
   catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 };
 
@@ -97,7 +97,7 @@ async function findCityByPostCode(req: Request, res: Response) {
       res.status(404).json({ message: 'city not found' });
     }
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    res.status(404).json({ message: error.message });
   }
 }
 
@@ -109,7 +109,7 @@ async function findCitiesByProvince(req: Request, res: Response) {
 
     res.status(200).json({ message: 'found cities by province', data: cities });
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    res.status(404).json({ message: error.message });
   }
 };
   
