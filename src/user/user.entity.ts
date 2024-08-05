@@ -1,9 +1,11 @@
-import {Entity, ManyToOne, Property, Rel} from '@mikro-orm/core';
+import {Entity, ManyToOne, Property, Rel, BeforeCreate, BeforeUpdate} from '@mikro-orm/core';
 import { BaseEntity } from '../shared/db/baseEntity.entity.js';
 //import { Shipment } from "../models/shipment.entity.js";
 import { City } from "../city/city.entity.js"
+import bcrypt from 'bcrypt';
 @Entity()   
 export class User extends BaseEntity {
+  
 
     @Property({nullable: false, unique: true})
     email!: string
@@ -37,4 +39,16 @@ export class User extends BaseEntity {
     // @Property({nullable: false, unique: true})
     // resetPasswordToken!: string
 
+
+    // vi un par de videos q usan isDirty, pero no me lo reconoce 
+    // así q tuve q poner un poco más de lógica en el controller en las funcione
+    // q tocan de alguna manera la contra (signup, update, updatepassword)
+    @BeforeCreate()
+    @BeforeUpdate()
+    async hashPassword() {
+        if (this.password) {
+            const salt = await bcrypt.genSalt(10);
+            this.password = await bcrypt.hash(this.password, salt);
+        }
+    }
 }

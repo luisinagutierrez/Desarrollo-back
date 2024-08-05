@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import { User } from './user.entity.js';
 import { orm } from '../shared/db/orm.js';
 import jwt from 'jsonwebtoken';
-//import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt';
 
 const em = orm.em;
 
@@ -28,7 +28,8 @@ async function findOne(req: Request, res: Response){
   }
 };
 
-async function update(req: Request, res: Response){
+/// creo q no lo usamos pero igual hice el hasging a la contra, hay q revisar si hay q sacarlo 
+async function update(req: Request, res: Response){  
   try{
     const id = req.params.id;
     const existingUser = await em.findOne(User, { id });
@@ -43,7 +44,14 @@ async function update(req: Request, res: Response){
           return res.status(400).json({ message: 'Error', error: 'The new name is already used' });
         }
       }
-    em.assign(existingUser, req.body);
+      const updatedData = req.body;
+
+      if (updatedData.password && updatedData.password !== existingUser.password) {
+        const salt = await bcrypt.genSalt(10);
+        updatedData.password = await bcrypt.hash(updatedData.password, salt);
+      }
+  
+      em.assign(existingUser, updatedData);
     await em.flush();
     res
       .status(200)
@@ -76,8 +84,11 @@ async function signUp(req: Request, res: Response) {
     const userData = req.body;
     const existingUser = await em.findOne(User, { email: userData.email });
     if (existingUser) {
-      return res.status(393).json({ message: 'Error', error: 'The user already exists' });
+      return res.status(409).json({ message: 'Error', error: 'The user already exists' });
     }
+
+    const salt = await bcrypt.genSalt(10);
+    userData.password = await bcrypt.hash(userData.password, salt);
 
     const user = em.create(User, userData);
     await em.flush();
@@ -112,7 +123,8 @@ async function updatePassword(req: Request, res: Response) {
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
-    user.password = password;
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(password, salt);
     await em.persistAndFlush(user);
 
     res.status(200).json({ message: 'Contraseña actualizada exitosamente' });

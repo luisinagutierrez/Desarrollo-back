@@ -5,7 +5,11 @@ GET http://localhost:3000/api/users
 
 GET http://localhost:3000/api/users?email=:email/proveedor1@gmail.com   
 
+
+GET http://localhost:3000/api/cities/proveedor1@gmail.com
+
 ### crear un nuevo usuario
+
 
 POST http://localhost:3000/api/users
 Content-Type: application/json
