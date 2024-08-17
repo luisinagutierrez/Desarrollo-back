@@ -20,19 +20,22 @@ import { orm } from './shared/db/orm.js';
 import { RequestContext } from '@mikro-orm/core';
 import { productRouter } from './product/product.routes.js';
 import { authRouter } from './auth/auth.routes.js';
+import path from 'path';
 
 const app = express();
 app.use(express.json());
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:4200'
+}));
 
 //luego de los middlewares base
 app.use((req: Request, res: Response, next) => {
   RequestContext.create(orm.em, next)
 })
 
-//antes de las rutas y middlewares de negocio
 
+//antes de las rutas y middlewares de negocio
 app.use('/api/categories', categoryRouter);
 app.use('/api/discounts', discountRouter);
 app.use('/api/suppliers', supplierRouter);

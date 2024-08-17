@@ -41,22 +41,35 @@ async function findOne(req: Request, res: Response){
 };
 
 async function add(req: Request, res: Response) {
-  try {
-    const productData = req.body;
-    const existingProduct = await em.findOne(Product, { name: productData.name });
-    if (existingProduct) {
-      return res.status(303).json({ message: 'Error', error: 'The product already exists' });
+  upload.single('image')(req, res, async (err: any) => {
+    if (err) {
+      return res.status(400).json({ error: 'Error al subir la imagen' });
     }
 
-    const product = em.create(Product, productData);
-    await em.flush();
+    const { name, description, price, stock, category, supplier } = req.body;
+    let imagePath = '';
 
-    res.status(201).json({ message: 'Product created successfully', data: product });
-  } 
-  catch (error: any) {
-    res.status(404).json({ message: error.message });
-  }
-};
+    if (req.file) {
+      imagePath = 'uploadsProductsPhotographs/' + req.file.filename;
+    }
+
+    try {
+      const existingProduct = await em.findOne(Product, { name });
+
+      if (existingProduct) {
+        return res.status(303).json({ message: 'Error', error: 'El producto ya existe' });
+      }
+
+      const product = em.create(Product, { name, description, price, stock, image: imagePath, category, supplier });
+      await em.flush();
+
+      res.status(201).json({ message: 'Producto creado con éxito', data: product });
+    } catch (error:any) {
+      res.status(404).json({message: error.message});
+    }
+  });
+}
+
 
 // async function add(req: Request, res: Response) {
 //   try {

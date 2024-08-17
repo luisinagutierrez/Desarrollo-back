@@ -36,8 +36,12 @@ export class User extends BaseEntity {
 
     @ManyToOne(() => City, {nullable: false})
     city!: Rel<City>
-    // @Property({nullable: false, unique: true})
-    // resetPasswordToken!: string
+
+    @Property({nullable: true, unique: true})
+    resetPasswordToken?: string
+
+    @Property({nullable: true, unique: true})
+    resetPasswordExpires?: Date
 
 
     // vi un par de videos q usan isDirty, pero no me lo reconoce 
