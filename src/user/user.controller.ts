@@ -4,7 +4,7 @@ import { orm } from '../shared/db/orm.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
-const em = orm.em;
+const em = orm.em.fork();
 
 async function findAll(req: Request, res: Response){
   try{

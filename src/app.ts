@@ -21,6 +21,7 @@ import { RequestContext } from '@mikro-orm/core';
 import { productRouter } from './product/product.routes.js';
 import { authRouter } from './auth/auth.routes.js';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 const app = express();
 app.use(express.json());
@@ -45,6 +46,28 @@ app.use('/api/cities', cityRouter);
 app.use('/api/products', productRouter);
 app.use('/api/auth', authRouter);
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+//static route for images
+app.use('/uploadsProductsPhotographs', (req: Request, res: Response, next: NextFunction) => {
+  const options = {
+    root: path.join(__dirname, 'uploadsProductsPhotographs'),
+    dotfiles: 'deny' as const,
+    headers: {
+      'x-timestamp': Date.now(),
+      'x-sent': true
+    }
+  };
+  const fileName = req.path;
+  res.sendFile(fileName, options, (err) => {
+    if (err) {
+      next(err);
+    } else {
+      console.log('Sent:', fileName);
+    }
+  });
+});
 
 app.use((_, res) => {
   return res.status(404).send({message: 'Resource not found!'});

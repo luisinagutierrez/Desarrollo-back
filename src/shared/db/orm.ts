@@ -1,4 +1,4 @@
-import { MikroORM } from "@mikro-orm/core";
+import { MikroORM, t } from "@mikro-orm/core";
 import { MongoHighlighter } from "@mikro-orm/mongo-highlighter";
 
 
@@ -10,6 +10,7 @@ export const orm = await MikroORM.init({
   clientUrl: 'mongodb://127.0.0.1:27017',
   highlighter: new MongoHighlighter(),
   debug: true,
+  allowGlobalContext: true,
   schemaGenerator: { //never in production
     disableForeignKeys: true,
     createForeignKeyConstraints: true,

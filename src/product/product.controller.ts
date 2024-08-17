@@ -1,21 +1,9 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { Product } from './product.entity.js';
 import { orm } from '../shared/db/orm.js';
-import multer from 'multer';
 //import path from 'path';
 
 const em = orm.em;
-
-const storage = multer.diskStorage({ // todavía no funciona 
-  destination: function (req, file, cb) {
-    cb(null, 'uploadsProductsPhotographs/'); 
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname); 
-  },
-});
-
-const upload = multer({ storage });
 
 
 async function findAll(req: Request, res: Response){
@@ -41,33 +29,37 @@ async function findOne(req: Request, res: Response){
 };
 
 async function add(req: Request, res: Response) {
-  upload.single('image')(req, res, async (err: any) => {
-    if (err) {
-      return res.status(400).json({ error: 'Error al subir la imagen' });
-    }
-
+  try {
     const { name, description, price, stock, category, supplier } = req.body;
     let imagePath = '';
 
     if (req.file) {
-      imagePath = 'uploadsProductsPhotographs/' + req.file.filename;
+      imagePath = 'src\\uploadsProductsPhotographs\\' + req.file.filename;
     }
 
-    try {
-      const existingProduct = await em.findOne(Product, { name });
+    const existingProduct = await em.findOne(Product, { name });
 
-      if (existingProduct) {
-        return res.status(303).json({ message: 'Error', error: 'El producto ya existe' });
-      }
-
-      const product = em.create(Product, { name, description, price, stock, image: imagePath, category, supplier });
-      await em.flush();
-
-      res.status(201).json({ message: 'Producto creado con éxito', data: product });
-    } catch (error:any) {
-      res.status(404).json({message: error.message});
+    if (existingProduct) {
+      return res.status(303).json({ message: 'Error', error: 'El producto ya existe' });
     }
-  });
+
+    const product = em.create(Product, {
+      name,
+      description,
+      price: parseFloat(price),
+      stock: parseInt(stock),
+      image: imagePath,
+      category,
+      supplier
+    });
+
+    await em.persistAndFlush(product);
+
+    res.status(201).json({ message: 'Producto creado con éxito', data: product });
+  } catch (error: any) {
+    console.error('Error al crear el producto:', error);
+    res.status(500).json({ message: 'Error interno del servidor', error: error.message });
+  }
 }
 
 
