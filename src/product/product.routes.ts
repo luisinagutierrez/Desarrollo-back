@@ -1,20 +1,9 @@
 import { Router } from "express";
-import multer from 'multer';
-import path from 'path';
 import { controller } from "./product.controller.js";
+import { upload } from "../shared/db/image_processor/multer_middleware.js";
 
 export const productRouter = Router();
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(process.cwd(), 'src', 'uploadsProductsPhotographs'));
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname);
-  },
-});
-
-const upload = multer({ storage });
 
 productRouter.get('/product/:name', controller.findProductByName);
 productRouter.get('/', controller.findAll);

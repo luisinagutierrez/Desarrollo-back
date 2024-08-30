@@ -4,6 +4,7 @@ import { controller } from "./supplier.controller.js";
 
 export const supplierRouter = Router();
 
+//supplierRouter.get('/:cuit/products', controller.findProductsBySupplier);// está bien así
 supplierRouter.get('/products/:cuit', controller.findProductsBySupplier);// está mal así
 supplierRouter.get('/supplier/:cuit', controller.findSupplierByCuit);
 supplierRouter.get('/', controller.findAll);

@@ -50,24 +50,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 //static route for images
-app.use('/uploadsProductsPhotographs', (req: Request, res: Response, next: NextFunction) => {
-  const options = {
-    root: path.join(__dirname, 'uploadsProductsPhotographs'),
-    dotfiles: 'deny' as const,
-    headers: {
-      'x-timestamp': Date.now(),
-      'x-sent': true
-    }
-  };
-  const fileName = req.path;
-  res.sendFile(fileName, options, (err) => {
-    if (err) {
-      next(err);
-    } else {
-      console.log('Sent:', fileName);
-    }
-  });
-});
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use((_, res) => {
   return res.status(404).send({message: 'Resource not found!'});

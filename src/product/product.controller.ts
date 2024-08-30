@@ -34,7 +34,7 @@ async function add(req: Request, res: Response) {
     let imagePath = '';
 
     if (req.file) {
-      imagePath = 'src\\uploadsProductsPhotographs\\' + req.file.filename;
+      imagePath = 'uploads/' + req.file.filename;
     }
 
     const existingProduct = await em.findOne(Product, { name });

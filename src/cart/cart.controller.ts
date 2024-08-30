@@ -30,6 +30,7 @@ async function getUserCart(req: Request, res: Response){
   }
 };
 
+
 //async function cancelCart --> deberíamos agregar un estado en el carrito
 // porque sino, no se podrian validar varias cosas. Acá debería pasar de pendiente a cancelado
 
