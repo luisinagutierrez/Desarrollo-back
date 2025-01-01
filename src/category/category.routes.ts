@@ -3,7 +3,7 @@ import { controller } from "./category.controller.js";
 
 export const categoryRouter = Router();
 
-categoryRouter.get('/products/:name', controller.findProductsByCategory);
+categoryRouter.get('/:name/products', controller.findProductsByCategory);
 categoryRouter.get('/category/:name', controller.findCategoryByName); 
 categoryRouter.get('/', controller.findAll);
 categoryRouter.get('/:id', controller.findOne);

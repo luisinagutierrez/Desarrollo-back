@@ -3,7 +3,7 @@ import { controller } from "./city.controller.js";
 
 export const cityRouter = Router();
 
-cityRouter.get('/city/:postCode', controller.findCityByPostCode);
+cityRouter.get('/:postCode', controller.findCityByPostCode);
 cityRouter.get('/', controller.findAll);
 cityRouter.post('/', controller.add); 
 cityRouter.put('/:id', controller.update);
