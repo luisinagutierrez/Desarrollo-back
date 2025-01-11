@@ -1,0 +1,6 @@
+POST http://localhost:3000/api/auth/reset-password
+Content-Type: application/json
+
+{
+    "email": "corinag.2003@gmail.com"
+}

@@ -11,16 +11,30 @@ import { cityRouter } from './city/city.routes.js';
 import { orm } from './shared/db/orm.js';
 import { RequestContext } from '@mikro-orm/core';
 import { productRouter } from './product/product.routes.js';
-
+import { authRouter } from './auth/auth.routes.js';
+import jwt from 'jsonwebtoken';
 const app = express();
 app.use(express.json());
-
 app.use(cors());
+
+const SECRET_KEY = 'secretkey123456'; // Debe ser una variable de entorno
 
 //luego de los middlewares base
 app.use((req: Request, res: Response, next) => {
   RequestContext.create(orm.em, next)
 })
+
+// app.use((req, res, next) => {
+//   const authHeader = req.headers['authorization']
+//   const token = authHeader && authHeader.split(' ')[1]
+//   if (!token) return res.status(401).json('No token')
+  
+//   jwt.verify(token, SECRET_KEY, (err, user) => {
+//     if (err) return res.status(403).json('Invalid token');
+
+//     next()
+//   })
+// })
 
 //antes de las rutas y middlewares de negocio
 
@@ -31,6 +45,7 @@ app.use('/api/provinces', provinceRouter);
 app.use('/api/users', userRouter);
 app.use('/api/cities', cityRouter);
 app.use('/api/products', productRouter);
+app.use('/api/auth', authRouter);
 
 
 app.use((_, res) => {
