@@ -1,4 +1,12 @@
 // pnpm install all 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+// process.on('warning', (warning) => {
+//   if (warning.name === 'DeprecationWarning' && warning.message.includes('NODE_TLS_REJECT_UNAUTHORIZED')) {
+//   } else {
+//     console.warn(warning);
+//   }
+// });
+
 import 'reflect-metadata';
 import cors from 'cors';
 import express, { Request, Response, NextFunction} from 'express';
@@ -16,6 +24,12 @@ import jwt from 'jsonwebtoken';
 const app = express();
 app.use(express.json());
 app.use(cors());
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+app.use(cors({
+  origin: 'http://localhost:4200'
+}));
 
 const SECRET_KEY = 'secretkey123456'; // Debe ser una variable de entorno
 
@@ -37,7 +51,6 @@ app.use((req: Request, res: Response, next) => {
 // })
 
 //antes de las rutas y middlewares de negocio
-
 app.use('/api/categories', categoryRouter);
 app.use('/api/discounts', discountRouter);
 app.use('/api/suppliers', supplierRouter);
@@ -47,6 +60,11 @@ app.use('/api/cities', cityRouter);
 app.use('/api/products', productRouter);
 app.use('/api/auth', authRouter);
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+//static route for images
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use((_, res) => {
   return res.status(404).send({message: 'Resource not found!'});

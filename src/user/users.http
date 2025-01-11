@@ -3,9 +3,13 @@ GET http://localhost:3000/api/users
 
 ### obtener un usuario por id 
 
-GET http://localhost:3000/api/users/prueba   
+GET http://localhost:3000/api/users?email=:email/proveedor1@gmail.com   
+
+
+GET http://localhost:3000/api/cities/proveedor1@gmail.com
 
 ### crear un nuevo usuario
+
 
 POST http://localhost:3000/api/users
 Content-Type: application/json
@@ -18,4 +22,12 @@ Content-Type: application/json
     "lastName":"Maiz",
     "phone": "3418243512",
     "city": "654baf5a2aed6214eed43aa4"
+}
+
+PUT http://localhost:3000/api/users/update-password
+Content-Type: application/json
+
+{
+    "email": "luisinagutierrez2618@gmail.com" ,
+    "password": "hola hola"
 }

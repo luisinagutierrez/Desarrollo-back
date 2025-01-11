@@ -10,7 +10,7 @@ async function findAll(req: Request, res: Response){
     const categories = await em.find(Category, {});
     res.status(200).json({message:'found all categories',data: categories});
   } catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 };
 
@@ -23,7 +23,7 @@ async function findOne(req: Request, res: Response){
     .json({message: 'found one category', data: category});
   }
   catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message}); //404 == no está
   }
 };
 
@@ -32,7 +32,7 @@ async function add(req: Request, res: Response) {
     const categoryData = req.body;
     const existingCategory = await em.findOne(Category, { name: categoryData.name });
     if (existingCategory) {
-      return res.status(400).json({ message: 'Error', error: 'The category already exists' });
+      return res.status(303).json({ message: 'Error', error: 'The category already exists' }); /// 303 ==
     }
 
     const pcategory = em.create(Category, categoryData);
@@ -41,7 +41,7 @@ async function add(req: Request, res: Response) {
     res.status(201).json({ message: 'Category created successfully', data: pcategory });
   } 
   catch (error: any) {
-    res.status(500).json({ message: error.message });
+    res.status(404).json({ message: error.message });
   }
 };
   
@@ -67,7 +67,7 @@ async function update(req: Request, res: Response){
       .json({message: 'category updated', data: existingCategory});
     }
   catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
     }
 };
   
@@ -88,7 +88,7 @@ async function update(req: Request, res: Response){
       .json({message: 'category deleted', data: category});
   }
   catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 };
 
@@ -106,7 +106,7 @@ async function findProductsByCategory(req: Request, res: Response){
       .json({message: 'found products by category', data: products});
 
   }catch (error: any) {
-    res.status(500).json({message: error.message});
+    res.status(404).json({message: error.message});
   }
 };
 
@@ -121,7 +121,7 @@ async function findCategoryByName(req: Request, res: Response) {
       res.status(404).json({ message: 'category not found' });
     }
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    res.status(404).json({ message: error.message });
   }
 }
   
