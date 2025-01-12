@@ -6,9 +6,11 @@ export const productRouter = Router();
 
 
 productRouter.get('/product/:name', controller.findProductByName);
+productRouter.get('/search', controller.search);
 productRouter.get('/', controller.findAll);
 productRouter.get('/:id', controller.findOne);
 productRouter.post('/', upload.single('image'), controller.add);
 productRouter.put('/:id', controller.update);
 productRouter.delete('/:id', controller.remove);
 productRouter.get('/category/:category', controller.listByCategory);
+productRouter.get('/search', controller.search);
