@@ -61,34 +61,6 @@ async function add(req: Request, res: Response) {
     res.status(500).json({ message: 'Error interno del servidor', error: error.message });
   }
 }
-
-
-// async function add(req: Request, res: Response) {
-//   try {
-//     upload.single('image')(req, res, async (err: any) => {
-//       if (err) {
-//         return res.status(400).json({ error: 'Error al subir la imagen' });
-//       }
-
-//       // if (!req.file) {
-//       //   return res.status(400).json({ error: 'No se ha adjuntado ninguna imagen' });
-//       // }
-
-//       const { name, description, price, stock, image, category, supplier } = req.body;
-//      // const imageFileName = req.file.filename;
-//       //const image = 'uploadsProductsPhotographs/' + imageFileName;
-      
-//       const product = em.create(Product, { name, description, price, stock, image, category, supplier });
-//       await em.flush();
-
-//       res.status(201).json({ message: 'product created', data: product });
-//     });
-//   } catch (error: any) {
-//     console.error(error); // Agregamos una impresión de error para depurar
-//     res.status(404).json({ message: error.message });
-//   }
-// };
-
   async function update(req: Request, res: Response){
     try{
       const id = req.params.id;
@@ -132,16 +104,16 @@ async function add(req: Request, res: Response) {
   }
 }
 
-async function listByCategory(req: Request, res: Response){
-  try{
-    const category = req.params.category;
-    const products = await em.find(Product, {category});
-    res.status(200).json({message:'found all products',data: products});
-  }
-  catch (error: any) {
-    res.status(404).json({message: error.message});
-  }
-}
+// async function listByCategory(req: Request, res: Response){
+//   try{
+//     const category = req.params.category;
+//     const products = await em.find(Product, {category});
+//     res.status(200).json({message:'found all products',data: products});
+//   }
+//   catch (error: any) {
+//     res.status(404).json({message: error.message});
+//   }
+// }
 
 // async function orderProductStock(req: Request, res: Response){
 //   const cart = req.body.cart;
@@ -171,6 +143,41 @@ async function findProductByName(req: Request, res: Response) {
     res.status(404).json({ message: error.message });
   }
 }
+async function updateStock(req: Request, res: Response) {
+  try {
+    const { id: productId } = req.params; 
+    const { quantity, operation } = req.body;
+
+    const product = await em.findOne(Product, { id: productId });
+
+    if (!product) {
+      return res.status(404).json({ message: 'Producto no encontrado' });
+    }
+
+    if (operation === 'compra') {
+      if (product.stock < 1) {
+        return res.status(400).json({
+          message: 'Stock insuficiente',
+          availableStock: product.stock ///?
+        });
+      }
+      product.stock -= quantity;
+    } else {
+      product.stock += quantity;
+    }
+
+    await em.flush();
+
+    res.status(200).json({
+      message: 'Stock actualizado correctamente',
+      currentStock: product.stock
+    });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+
 
 export const controller = {  
   findAll, 
@@ -178,7 +185,8 @@ export const controller = {
   add,
   update,
   remove,
-  listByCategory,
+  //listByCategory,
   //orderProductStock,
-  findProductByName
+  findProductByName,
+  updateStock
 };

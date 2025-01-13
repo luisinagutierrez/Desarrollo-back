@@ -46,7 +46,14 @@ Content-Type: application/json
 
 ### borrar un producto
 
-DELETE http://localhost:3000/api/products/654e70fb071d385f21eddbcb
 
 
-src\uploadsProductsPhotographs\1723926050248-mochila8.png
+
+
+PUT http://localhost:3000/api/products/66d22415e96acb1617f96569/stock
+Content-Type: application/json
+
+{
+    "operation": "compra"
+    //"operation": "devuelve"
+}
