@@ -1,8 +1,9 @@
-import {Entity, ManyToOne, Property, Rel, BeforeCreate, BeforeUpdate} from '@mikro-orm/core';
+import {Entity, ManyToOne, Property, Rel, BeforeCreate, BeforeUpdate, OneToMany, Cascade, Collection} from '@mikro-orm/core';
 import { BaseEntity } from '../shared/db/baseEntity.entity.js';
 //import { Shipment } from "../models/shipment.entity.js";
 import { City } from "../city/city.entity.js"
 import bcrypt from 'bcrypt';
+import { Order } from '../order/order.entity.js';
 @Entity()   
 export class User extends BaseEntity {
   
@@ -43,6 +44,8 @@ export class User extends BaseEntity {
     @Property({nullable: true, unique: true})
     resetPasswordExpires?: Date
 
+    @OneToMany(() => Order, (order) => order.user, {cascade:[Cascade.ALL]})
+    orders = new Collection<Order>(this);
 
     // vi un par de videos q usan isDirty, pero no me lo reconoce 
     // así q tuve q poner un poco más de lógica en el controller en las funcione
