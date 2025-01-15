@@ -3,11 +3,12 @@ import * as crypto from 'crypto';
 import { User } from '../user/user.entity.js';
 import { orm } from '../shared/db/orm.js';
 import { MailService } from './mail.service.js';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import { Loaded } from '@mikro-orm/core';
 
 const em = orm.em;
 const mailService = new MailService();
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs'
 const SECRET_KEY = 'secretkey123456'; // Debe ser una variable de entorno
 
 export const resetPassword = async (req: Request, res: Response) => {
@@ -43,19 +44,15 @@ export const loginUser = async (req: Request, res: Response) => {
   }
 
   try {
-    const findUser = await em.findOne(User, {email: userData.email, password: userData.password});
-    if (!findUser){
-      res.status(409).send({message: 'Invalid user'});
-  } else {
-    const resultPassword = userData.password;
-    if (resultPassword) {
-        const expiresIn = 20;
-        const accessToken = jwt.sign({ email: findUser.email, privilege: findUser.privilege }, SECRET_KEY, {expiresIn: expiresIn});
-        res.send({ accessToken });
-    } else {
-        res.status(409).send({message: 'Invalid user'});
-    }
-  }
+    const findUser = await em.findOne(User, { email: userData.email }) as Loaded<User, never>;
+    if (!findUser) res.status(401).send({message: 'Invalid user'});
+    const isPasswordValid = await bcrypt.compare(userData.password, findUser.password)
+
+    if (!isPasswordValid) return res.status(401).json({message: 'Credenciales inválidas'});
+    
+    const expiresIn = 24*60*60;
+    const accessToken = jwt.sign({ email: findUser.email, privilege: findUser.privilege }, SECRET_KEY, {expiresIn: expiresIn});
+    res.send({ accessToken });
   } catch (err) {
     return res.status(500).send('Server error!');
   }
