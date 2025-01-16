@@ -143,41 +143,32 @@ async function findProductByName(req: Request, res: Response) {
     res.status(404).json({ message: error.message });
   }
 }
-async function updateStock(req: Request, res: Response) {
+
+async function verifyStock(req: Request, res: Response) {
   try {
     const { id: productId } = req.params; 
-    const { quantity, operation } = req.body;
+    const { quantity } = req.query;
 
     const product = await em.findOne(Product, { id: productId });
 
     if (!product) {
       return res.status(404).json({ message: 'Producto no encontrado' });
     }
-
-    if (operation === 'compra') {
-      if (product.stock < 1) {
-        return res.status(400).json({
-          message: 'Stock insuficiente',
-          availableStock: product.stock ///?
-        });
-      }
-      product.stock -= quantity;
-    } else {
-      product.stock += quantity;
+    if (Number(quantity) > product.stock) { // lo tuve que poner así al quantity pq si no no me dejaba aunque si lo paso como numero
+      return res.status(400).json({
+        message: 'Stock insuficiente',
+        availableStock: product.stock,
+      });
     }
 
-    await em.flush();
-
     res.status(200).json({
-      message: 'Stock actualizado correctamente',
-      currentStock: product.stock
+      message: 'Stock suficiente',
+      availableStock: product.stock,
     });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
 }
-
-
 
 export const controller = {  
   findAll, 
@@ -188,5 +179,5 @@ export const controller = {
   //listByCategory,
   //orderProductStock,
   findProductByName,
-  updateStock
+  verifyStock,
 };

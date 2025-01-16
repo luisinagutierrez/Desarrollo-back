@@ -47,13 +47,4 @@ Content-Type: application/json
 ### borrar un producto
 
 
-
-
-
-PUT http://localhost:3000/api/products/66d22415e96acb1617f96569/stock
-Content-Type: application/json
-
-{
-    "operation": "compra"
-    //"operation": "devuelve"
-}
+GET http://localhost:3000/api/products/67880cf269c71bef9c9957c6/verify-stock?quantity=3

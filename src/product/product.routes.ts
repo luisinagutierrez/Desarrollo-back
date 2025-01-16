@@ -10,6 +10,6 @@ productRouter.get('/', controller.findAll);
 productRouter.get('/:id', controller.findOne);
 productRouter.post('/', upload.single('image'), controller.add);
 productRouter.put('/:id', controller.update);
-productRouter.put('/:id/stock', controller.updateStock);  // revisar
+productRouter.get('/:id/verify-stock', controller.verifyStock);
 productRouter.delete('/:id', controller.remove);
 ///productRouter.get('/category/:category', controller.listByCategory);
