@@ -12,8 +12,8 @@ export class Cart extends BaseEntity {
     @Property({nullable: false})
     quantity!: number
 
-    @Property({nullable: false})
-    product!: Product
+    @OneToMany(() => Product, (product) => product.cart, {cascade:[Cascade.ALL]})
+    products = new Collection<Product>(this);
 
     @ManyToOne(() => Order, {nullable: false})
     order!: Rel<Order>
