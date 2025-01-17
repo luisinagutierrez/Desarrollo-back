@@ -102,7 +102,7 @@ async function signUp(req: Request, res: Response) {
 
 async function findUserByEmail(req: Request, res: Response) {
   try {
-    const email = req.params.email;
+    const email = req.query.email as string; // Ensure email is typed as string
     const user = await em.findOne(User, { email });
 
     if (user) {
@@ -114,6 +114,7 @@ async function findUserByEmail(req: Request, res: Response) {
     res.status(404).json({ message: error.message });
   }
 }
+
 async function updatePassword(req: Request, res: Response) {
   try {
     const { email, password: password } = req.body;
