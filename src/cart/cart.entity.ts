@@ -9,12 +9,15 @@ import { User } from '../user/user.entity.js';
 @Entity()   
 export class Cart extends BaseEntity {
 
-    @Property({nullable: false, unique: true})
+    @Property({nullable: false, unique: true}) // total de compra???
     total!: number
-
-    // @OneToMany(() => Product, (product) => product.cart, {cascade:[Cascade.ALL]})
-    // products = new Collection<Product>(this);
+    
+    // @Property({nullable: false, unique: true}) // total de cada producto ???
+    // amount!: number
 
     @ManyToOne(() => User, {nullable: false})
     user!: User
+
+    @OneToMany(() => Product, (product) => product.cart, { cascade: [Cascade.ALL] })
+    products = new Collection<Product>(this);
 }

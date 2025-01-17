@@ -36,3 +36,8 @@ async function getUserCart(req: Request, res: Response){
 
 // ver si cart se puede tomar como order, es raro, pero meca dijo que hagamos asi
 
+
+export{
+  generateCart,
+  getUserCart
+}
