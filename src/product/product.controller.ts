@@ -61,34 +61,6 @@ async function add(req: Request, res: Response) {
     res.status(500).json({ message: 'Error interno del servidor', error: error.message });
   }
 }
-
-
-// async function add(req: Request, res: Response) {
-//   try {
-//     upload.single('image')(req, res, async (err: any) => {
-//       if (err) {
-//         return res.status(400).json({ error: 'Error al subir la imagen' });
-//       }
-
-//       // if (!req.file) {
-//       //   return res.status(400).json({ error: 'No se ha adjuntado ninguna imagen' });
-//       // }
-
-//       const { name, description, price, stock, image, category, supplier } = req.body;
-//      // const imageFileName = req.file.filename;
-//       //const image = 'uploadsProductsPhotographs/' + imageFileName;
-      
-//       const product = em.create(Product, { name, description, price, stock, image, category, supplier });
-//       await em.flush();
-
-//       res.status(201).json({ message: 'product created', data: product });
-//     });
-//   } catch (error: any) {
-//     console.error(error); // Agregamos una impresión de error para depurar
-//     res.status(404).json({ message: error.message });
-//   }
-// };
-
   async function update(req: Request, res: Response){
     try{
       const id = req.params.id;
@@ -132,16 +104,16 @@ async function add(req: Request, res: Response) {
   }
 }
 
-async function listByCategory(req: Request, res: Response){
-  try{
-    const category = req.params.category;
-    const products = await em.find(Product, {category});
-    res.status(200).json({message:'found all products',data: products});
-  }
-  catch (error: any) {
-    res.status(404).json({message: error.message});
-  }
-}
+// async function listByCategory(req: Request, res: Response){
+//   try{
+//     const category = req.params.category;
+//     const products = await em.find(Product, {category});
+//     res.status(200).json({message:'found all products',data: products});
+//   }
+//   catch (error: any) {
+//     res.status(404).json({message: error.message});
+//   }
+// }
 
 // async function orderProductStock(req: Request, res: Response){
 //   const cart = req.body.cart;
@@ -172,13 +144,85 @@ async function findProductByName(req: Request, res: Response) {
   }
 }
 
+async function verifyStock(req: Request, res: Response) {
+  try {
+    const { id: productId } = req.params; 
+    const { quantity } = req.query;
+
+    const product = await em.findOne(Product, { id: productId });
+
+    if (!product) {
+      return res.status(404).json({ message: 'Producto no encontrado' });
+    }
+    if (Number(quantity) > product.stock) { // lo tuve que poner así al quantity pq si no no me dejaba aunque si lo paso como numero
+      return res.status(400).json({
+        message: 'Stock insuficiente para el articulo',
+        productName: product.name,
+        availableStock: product.stock,
+      });
+    }
+
+    res.status(200).json({
+      message: 'Stock suficiente',
+      availableStock: product.stock,
+    });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+async function updateStock(req: Request, res: Response) {
+  try {
+    const { id: productId } = req.params; // Extraemos el ID del producto de los parámetros
+    const { quantity } = req.body; // Extraemos la cantidad del body de la solicitud
+
+    if (!quantity || quantity <= 0) {
+      return res.status(400).json({ message: 'La cantidad debe ser mayor a 0' });
+    }
+
+    const product = await em.findOne(Product, { id: productId }); // Buscamos el producto en la base de datos
+
+    if (!product) {
+      return res.status(404).json({ message: 'Producto no encontrado' });
+    }
+
+    if (Number(quantity) > product.stock) {
+      return res.status(400).json({
+        message: 'Stock insuficiente para el artículo',
+        productName: product.name, // Agregar el nombre del producto correctamente
+        availableStock: product.stock // Asegúrate de que el stock disponible también esté incluido
+      });
+    }
+    
+    
+
+    // Restamos la cantidad del stock y actualizamos el producto
+    product.stock -= quantity;
+    await em.flush();
+
+    res.status(200).json({
+      message: 'Stock actualizado correctamente',
+      data: {
+        id: product.id,
+        name: product.name,
+        remainingStock: product.stock,
+      },
+    });
+  } catch (error: any) {
+    res.status(500).json({ message: 'Error interno del servidor', error: error.message });
+  }
+}
+
+
 export const controller = {  
   findAll, 
   findOne,
   add,
   update,
   remove,
-  listByCategory,
+  //listByCategory,
   //orderProductStock,
-  findProductByName
+  findProductByName,
+  verifyStock,
+  updateStock
 };
