@@ -114,7 +114,7 @@ async function findCitiesByProvince(req: Request, res: Response){
     const id = req.params.id;
     const province = await em.findOneOrFail(Province, {id: id});
     const citys = await em.find(City, {province: province});
-    res.status(200).json({message: 'found citys by province', data: citys});
+    res.status(200).json({message: 'found cities by province', data: citys});
   } catch (error: any) {
     res.status(404).json({message: error.message});
   }

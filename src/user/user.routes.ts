@@ -5,9 +5,9 @@ export const userRouter = Router();
 
 //userRouter.get('/search', controller.findUserByEmail);
 //userRouter.get('/', controller.findAll);
-userRouter.get('/:email', controller.findUserByEmail);
 userRouter.put('/update-password', controller.updatePassword);
+userRouter.get('/email/:email', controller.findUserByEmail);
+userRouter.delete('/email/:email', controller.remove);
 userRouter.get('/:id', controller.findOne);
 userRouter.put('/:id', controller.update);
-userRouter.delete('/:id', controller.remove);
 userRouter.post('/', controller.signUp);

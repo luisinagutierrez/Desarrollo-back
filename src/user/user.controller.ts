@@ -62,22 +62,22 @@ async function update(req: Request, res: Response){
   }
 };
 
-async function remove(req: Request, res: Response){
-try{
-  const id = req.params.id;
-  const user = await em.findOne(User, { id });
+async function remove(req: Request, res: Response) {
+  try {
+    const email = req.params.email;
+    const user = await em.findOne(User, { email });
+    
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-  await em.removeAndFlush(user);
-  res
-    .status(200)
-    .json({message: 'user deleted', data: user});
+
+    await em.removeAndFlush(user);
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (error: any) {
+    res.status(404).json({ message: error.message });
+  }
 }
-catch (error: any) {
-  res.status(404).json({message: error.message});
-}
-}
+
 
 async function signUp(req: Request, res: Response) {
   try {
@@ -100,19 +100,6 @@ async function signUp(req: Request, res: Response) {
   }
 };
 
-async function finddUserByEmail(req: Request, res: Response) {
-  try {
-    const email = req.query.email as string;
-    const user = await em.findOne(User, { email });
-    if (user) {
-      res.status(200).json({ message: 'User found', data: user });
-    } else {
-      res.status(404).json({ message: 'User not found' });
-    }
-  } catch (error: any) {
-    res.status(500).json({ message: error.message });
-  }
-}
 
 async function findUserByEmail(req: Request, res: Response){
   try {
@@ -120,7 +107,7 @@ async function findUserByEmail(req: Request, res: Response){
     const user = await em.findOne(User, { email });
 
     if (user) {
-      res.status(200).json({ message: 'found one supplier', data: user });
+      res.status(200).json({ message: 'found one user', data: user });
     } else {
       res.status(404).json({ message: 'user not found' });
     }
