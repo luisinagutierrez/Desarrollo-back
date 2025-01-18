@@ -3,7 +3,8 @@ GET http://localhost:3000/api/users
 
 ### obtener un usuario por id 
 
-GET http://localhost:3000/api/users?email=:email/proveedor1@gmail.com   
+GET http://localhost:3000/api/users?email=contraaholaa.12@gmail.com
+
 
 
 GET http://localhost:3000/api/cities/proveedor1@gmail.com
