@@ -64,8 +64,8 @@ async function update(req: Request, res: Response){
 
 async function remove(req: Request, res: Response) {
   try {
-    const email = req.params.email;
-    const user = await em.findOne(User, { email });
+    const id = req.params.id;
+    const user = await em.findOne(User, { id });
     
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -77,7 +77,6 @@ async function remove(req: Request, res: Response) {
     res.status(404).json({ message: error.message });
   }
 }
-
 
 async function signUp(req: Request, res: Response) {
   try {

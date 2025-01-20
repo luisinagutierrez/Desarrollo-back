@@ -7,7 +7,7 @@ export const userRouter = Router();
 //userRouter.get('/', controller.findAll);
 userRouter.put('/update-password', controller.updatePassword);
 userRouter.get('/email/:email', controller.findUserByEmail);
-userRouter.delete('/email/:email', controller.remove);
+userRouter.delete('/:id', controller.remove);
 userRouter.get('/:id', controller.findOne);
 userRouter.put('/:id', controller.update);
 userRouter.post('/', controller.signUp);
