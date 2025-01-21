@@ -58,8 +58,39 @@ export const loginUser = async (req: Request, res: Response) => {
   }
 }
 
+// export const updateEmail = async (req: Request, res: Response) => {
+//   const { email } = req.body;
+  
+//   try {
+//     // Verify authorization header
+//     const token = req.headers.authorization?.split(' ')[1];
+//     if (!token) {
+//       return res.status(401).json({ message: 'No token provided' });
+//     }
+
+//     // Decode current token
+//     const decoded = jwt.verify(token, SECRET_KEY) as any;
+    
+//     // Create new token with updated email
+//     const newToken = jwt.sign(
+//       { 
+//         email: email, 
+//         privilege: decoded.privilege 
+//       }, 
+//       SECRET_KEY, 
+//       { expiresIn: 24*60*60 }
+//     );
+
+//     res.json({ token: newToken });
+//   } catch (error) {
+//     console.error('Error updating email token:', error);
+//     res.status(500).json({ message: 'Error updating token' });
+//   }
+// };
+
 export const controller = {
   resetPassword,
-  loginUser
+  loginUser,
+  //updateEmail
 };
 
