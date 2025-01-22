@@ -62,21 +62,20 @@ async function update(req: Request, res: Response){
   }
 };
 
-async function remove(req: Request, res: Response){
-try{
-  const id = req.params.id;
-  const user = await em.findOne(User, { id });
+async function remove(req: Request, res: Response) {
+  try {
+    const id = req.params.id;
+    const user = await em.findOne(User, { id });
+    
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-  await em.removeAndFlush(user);
-  res
-    .status(200)
-    .json({message: 'user deleted', data: user});
-}
-catch (error: any) {
-  res.status(404).json({message: error.message});
-}
+
+    await em.removeAndFlush(user);
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (error: any) {
+    res.status(404).json({ message: error.message });
+  }
 }
 
 async function signUp(req: Request, res: Response) {
@@ -100,7 +99,8 @@ async function signUp(req: Request, res: Response) {
   }
 };
 
-async function findUserByEmail(req: Request, res: Response) {
+
+async function findUserByEmail(req: Request, res: Response){
   try {
     const email = req.params.email;
     //const user = await em.findOne(User, { email });
@@ -109,12 +109,13 @@ async function findUserByEmail(req: Request, res: Response) {
     if (user) {
       res.status(200).json({ message: 'found one user', data: user });
     } else {
-      res.status(404).json({ message: 'User not found' });
+      res.status(404).json({ message: 'user not found' });
     }
   } catch (error: any) {
     res.status(404).json({ message: error.message });
   }
-}
+};
+
 
 async function updatePassword(req: Request, res: Response) {
   try {

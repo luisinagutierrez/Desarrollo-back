@@ -6,3 +6,4 @@ export const authRouter = Router();
 
 authRouter.post('/reset-password', controller.resetPassword);
 authRouter.post('/login', controller.loginUser)
+//authRouter.post('/update-email', controller.updateEmail);

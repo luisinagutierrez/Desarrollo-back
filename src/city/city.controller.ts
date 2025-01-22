@@ -102,7 +102,7 @@ async function findCityByPostCode(req: Request, res: Response) {
 }
 
 
-async function findCitiesByProvince(req: Request, res: Response) {
+/*async function findCitiesByProvince(req: Request, res: Response) {
   try {
     const provinceId = req.params.provinceId;
     const cities = await em.find(City, { province: { id: provinceId } });
@@ -111,7 +111,7 @@ async function findCitiesByProvince(req: Request, res: Response) {
   } catch (error: any) {
     res.status(404).json({ message: error.message });
   }
-};
+};*/
   
 export const controller = {  
   findAll, 
@@ -120,5 +120,5 @@ export const controller = {
   update,
   remove,
   findCityByPostCode,
-  findCitiesByProvince
+  //findCitiesByProvince
 };
