@@ -12,6 +12,9 @@ export class City extends BaseEntity {
     @Property({nullable: false, unique: true})
     name!: string
 
+    @Property({nullable: false, unique: false})
+    surcharge?: number
+
     @ManyToOne(() => Province, {nullable: false})
     province!: Rel<Province>
 
