@@ -30,7 +30,7 @@ export const resetPassword = async (req: Request, res: Response) => {
     await mailService.sendPasswordResetEmail(email, token);
 
     res.status(202).send('Password reset email sent');
-    res.send('Password reset email sent');
+    //res.send('Password reset email sent');
   } catch (error: any) {
     console.error('Error in reset password', error);
     res.status(500).send('Internal server error');
@@ -45,7 +45,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
   try {
     const findUser = await em.findOne(User, { email: userData.email }) as Loaded<User, never>;
-    if (!findUser) res.status(401).send({message: 'Invalid user'});
+    if (!findUser) return res.status(401).send({message: 'Invalid user'});
     const isPasswordValid = await bcrypt.compare(userData.password, findUser.password)
 
     if (!isPasswordValid) return res.status(401).json({message: 'Credenciales inválidas'});

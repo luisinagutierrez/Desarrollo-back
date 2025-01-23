@@ -103,8 +103,7 @@ async function signUp(req: Request, res: Response) {
 async function findUserByEmail(req: Request, res: Response){
   try {
     const email = req.params.email;
-    //const user = await em.findOne(User, { email });
-    const user = await em.findOne(User, { email }, { populate: ['city.surcharge'] });
+    const user = await em.findOne(User, { email });
 
     if (user) {
       res.status(200).json({ message: 'found one user', data: user });
