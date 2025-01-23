@@ -4,7 +4,7 @@ GET http://localhost:3000/api/cities
 
 ### obtener un producto por id ----- 1 es el id del producto
 
-GET http://localhost:3000/api/cities/65492350fcd9263a928e7982   
+GET http://localhost:3000/api/cities/678fa83bcafb7d5d3b68fef8
 
 ### crear un nuevo producto
 
