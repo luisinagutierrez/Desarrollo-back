@@ -21,11 +21,14 @@ import { RequestContext } from '@mikro-orm/core';
 import { productRouter } from './product/product.routes.js';
 import { authRouter } from './auth/auth.routes.js';
 import jwt from 'jsonwebtoken';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { orderRouter } from './order/order.routes.js';
+
 const app = express();
 app.use(express.json());
 app.use(cors());
-import path from 'path';
-import { fileURLToPath } from 'url';
+
 
 app.use(cors({
   origin: 'http://localhost:4200'
@@ -59,6 +62,7 @@ app.use('/api/users', userRouter);
 app.use('/api/cities', cityRouter);
 app.use('/api/products', productRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/orders', orderRouter);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
