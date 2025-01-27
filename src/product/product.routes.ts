@@ -14,4 +14,4 @@ productRouter.put('/:id', controller.update);
 productRouter.put('/:id/quantity', controller.updateStock);
 productRouter.get('/:id/verify-stock', controller.verifyStock);
 productRouter.delete('/:id', controller.remove);
-productRouter.get('/category/:category', controller.listByCategory);
+///productRouter.get('/category/:category', controller.listByCategory); ES MUY PROBABLE QUE TENGAMOS QUE ELIMINARLA
