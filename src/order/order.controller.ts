@@ -50,7 +50,7 @@ async function findOne(req: Request, res: Response){
 
 async function create(req: Request, res: Response){
   try{
-    const {userId, orderItems} = req.body;
+    const {userId, orderItems, total} = req.body;
 
     const user = await em.findOneOrFail(User, {id: userId});
 
@@ -72,10 +72,10 @@ async function create(req: Request, res: Response){
       })
     );
 
-    const total = orderItemsWithProduct.reduce(
-      (acc: number, item: any) => acc + item.subtotal,
-      0
-    );
+    // const total = orderItemsWithProduct.reduce(
+    //   (acc: number, item: any) => acc + item.subtotal,
+    //   0
+    // );
 
     const order = em.create(Order, {
       status: 'pending',
