@@ -5,6 +5,30 @@ GET http://localhost:3000/api/orders
 GET http://localhost:3000/api/orders/your-order-id-here
 
 ### Create new order
+
+# Datos luli
+POST http://localhost:3000/api/orders
+Content-Type: application/json
+
+{
+    "userId": "678fe607476f8c7cbc742e8c",
+    "orderItems": [
+        {
+            "productId": "678ed1d1bf576eea348f7c2d",
+            "quantity": 2,
+            "unitPrice": 30.00,
+            "subtotal": 60.00
+        },
+        {
+            "productId": "67978f986be6287af8303503",
+            "quantity": 5,
+            "unitPrice": 49.99,
+            "subtotal": 49.99
+        }
+    ]
+}
+
+#  datos luca
 POST http://localhost:3000/api/orders
 Content-Type: application/json
 
@@ -25,6 +49,7 @@ Content-Type: application/json
         }
     ]
 }
+
 
 ### Update order
 PUT http://localhost:3000/api/orders/your-order-id-here

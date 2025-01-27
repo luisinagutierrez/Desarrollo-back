@@ -54,17 +54,35 @@ async function create(req: Request, res: Response){
 
     const user = await em.findOneOrFail(User, {id: userId});
 
+    const orderItemsWithProduct = await Promise.all( /// DESDE ACÁ HASTA EL CREATE, ES PARA LA ACTUALIZACIÓN DEL STOCK 
+      orderItems.map(async (item: any) => { 
+        const product = await em.findOneOrFail(Product, { id: item.productId });
+        
+        if (product.stock < item.quantity) { // con el verifyStock ya nos aceguramos de que no entre acá, quiza se pueda sacar 
+          throw new Error(`Insufficient stock for product: ${product.name}`);
+        }
+        
+        product.stock -= item.quantity;
+        return {
+          productId: product.id,
+          quantity: item.quantity,
+          unitPrice: item.unitPrice,
+          subtotal: item.quantity * item.unitPrice,
+        };
+      })
+    );
+
+    const total = orderItemsWithProduct.reduce(
+      (acc: number, item: any) => acc + item.subtotal,
+      0
+    );
+
     const order = em.create(Order, {
       status: 'pending',
       orderDate: new Date(),
       user,
-      orderItems: orderItems.map((item: any) => ({
-        productId: item.productId,
-        quantity: item.quantity,
-        unitPrice: item.unitPrice,
-        subtotal: item.quantity * item.unitPrice
-      })),
-      total: orderItems.reduce((acc: number, item: any) => acc + (item.quantity * item.unitPrice), 0)
+      orderItems: orderItemsWithProduct,
+      total,
     });
 
     await em.persistAndFlush(order);
