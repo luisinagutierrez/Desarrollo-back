@@ -1,0 +1,17 @@
+### Crear una nueva orden
+POST http://localhost:3000/678fe607476f8c7cbc742e8c/create  
+# AHÍ TENDRÍAS Q PONER EL ID DE UN USUARIO, PUEDE SER Q SEA ESTO LO QUE ESTÉ MAL, CAPAZ Q EL ID TENDRÍA Q IR COMO PARTE DE LO QUE SE PASA
+# NO LO QUISE HACER ASÍ PQ TENÍA MIEDO Q ENTRE EN CONFLICTO CON OTRAS RUTAS COMO NOS PASA CON EL USER CON EL EMAIL
+Content-Type: application/json
+{
+  "products": [
+    { "id": "678ed1d1bf576eea348f7c2d" },
+    { "id": "67978f986be6287af8303503" }
+  ],
+  "total": 150.75
+}
+
+
+
+
+GET http://localhost:3000/api/orders

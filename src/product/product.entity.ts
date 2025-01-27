@@ -3,6 +3,7 @@ import { BaseEntity } from '../shared/db/baseEntity.entity.js';
 import { Category } from "../category/category.entity.js";
 import { Supplier } from "../supplier/supplier.entity.js";
 import { Cart } from '../cart/cart.entity.js';
+import { Order } from '../order/order.entity.js';
 
 @Entity()   
 export class Product extends BaseEntity { 
@@ -30,4 +31,7 @@ export class Product extends BaseEntity {
 
     @ManyToOne(() => Cart, {nullable: true})   
     cart?: Rel<Cart>
+    @ManyToOne(() => Order, {nullable: true})
+        order?: Rel<Order>
+        
 }
