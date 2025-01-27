@@ -144,6 +144,32 @@ async function findProductByName(req: Request, res: Response) {
   }
 }
 
+async function search(req: Request, res: Response) {
+  try {
+    const { query } = req.query;
+    if (!query) {
+      return res.status(400).json({ message: 'Query parameter is required' });
+    }
+
+    const searchQuery = String(query).toLowerCase();
+    const products = await em.find(Product, {}, { 
+      populate: ['category']
+    });
+
+    const filteredProducts = products.filter(product => 
+      product.name.toLowerCase().includes(searchQuery) || 
+      product.category.name.toLowerCase().includes(searchQuery)
+    );
+
+    res.status(200).json({ 
+      message: 'found products', 
+      data: filteredProducts 
+    });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
 async function verifyStock(req: Request, res: Response) {
   try {
     const { id: productId } = req.params; 
@@ -223,6 +249,7 @@ export const controller = {
   //listByCategory,
   //orderProductStock,
   findProductByName,
+  search,
   verifyStock,
   updateStock
 };
