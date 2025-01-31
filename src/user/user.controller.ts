@@ -81,7 +81,7 @@ async function signUp(req: Request, res: Response) {
     const userData = req.body;
     const existingUser = await em.findOne(User, { email: userData.email });
     if (existingUser) {
-      return res.status(409).json({ message: 'Error', error: 'The user already exists' });
+      return res.status(303).json({ message: 'Error', error: 'The user already exists' });
     }
 
     const salt = await bcrypt.genSalt(10);
