@@ -1,9 +1,9 @@
 import {Entity, ManyToOne, Property, Rel, BeforeCreate, BeforeUpdate, OneToMany, Cascade, Collection} from '@mikro-orm/core';
 import { BaseEntity } from '../shared/db/baseEntity.entity.js';
-//import { Shipment } from "../models/shipment.entity.js";
 import { City } from "../city/city.entity.js"
 import bcrypt from 'bcrypt';
 import { Order } from '../order/order.entity.js';
+
 @Entity()   
 export class User extends BaseEntity {
   

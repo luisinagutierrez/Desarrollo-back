@@ -1,7 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { Product } from './product.entity.js';
 import { orm } from '../shared/db/orm.js';
-//import path from 'path';
 
 const em = orm.em;
 
@@ -104,31 +103,6 @@ async function add(req: Request, res: Response) {
   }
 }
 
-// async function listByCategory(req: Request, res: Response){
-//   try{
-//     const category = req.params.category;
-//     const products = await em.find(Product, {category});
-//     res.status(200).json({message:'found all products',data: products});
-//   }
-//   catch (error: any) {
-//     res.status(404).json({message: error.message});
-//   }
-// }
-
-// async function orderProductStock(req: Request, res: Response){
-//   const cart = req.body.cart;
-//   const {products} = cart;
-//   try{
-//     for (const product of products) {
-//       const productToUpdate = await em.findOneOrFail(Product, {id: product.id});
-//       productToUpdate.stock -= product.quantity;
-//       await em.flush();
-//     }
-//   } catch (error: any) {
-//     res.status(404).json({message: error.message});
-//   }
-// };
-
 async function findProductByName(req: Request, res: Response) {
   try {
     const name = req.params.name;
@@ -197,59 +171,13 @@ async function verifyStock(req: Request, res: Response) {
   }
 }
 
-async function updateStock(req: Request, res: Response) {
-  try {
-    const { id: productId } = req.params; // Extraemos el ID del producto de los parámetros
-    const { quantity } = req.body; // Extraemos la cantidad del body de la solicitud
-
-    if (!quantity || quantity <= 0) {
-      return res.status(400).json({ message: 'La cantidad debe ser mayor a 0' });
-    }
-
-    const product = await em.findOne(Product, { id: productId }); // Buscamos el producto en la base de datos
-
-    if (!product) {
-      return res.status(404).json({ message: 'Producto no encontrado' });
-    }
-
-    if (Number(quantity) > product.stock) {
-      return res.status(400).json({
-        message: 'Stock insuficiente para el artículo',
-        productName: product.name, // Agregar el nombre del producto correctamente
-        availableStock: product.stock // Asegúrate de que el stock disponible también esté incluido
-      });
-    }
-    
-    
-
-    // Restamos la cantidad del stock y actualizamos el producto
-    product.stock -= quantity;
-    await em.flush();
-
-    res.status(200).json({
-      message: 'Stock actualizado correctamente',
-      data: {
-        id: product.id,
-        name: product.name,
-        remainingStock: product.stock,
-      },
-    });
-  } catch (error: any) {
-    res.status(500).json({ message: 'Error interno del servidor', error: error.message });
-  }
-}
-
-
 export const controller = {  
   findAll, 
   findOne,
   add,
   update,
   remove,
-  //listByCategory,
-  //orderProductStock,
   findProductByName,
   search,
-  verifyStock,
-  updateStock
+  verifyStock
 };

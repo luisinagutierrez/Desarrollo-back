@@ -58,7 +58,7 @@ async function create(req: Request, res: Response){
       orderItems.map(async (item: any) => { 
         const product = await em.findOneOrFail(Product, { id: item.productId });
         
-        if (product.stock < item.quantity) { // con el verifyStock ya nos aceguramos de que no entre acá, quiza se pueda sacar 
+        if (product.stock < item.quantity) { // con el verifyStock ya nos aceguramis de que no entre acá, quiza se pueda sacar 
           throw new Error(`Insufficient stock for product: ${product.name}`);
         }
         
@@ -71,11 +71,6 @@ async function create(req: Request, res: Response){
         };
       })
     );
-
-    // const total = orderItemsWithProduct.reduce(
-    //   (acc: number, item: any) => acc + item.subtotal,
-    //   0
-    // );
 
     const order = em.create(Order, {
       status: 'pending',

@@ -1,7 +1,6 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response } from 'express';
 import { User } from './user.entity.js';
 import { orm } from '../shared/db/orm.js';
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 const em = orm.em.fork();
@@ -28,7 +27,6 @@ async function findOne(req: Request, res: Response){
   }
 };
 
-/// creo q no lo usamos pero igual hice el hasging a la contra, hay q revisar si hay q sacarlo 
 async function update(req: Request, res: Response){  
   try{
     const id = req.params.id;
@@ -99,7 +97,6 @@ async function signUp(req: Request, res: Response) {
   }
 };
 
-
 async function findUserByEmail(req: Request, res: Response){
   try {
     const email = req.params.email;
@@ -114,7 +111,6 @@ async function findUserByEmail(req: Request, res: Response){
     res.status(404).json({ message: error.message });
   }
 };
-
 
 async function updatePassword(req: Request, res: Response) {
   try {
@@ -145,6 +141,5 @@ async function updatePassword(req: Request, res: Response) {
     signUp,
     findUserByEmail,
     updatePassword
-    
-    //login
+
   };

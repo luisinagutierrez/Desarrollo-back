@@ -1,8 +1,6 @@
-import {Entity, ManyToOne, OneToMany, Property, Rel, Collection, Cascade} from '@mikro-orm/core';
+import {Entity, OneToMany, Property, Collection, Cascade} from '@mikro-orm/core';
 import { BaseEntity } from '../shared/db/baseEntity.entity.js';
-import { Province } from "../province/province.entity.js";
 import { Product } from "../product/product.entity.js";
-//import { Shipment } from "../models/shipment.entity.js";
 
 @Entity()   
 export class Category extends BaseEntity {
