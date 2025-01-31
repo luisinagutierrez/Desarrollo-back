@@ -39,7 +39,7 @@ async function add(req: Request, res: Response) {
     const existingProduct = await em.findOne(Product, { name });
 
     if (existingProduct) {
-      return res.status(303).json({ message: 'Error', error: 'El producto ya existe' });
+      return res.status(303).json({ message: 'Error', error: 'El producto already exists' });
     }
 
     const product = em.create(Product, {
