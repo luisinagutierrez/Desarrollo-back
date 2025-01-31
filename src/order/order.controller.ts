@@ -123,10 +123,31 @@ async function remove(req: Request, res: Response){
   }
 }
 
+async function findOrdersByEmail(req: Request, res: Response) {
+  try {
+    const userEmail = req.params.email;
+    const user = await em.findOne(User, { email: userEmail });
+    
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const orders = await em.find(Order, { user: user.id }, {
+      populate: ['orderItems'],
+      fields: ['*']
+    });
+    
+    res.status(200).json({ message: 'Orders found successfully', data: orders });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
 export const controller = {
   findAll,
   findOne,
   create,
   update,
-  remove
+  remove,
+  findOrdersByEmail
 }
