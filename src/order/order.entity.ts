@@ -1,6 +1,5 @@
-import {Entity, ManyToOne, OneToMany, Property, Collection, Cascade, Rel} from '@mikro-orm/core'; 
+import {Entity, ManyToOne, Property, Rel} from '@mikro-orm/core'; 
 import { BaseEntity } from '../shared/db/baseEntity.entity.js';
-//import { Product } from "../product/product.entity.js";
 import { User } from '../user/user.entity.js';
 
 interface OrderItem {

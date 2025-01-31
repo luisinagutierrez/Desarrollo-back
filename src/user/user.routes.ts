@@ -3,7 +3,7 @@ import { controller } from "./user.controller.js";
 
 export const userRouter = Router();
 
-//userRouter.get('/search', controller.findUserByEmail);
+userRouter.get('/search', controller.findUserByEmail);
 userRouter.get('/', controller.findAll);
 userRouter.put('/update-password', controller.updatePassword);
 userRouter.get('/:email', controller.findUserByEmail);

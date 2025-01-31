@@ -1,6 +1,7 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response } from 'express';
 import { City } from './city.entity.js';
 import { orm } from '../shared/db/orm.js';
+import { User } from '../user/user.entity.js';
 
 const em = orm.em;
 
@@ -71,22 +72,39 @@ async function update(req: Request, res: Response){
 };
   
  async function remove(req: Request, res: Response){
-  try{
-    const id = req.params.id;
-    const city = await em.findOne(City, { id });
-    if (!city) {
-      return res.status(404).json({ message: 'City not found' });
-    }
-    await em.removeAndFlush(city);
-    res
-      .status(200)
-      .json({message: 'city deleted', data: city});
-  }
-  catch (error: any) {
-    res.status(404).json({message: error.message});
-  }
-};
-
+   try{
+     const id = req.params.id;
+     const city = await em.findOne(City, { id });
+     if (!city) {
+       return res.status(404).json({ message: 'City not found' });
+     }
+     const cities = await em.find(User, { city });
+     if (cities.length > 0) {
+       return res.status(400).json({ message: 'Error', error: 'The city has associated users.' });
+     }
+     await em.removeAndFlush(city);
+     res
+       .status(200)
+       .json({message: 'city deleted', data: city});
+   }
+   catch (error: any) {
+     res.status(404).json({message: error.message});
+   }
+ };
+ 
+ async function findUsersByCity(req: Request, res: Response){
+   try{
+     const postCode = req.params.postCode;
+     const city = await em.findOneOrFail(City, {postCode: postCode});
+     const users = await em.find(User, {city: city}); 
+     res
+       .status(200)
+       .json({message: 'found users by city', data: users});
+ 
+   }catch (error: any) {
+     res.status(404).json({message: error.message});
+   }
+ };
 async function findCityByPostCode(req: Request, res: Response) {
   try {
     const postCode = req.params.postCode;
@@ -100,18 +118,6 @@ async function findCityByPostCode(req: Request, res: Response) {
     res.status(404).json({ message: error.message });
   }
 }
-
-
-/*async function findCitiesByProvince(req: Request, res: Response) {
-  try {
-    const provinceId = req.params.provinceId;
-    const cities = await em.find(City, { province: { id: provinceId } });
-
-    res.status(200).json({ message: 'found cities by province', data: cities });
-  } catch (error: any) {
-    res.status(404).json({ message: error.message });
-  }
-};*/
   
 export const controller = {  
   findAll, 
@@ -120,5 +126,5 @@ export const controller = {
   update,
   remove,
   findCityByPostCode,
-  //findCitiesByProvince
+  findUsersByCity
 };

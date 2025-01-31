@@ -1,8 +1,7 @@
-import {Entity, ManyToOne, Property, Rel, Collection} from '@mikro-orm/core';
+import {Entity, ManyToOne, Property, Rel} from '@mikro-orm/core';
 import { BaseEntity } from '../shared/db/baseEntity.entity.js';
 import { Category } from "../category/category.entity.js";
 import { Supplier } from "../supplier/supplier.entity.js";
-import { Order } from '../order/order.entity.js';
 
 @Entity()   
 export class Product extends BaseEntity { 
@@ -27,7 +26,4 @@ export class Product extends BaseEntity {
 
     @ManyToOne(() => Supplier, {nullable: false})
     supplier!: Rel<Supplier>
-
-    // @ManyToOne(() => Order, {nullable: true})
-    // order?: Rel<Order>   
 }
