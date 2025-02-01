@@ -45,7 +45,7 @@ Content-Type: application/json
 
 
 ###barra de busqueda
-GET http://localhost:3000/api/products/search?query=PURSE
+GET http://localhost:3000/api/products/search?query=mochi
 
 
 ### borrar un producto
