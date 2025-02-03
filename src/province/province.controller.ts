@@ -57,7 +57,7 @@ async function add(req: Request, res: Response) {
       if (newName !== existingProvince.name) {
         const duplicateProvince = await em.findOne(Province, { name: newName });
         if (duplicateProvince) {
-          return res.status(400).json({ message: 'Error', error: 'The new name is already used' });
+          return res.status(303).json({ message: 'Error', error: 'The new name is already used' });
         }
       }
       em.assign(existingProvince, req.body);
@@ -67,7 +67,7 @@ async function add(req: Request, res: Response) {
         .json({message: 'Province updated', data: existingProvince});
     }
     catch (error: any) {
-      res.status(404).json({message: error.message});
+      res.status(500).json({ message: 'Internal server error', error: error.message });
     }
   };
 
@@ -89,7 +89,7 @@ async function add(req: Request, res: Response) {
       .json({message: 'Province deleted', data: province});
   }
   catch (error: any) {
-    res.status(404).json({message: error.message});
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 };  
 
@@ -105,7 +105,7 @@ async function findProvinceByName(req: Request, res: Response) {
       res.status(404).json({ message: 'province not found' });
     }
   } catch (error: any) {
-    res.status(404).json({ message: error.message });
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 };
 

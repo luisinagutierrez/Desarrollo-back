@@ -68,7 +68,7 @@ async function add(req: Request, res: Response) {
         .json({message: 'supplier updated', data: existingSupplier});
     }
     catch (error: any) {
-      res.status(404).json({message: error.message});
+      res.status(500).json({ message: 'Internal server error', error: error.message });
     }
   };
   
@@ -90,7 +90,7 @@ async function add(req: Request, res: Response) {
       .json({message: 'supplier deleted', data: supplier});
   }
   catch (error: any) {
-    res.status(404).json({message: error.message});
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 }
 
@@ -121,7 +121,7 @@ async function findSupplierByCuit(req: Request, res: Response){
       res.status(404).json({ message: 'supplier not found' });
     }
   } catch (error: any) {
-    res.status(404).json({ message: error.message });
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 };
 

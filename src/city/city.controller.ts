@@ -88,7 +88,7 @@ async function update(req: Request, res: Response){
        .json({message: 'city deleted', data: city});
    }
    catch (error: any) {
-     res.status(404).json({message: error.message});
+    res.status(500).json({ message: 'Internal server error', error: error.message });
    }
  };
  
@@ -115,7 +115,7 @@ async function findCityByPostCode(req: Request, res: Response) {
       res.status(404).json({ message: 'city not found' });
     }
   } catch (error: any) {
-    res.status(404).json({ message: error.message });
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 }
   

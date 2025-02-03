@@ -50,7 +50,7 @@ async function update(req: Request, res: Response){
     const id = req.params.id;
     const existingCategory = await em.findOne(Category, { id });
       if (!existingCategory) {
-        return res.status(404).json({ message: 'Province not found' });
+        return res.status(404).json({ message: 'Category not found' });
       }
   
       const newName = req.body.name;
@@ -88,7 +88,7 @@ async function update(req: Request, res: Response){
       .json({message: 'category deleted', data: category});
   }
   catch (error: any) {
-    res.status(404).json({message: error.message});
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 };
 
@@ -117,7 +117,7 @@ async function findCategoryByName(req: Request, res: Response) {
       res.status(404).json({ message: 'category not found' });
     }
   } catch (error: any) {
-    res.status(404).json({ message: error.message });
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 }
   

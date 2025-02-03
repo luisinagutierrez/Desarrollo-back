@@ -99,7 +99,7 @@ async function add(req: Request, res: Response) {
       .json({message: 'product deleted', data: product});
   }
   catch (error: any) {
-    res.status(404).json({message: error.message});
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 }
 
@@ -114,7 +114,7 @@ async function findProductByName(req: Request, res: Response) {
       res.status(404).json({ message: 'product not found' });
     }
   } catch (error: any) {
-    res.status(404).json({ message: error.message });
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 }
 
@@ -140,7 +140,7 @@ async function search(req: Request, res: Response) {
       data: filteredProducts 
     });
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 }
 
@@ -167,7 +167,7 @@ async function verifyStock(req: Request, res: Response) {
       availableStock: product.stock,
     });
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 }
 

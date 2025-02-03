@@ -5,8 +5,8 @@ import { upload } from "../shared/db/image_processor/multer_middleware.js";
 export const productRouter = Router();
 
 productRouter.get('/search', controller.search);
-productRouter.get('/:name', controller.findProductByName);
 productRouter.get('/:id', controller.findOne);
+productRouter.get('/product/:name', controller.findProductByName);
 productRouter.get('/', controller.findAll);
 productRouter.post('/', upload.single('image'), controller.add);
 productRouter.put('/:id', controller.update);

@@ -56,7 +56,7 @@ async function update(req: Request, res: Response){
       .json({message: 'user updated', data: existingUser});
   }
   catch (error: any) {
-    res.status(404).json({message: error.message});
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 };
 
@@ -108,7 +108,7 @@ async function findUserByEmail(req: Request, res: Response){
       res.status(404).json({ message: 'user not found' });
     }
   } catch (error: any) {
-    res.status(404).json({ message: error.message });
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 };
 
@@ -127,9 +127,8 @@ async function updatePassword(req: Request, res: Response) {
 
     res.status(200).json({ message: 'Contraseña actualizada exitosamente' });
   } 
-  catch (error) {
-    console.error('Error al actualizar contraseña:', error);
-    res.status(404).json({ message: 'Error al actualizar contraseña' });
+  catch (error:any) {
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 }
   
