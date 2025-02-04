@@ -6,7 +6,7 @@
   "main": "app.js",
   "scripts": {
     "start:dev": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/app.js\"",
-    "test": "jest --silent --detectOpenHandles"
+    "test": "jest --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
