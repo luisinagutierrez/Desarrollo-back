@@ -2,7 +2,7 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 
-const uploadsDir = path.join(process.cwd(), 'dist', 'uploads');
+const uploadsDir = path.join(process.cwd(), 'dist', 'src', 'uploads');
 
 //Create uploads directory in dist folder if it doesn't exist
 if (!fs.existsSync(uploadsDir)) {

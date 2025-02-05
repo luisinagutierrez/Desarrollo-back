@@ -11,5 +11,8 @@ module.exports = {
     }]
   },
   extensionsToTreatAsEsm: ['.ts'],
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node']
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  transformIgnorePatterns: ['<rootDir>/dist/'],
+  testMatch: ['<rootDir>/src/**/*.test.ts'],  
+  roots: ['<rootDir>/src/'] 
 };
