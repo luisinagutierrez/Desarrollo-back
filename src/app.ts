@@ -65,6 +65,9 @@ app.use('/api/orders', orderRouter);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+//const __dirname = path.resolve();
+
+
 //static route for images
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
@@ -77,3 +80,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log('Server running on http://localhost:3000/');
 });
+
+export default app; // ES PARA EL DE INTEGRACIÓN

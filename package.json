@@ -6,7 +6,7 @@
   "main": "app.js",
   "scripts": {
     "start:devv": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/src/app.js\"",
-    "unittest": "jest --detectOpenHandles",
+    "test": "jest --detectOpenHandles",
     "start:dev": "cross-env NODE_ENV=development tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/src/app.js\"",
     "integrationtest": "cross-env NODE_ENV=integrationtest tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/src/app.js\""
   },
@@ -42,9 +42,11 @@
     "@types/jsonwebtoken": "^9.0.3",
     "@types/node": "20.5.2",
     "@types/nodemailer": "^6.4.11",
+    "@types/supertest": "^6.0.2",
     "cross-env": "^7.0.3",
     "jest": "^29.7.0",
     "nodemailer": "^6.9.5",
+    "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "tsc-watch": "6.0.4",
