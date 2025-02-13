@@ -92,6 +92,17 @@ async function update(req: Request, res: Response){
     const order = await em.findOneOrFail(Order, {id: req.params.id});
 
     const {status, orderItems} = req.body;
+///ACA SE ACREDITA EL STOCK
+    if (status === 'cancelled') {
+        
+      for (const item of order.orderItems) {
+        const product = await em.findOne(Product, { id: item.productId });
+        if (product) {
+          product.stock += item.quantity; 
+          await em.persistAndFlush(product);
+        }
+      }
+    }
 
     if (status) order.status = status;
     if (orderItems){
