@@ -99,7 +99,7 @@ async function signUp(req: Request, res: Response) {
 
 async function findUserByEmail(req: Request, res: Response){
   try {
-    const email = req.params.email;
+    const email = req.query.email as string;
     const user = await em.findOne(User, { email });
 
     if (user) {
