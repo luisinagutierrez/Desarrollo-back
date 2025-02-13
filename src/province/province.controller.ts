@@ -33,7 +33,7 @@ async function add(req: Request, res: Response) {
     const existingProvince = await em.findOne(Province, { name: provinceData.name });
     if (existingProvince) {
       return res.status(303).json({ message: 'Error', error: 'The province already exists' });
-    }
+    } 
 
     const province = em.create(Province, provinceData);
     await em.flush();

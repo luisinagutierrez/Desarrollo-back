@@ -62,7 +62,9 @@ app.use('/api/products', productRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/orders', orderRouter);
 
-const __filename = fileURLToPath(import.meta.url);
+//const __filename = fileURLToPath(import.meta.url); <-- (MECA) Esta era la línea que tiraba error y arreglamos con butti abajo, pero ahora tira error en el orm con MikroORM
+const rootDir = path.resolve(process.cwd());
+const _filename = path.join(rootDir, './');
 const __dirname = path.dirname(__filename);
 
 //const __dirname = path.resolve();

@@ -10,7 +10,7 @@ async function findAll(req: Request, res: Response){
     const users = await em.find(User, {});
     res.status(200).json({message:'found all users',data: users});
   } catch (error: any) {
-    res.status(404).json({message: error.message});
+    res.status(500).json({message: error.message});
   }
 };
 
@@ -72,7 +72,7 @@ async function remove(req: Request, res: Response) {
     await em.removeAndFlush(user);
     res.status(200).json({ message: 'User deleted successfully' });
   } catch (error: any) {
-    res.status(404).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 }
 

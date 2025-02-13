@@ -10,7 +10,7 @@ async function findAll(req: Request, res: Response){
     const products = await em.find(Product, {});
     res.status(200).json({message:'found all products',data: products});
   } catch (error: any) {
-    res.status(404).json({message: error.message});
+    res.status(500).json({message: error.message});
   }
 };
 

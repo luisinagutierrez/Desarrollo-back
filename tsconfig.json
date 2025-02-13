@@ -1,10 +1,16 @@
 // // no se debe de agregar nunca
+
+//LEER PROFE MECA
+// target lo cambiamos con butti a es2017 y no funcionó
+// module lo pasamos a minúsuculas y no funcionó
+//moduleResolution estaba en bundler y lo cambiamos, pero tampoco funcionó
+
 {
   "compilerOptions": {
     "incremental": true,
-    "target": "es2020",
-    "module": "ES2022",
-    "moduleResolution": "bundler",
+    "target": "es2017", 
+    "module": "es2022", 
+    "moduleResolution": "node", 
     "sourceMap": true,
     "outDir": "./dist",
     "esModuleInterop": true,

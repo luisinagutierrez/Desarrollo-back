@@ -45,13 +45,13 @@ describe('Supplier Controller', () => {
       });
     });
 
-    it('should return 404 when there is an error', async () => {
+    it('should return 500 when there is an error in findall', async () => {
       const errorMessage = 'Database error';
       (orm.em.find as jest.Mock).mockRejectedValue(new Error(errorMessage));
 
       await controller.findAll(mockRequest as Request, mockResponse as Response);
 
-      expect(mockResponse.status).toHaveBeenCalledWith(404);
+      expect(mockResponse.status).toHaveBeenCalledWith(500);
       expect(mockResponse.json).toHaveBeenCalledWith({
         message: errorMessage
       });

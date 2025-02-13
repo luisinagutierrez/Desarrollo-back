@@ -10,7 +10,7 @@ async function findAll(req: Request, res: Response){
     const cities = await em.find(City, {});
     res.status(200).json({message:'found all cities',data: cities});
   } catch (error: any) {
-    res.status(404).json({message: error.message});
+    res.status(500).json({message: error.message});
   }
 };
 
@@ -67,7 +67,7 @@ async function update(req: Request, res: Response){
       .json({message: 'city updated', data: existingCity});
   }
   catch (error: any) {
-    res.status(404).json({message: error.message});
+    res.status(500).json({message: error.message});
   }
 };
   

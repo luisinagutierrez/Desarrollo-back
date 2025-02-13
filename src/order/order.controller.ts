@@ -23,7 +23,7 @@ async function findAll(req: Request, res: Response){
     });
     res.status(200).json({message: 'Orders found successfully', data: orders});
   } catch (error: any){
-    res.status(404).json({message: error.message});
+    res.status(500).json({message: error.message});
   }
 }
 
