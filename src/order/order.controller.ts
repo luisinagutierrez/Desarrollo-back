@@ -130,7 +130,7 @@ async function cancelOrder(order: Order) {
   const hoursDiff = timeDiff / (1000 * 60 * 60);
 
   if (hoursDiff > 24) { 
-    return { success: false, message: 'La orden solo puede cancelarse dentro de una hora de su creación.' };
+    return { success: false, message: 'La orden solo puede cancelarse dentro de un día de su creación.' };
   }
 
   for (const item of order.orderItems) {
