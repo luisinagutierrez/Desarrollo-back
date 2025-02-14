@@ -4,7 +4,7 @@ import { authenticateAdmin } from "../auth/authMiddleware.js";
 
 export const provinceRouter = Router();
 
-provinceRouter.get('/:name', controller.findProvinceByName); 
+provinceRouter.get('/:name', authenticateAdmin,controller.findProvinceByName); 
 provinceRouter.get('/cities/:id', controller.findCitiesByProvince);
 provinceRouter.get('/', controller.findAll);
 provinceRouter.get('/:id', controller.findOne);

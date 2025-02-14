@@ -4,8 +4,8 @@ import { authenticateAdmin } from "../auth/authMiddleware.js";
 
 export const cityRouter = Router();
 
-cityRouter.get('/:postCode/users', controller.findUsersByCity);
-cityRouter.get('/postCode/:postCode', controller.findCityByPostCode);
+cityRouter.get('/:postCode/users', authenticateAdmin,controller.findUsersByCity);
+cityRouter.get('/postCode/:postCode', authenticateAdmin, controller.findCityByPostCode);
 cityRouter.get('/:id', controller.findOne);
 cityRouter.get('/', controller.findAll);
 cityRouter.post('/', authenticateAdmin, controller.add); 

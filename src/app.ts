@@ -23,6 +23,9 @@ import jwt from 'jsonwebtoken';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { orderRouter } from './order/order.routes.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 app.use(express.json());
@@ -33,7 +36,9 @@ app.use(cors({
   origin: 'http://localhost:4200'
 }));
 
-const SECRET_KEY = 'secretkey123456'; // Debe ser una variable de entorno
+const SECRET_KEY = process.env.SECRET_KEY || 'default_secret';
+
+//const SECRET_KEY = 'secretkey123456'; // Debe ser una variable de entorno
 
 //luego de los middlewares base
 app.use((req: Request, res: Response, next) => {
