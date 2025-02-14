@@ -3,7 +3,9 @@ import { Order } from './order.entity.js';
 import { orm } from '../shared/db/orm.js';
 import { User } from '../user/user.entity.js';
 import { Product } from '../product/product.entity.js';
+import { MailService } from '../auth/mail.service.js';
 
+const mailService = new MailService();
 const em = orm.em;
 
 async function findAll(req: Request, res: Response){
@@ -87,30 +89,72 @@ async function create(req: Request, res: Response){
   }
 }
 
-async function update(req: Request, res: Response){
-  try{
-    const order = await em.findOneOrFail(Order, {id: req.params.id});
+async function update(req: Request, res: Response) {
+  try {
+    const order = await em.findOneOrFail(Order, { id: req.params.id });
 
-    const {status, orderItems} = req.body;
+    const { status, orderItems } = req.body;
+
+    if (status === 'cancelled') {
+      const cancelResult = await cancelOrder(order);
+      if (!cancelResult.success) {
+        return res.status(400).json({ message: cancelResult.message });
+      }
+    }
 
     if (status) order.status = status;
-    if (orderItems){
+
+    if (orderItems) {
       order.orderItems = orderItems.map((item: any) => ({
         productId: item.productId,
         quantity: item.quantity,
         unitPrice: item.unitPrice,
-        subtotal: item.quantity * item.unitPrice
+        subtotal: item.quantity * item.unitPrice,
       }));
-      order.total = orderItems.reduce((acc: number, item: any) => acc + (item.quantity * item.unitPrice), 0);
+      order.total = orderItems.reduce((acc: number, item: any) => acc + item.subtotal, 0);
     }
 
     order.updatedDate = new Date();
     await em.persistAndFlush(order);
 
-    res.status(200).json({message: 'Order updated successfully', data: order});
-  } catch (error: any){
-    res.status(404).json({message: 'Order not found'});
+    res.status(200).json({ message: 'Order updated successfully', data: order });
+  } catch (error: any) {
+    res.status(404).json({ message: 'Order not found' });
   }
+}
+
+async function cancelOrder(order: Order) {
+  const orderDate = order.orderDate || new Date();
+  const now = new Date();
+  const timeDiff = now.getTime() - orderDate.getTime();
+  const hoursDiff = timeDiff / (1000 * 60 * 60);
+
+  if (hoursDiff > 24) { 
+    return { success: false, message: 'La orden solo puede cancelarse dentro de un día de su creación.' };
+  }
+
+  for (const item of order.orderItems) {
+    const product = await em.findOne(Product, { id: item.productId });
+    if (product) {
+      product.stock += item.quantity;
+      await em.persistAndFlush(product);
+    }
+  }
+
+  if (order.user && order.user._id) {
+    const user = await em.findOne(User, { id: order.user._id.toString() });
+
+    if (user?.email) {
+      console.log('Sending order cancellation email to:', user.email);
+      await mailService.sendOrderCancellationEmail(user.email, orderDate);
+    } else {
+      console.warn('No email found for user:', order.user._id.toString());
+    }
+  } else {
+    console.warn('Order has no associated user or user ID');
+  }
+
+  return { success: true };
 }
 
 async function remove(req: Request, res: Response){

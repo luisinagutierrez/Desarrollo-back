@@ -35,4 +35,21 @@ export class MailService {
 
     await this.transporter.sendMail(mailOptions);
   }
+
+  async sendOrderCancellationEmail(to: string, orderDate: Date) {
+    const mailOptions = {
+      from: 'chiacoriluli@gmail.com',
+      to: to,
+      subject: 'Cancelación de Orden',
+      html: `
+      <h1>Tu orden ha sido cancelada</h1>
+        <p>Lo sentimos mucho</p>
+        <p>La orden que realizó el día <strong>${orderDate}</strong> ha sido cancelada.</p>
+       <p>Disculpe las molestias ocasionadas. Si tiene alguna pregunta, ¡por favor contáctenos !</p>
+      `
+    };
+
+    await this.transporter.sendMail(mailOptions);
+  }
+  
 }

@@ -28,7 +28,7 @@ Content-Type: application/json
 }
 
 ### Update order
-PUT http://localhost:3000/api/orders/your-order-id-here
+PUT http://localhost:3000/api/orders/
 Content-Type: application/json
 
 {
@@ -45,3 +45,11 @@ Content-Type: application/json
 
 ### Delete order
 DELETE http://localhost:3000/api/orders/your-order-id-here
+
+
+POST http://localhost:3000/api/order/update
+Content-Type: application/json
+
+{
+    "email": "luisinagutierrez2618@gmail.com"
+}
