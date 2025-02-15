@@ -22,7 +22,7 @@ export function authenticateAdmin(req: AuthenticatedRequest, res: Response, next
 
   try {
     const decoded: any = jwt.verify(token, SECRET_KEY);
-
+    console.log("EL PRIVILEGIO ES: ADMINISTRADOR", decoded.privilege);
     if (!decoded || decoded.privilege !== 'administrador') {
       return res.status(403).json({ message: 'Requiere acceso de administrador' });
     }
@@ -47,7 +47,7 @@ export function authenticateClient(req: AuthenticatedRequest, res: Response, nex
     const decoded: any = jwt.verify(token, SECRET_KEY);
 
     if (!decoded || decoded.privilege !== 'cliente') {
-      return res.status(403).json({ message: 'Requiere acceso de administrador' });
+      return res.status(403).json({ message: 'Requiere acceso de cliente' });
     }
     req.user = decoded; 
     next();

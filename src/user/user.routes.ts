@@ -5,7 +5,7 @@ import { authenticateClient } from "../auth/authMiddleware.js";
 
 export const userRouter = Router();
 
-userRouter.get('/', authenticateAdmin, controller.findAll);
+userRouter.get('/', controller.findAll);
 userRouter.put('/update-password', controller.updatePassword);
 userRouter.get('/by-email', controller.findUserByEmail);
 userRouter.delete('/:id', authenticateClient, controller.remove);

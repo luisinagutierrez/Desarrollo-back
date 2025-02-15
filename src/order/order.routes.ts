@@ -8,6 +8,6 @@ export const orderRouter = Router();
 orderRouter.get('/user/email/:email', authenticateClient,controller.findOrdersByEmail);
 orderRouter.get('/', controller.findAll);
 orderRouter.get('/:id', controller.findOne);
-orderRouter.post('/', authenticateClient, controller.create);
+orderRouter.post('/', controller.create);
 orderRouter.put('/:id', controller.update);
 orderRouter.delete('/:id', authenticateAdmin, controller.remove);

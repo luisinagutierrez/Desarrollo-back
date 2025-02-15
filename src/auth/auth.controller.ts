@@ -12,8 +12,8 @@ dotenv.config();
 
 const em = orm.em;
 const mailService = new MailService();
-const SECRET_KEY = process.env.SECRET_KEY || 'default_secret';
-//const SECRET_KEY = 'secretkey123456'; // Debe ser una variable de entorno
+//const SECRET_KEY = process.env.SECRET_KEY || 'default_secret';
+const SECRET_KEY = 'secretkey123456'; // Debe ser una variable de entorno
 
 export const resetPassword = async (req: Request, res: Response) => {
   const { email } = req.body;
@@ -56,6 +56,7 @@ export const loginUser = async (req: Request, res: Response) => {
     
     const expiresIn = 24*60*60;
     const accessToken = jwt.sign({ email: findUser.email, privilege: findUser.privilege }, SECRET_KEY, {expiresIn: expiresIn});
+    console.log('Token generado', accessToken);
     res.send({ accessToken });
   } catch (err) {
     return res.status(500).send('Server error!');
