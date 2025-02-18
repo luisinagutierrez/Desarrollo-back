@@ -24,6 +24,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { orderRouter } from './order/order.routes.js';
 import dotenv from 'dotenv';
+import { createDefaultAdmin } from './user/admin.seed.js';
 
 dotenv.config();
 
@@ -79,6 +80,7 @@ app.use((_, res) => {
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log('Server running on http://localhost:3000/');
+app.listen(PORT, async () => {
+  console.log('Server running on https://localhost:3000');
+  await createDefaultAdmin();
 });

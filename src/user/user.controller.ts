@@ -84,6 +84,11 @@ async function signUp(req: Request, res: Response) {
       return res.status(303).json({ message: 'Error', error: 'The user already exists' });
     }
 
+    // Check if city is required based on privilege
+    if (userData.privilege !== 'administrador' && !userData.city) {
+      return res.status(400).json({ message: 'Error', error: 'City is required for non-admin users' });
+    }
+
     const salt = await bcrypt.genSalt(10);
     userData.password = await bcrypt.hash(userData.password, salt);
 

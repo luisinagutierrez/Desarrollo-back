@@ -32,8 +32,8 @@ export class User extends BaseEntity {
     @Property({nullable: true, unique: true})
     streetNumber?: string
 
-    @ManyToOne(() => City, {nullable: false})
-    city!: Rel<City>
+    @ManyToOne(() => City, {nullable: true})
+    city?: Rel<City>
 
     @Property({nullable: true, unique: true})
     resetPasswordToken?: string
