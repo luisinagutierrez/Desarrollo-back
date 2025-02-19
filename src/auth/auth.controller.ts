@@ -56,7 +56,6 @@ export const loginUser = async (req: Request, res: Response) => {
     
     const expiresIn = 24*60*60;
     const accessToken = jwt.sign({ email: findUser.email, privilege: findUser.privilege }, SECRET_KEY, {expiresIn: expiresIn});
-    console.log('Token generado', accessToken);
     res.send({ accessToken });
   } catch (err) {
     return res.status(500).send('Server error!');
