@@ -12,8 +12,8 @@ export const createDefaultAdmin = async () => {
             
 
             const adminUser = em.create(User, {
-                email: 'admin@admin.com',
-                password: 'admin123', // This will be hashed automatically by the entity hooks
+                email: process.env.ADMIN_EMAIL || '',
+                password: process.env.ADMIN_PASSWORD || '', // This will be hashed automatically by the entity hooks
                 privilege: 'administrador',
                 firstName: 'Admin',
                 lastName: 'Admin',
