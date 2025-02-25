@@ -19,7 +19,6 @@ function authenticateRole(role: 'administrador' | 'cliente') {
 
     try {
       const decoded: any = jwt.verify(token, SECRET_KEY);
-      console.log("ESERSRSGS",decoded.privilege)
       if (!decoded || decoded.privilege !== role) {
         return res.status(403).json({ message: `Requiere acceso de ${role}` });
       }
