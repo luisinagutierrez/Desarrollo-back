@@ -22,7 +22,7 @@ export class MailService {
     const frontendUrl = 'http://localhost:4200/UserRegistration/new-password';
     const resetUrl = `${frontendUrl}/${token}`;
     const mailOptions = {
-      from: 'chiacoriluli@gmail.com',
+      from: process.env.MAIL_USER,
       to: to,
       subject: 'Reestablecer la contraseña',
       html: `
@@ -38,7 +38,7 @@ export class MailService {
 
   async sendOrderCancellationEmail(to: string, orderDate: Date) {
     const mailOptions = {
-      from: 'chiacoriluli@gmail.com',
+      from: process.env.MAIL_USER,
       to: to,
       subject: 'Cancelación de Orden',
       html: `
